@@ -150,9 +150,11 @@
                                             </td>
                                             @*ACTIONS*@
                                             <td class="text-center">
-                                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                               @* @Html.ActionLink("Edit", "EditUser", new { id=item.userId }) |
                                                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                                <a href="@Url.Action("EditUser","User", new { ID = item.userId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
+                                                <a href="@Url.Action("Delete","User", new { ID = item.userId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     }

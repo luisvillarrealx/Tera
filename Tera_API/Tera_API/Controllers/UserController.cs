@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
@@ -28,6 +29,14 @@ namespace Tera_API.Controllers
             return model.ListUser(_configuration);
         }
 
+        [HttpGet]
+        [Route("GetUser/{id}")]
+        public UserObj Get(int id)
+        {
+            var Productos = new UserObj();
+            return model.GetUser(_configuration, id);
+        }
+
         [HttpPost]
         [Route("Register")]
         public IActionResult Register(UserObj user)
@@ -43,14 +52,11 @@ namespace Tera_API.Controllers
         [Route("EditUser")]
         public ActionResult EditUser(UserObj user)
         {
-
             if (model.EditUser(user, _configuration) > 0)
             {
                 return Ok(user);
             }
             return BadRequest();
-
         }
-
     }
 }

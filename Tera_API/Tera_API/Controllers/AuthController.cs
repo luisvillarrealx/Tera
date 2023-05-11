@@ -5,8 +5,6 @@ namespace Tera_API.Controllers
 {
     public class AuthController : Controller
     {
-        // GET: AuthController
-
         public IActionResult Login()
         {
             return View();

@@ -23,6 +23,16 @@ namespace Tera_API.Models
             }
         }
 
+        //In the following procedure GetUser, I query the database for a user by ID.
+        public UserObj GetUser(IConfiguration stringConnection, int id)
+        {
+
+            using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
+            {
+                var SqlQuery = connection.Query<UserObj>("SELECT * from Users WHERE userId =" + id.ToString()).ToList();
+                return SqlQuery[0];
+            }
+        }
 
         //The following Register function is used to add a new user to a database.
         public int Register(UserObj user, IConfiguration stringConnection)
@@ -38,7 +48,6 @@ namespace Tera_API.Models
             }
         }
 
-
         //In the following EditUser function, what we are going to do is wait for the frontend
         //to connect to this API, passing us the edited parameters
         public int EditUser(UserObj user, IConfiguration stringConnection)
@@ -48,20 +57,19 @@ namespace Tera_API.Models
                 return connection.Execute("EditUser",
                 new
                 {
-                        //We pass the userId as a parameter
-                        user.userId,
-                        user.userGovId,
-                        user.userName,
-                        user.userFirstSurname,
-                        user.userSecondSurname,
-                        user.email,
-                        user.password,
-                        user.active,
-                        user.idRole
+                    //We pass the userId as a parameter
+                    user.userId,
+                    user.userGovId,
+                    user.userName,
+                    user.userFirstSurname,
+                    user.userSecondSurname,
+                    user.email,
+                    user.password,
+                    user.active,
+                    user.idRole
 
-                    }, commandType: CommandType.StoredProcedure);
+                }, commandType: CommandType.StoredProcedure);
             }
         }
-
     }
 }

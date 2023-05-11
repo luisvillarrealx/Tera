@@ -10,8 +10,8 @@ namespace Tera_Web.Controllers
 {
     public class UserController : Controller
     {
-        UserObj credentialObj = new UserObj();
-        UserModel credentialModel = new UserModel();
+        UserObj userObj = new UserObj();
+        UserModel userModel = new UserModel();
 
         public ActionResult Login()
         {
@@ -22,7 +22,7 @@ namespace Tera_Web.Controllers
         public IActionResult List()
         {
             List<UserObj> _user = new List<UserObj>();
-            _user = credentialModel.GetUser().ToList();
+            _user = userModel.GetUser().ToList();
             //if (HttpContext.Session.GetInt32("TokenState") == 0)
             return View(_user);
         }
@@ -35,11 +35,11 @@ namespace Tera_Web.Controllers
 
 
         [HttpPost]
-        public ActionResult Register(UserObj credentialObj)
+        public ActionResult Register(UserObj userObj)
         {
             try
             {
-                if (credentialModel.PostUsers(credentialObj) != string.Empty)
+                if (userModel.PostUsers(userObj) != string.Empty)
                     return RedirectToAction(nameof(List));
                 else
                 {
@@ -51,6 +51,33 @@ namespace Tera_Web.Controllers
             catch
             {
                 return RedirectToAction(nameof(View));
+            }
+        }
+
+        public ActionResult EditUser(int id)
+        {
+            userObj = userModel.GetUser(id);
+            return View(userObj);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(UserObj userObj)
+        {
+            try
+            {
+                userModel.PutUsers(userObj);
+                return RedirectToAction("List", "User");
+            }
+            catch
+            {
+                //var Roles = use.ConsultarRoles();
+                //var datos = new List<SelectListItem>();
+
+                //datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
+                //foreach (var item in Roles)
+                //    datos.Add(new SelectListItem { Value = item.IdRol.ToString(), Text = item.Roles });
+
+                return View();
             }
         }
     }

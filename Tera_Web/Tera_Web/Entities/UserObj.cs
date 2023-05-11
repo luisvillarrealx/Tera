@@ -23,6 +23,5 @@ namespace Tera_Web.Entities
         public bool active { get; set; } = true;
         [DisplayName("Rol")]
         public int idRole { get; set; } = 0;
-
     }
 }
