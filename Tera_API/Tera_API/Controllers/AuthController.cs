@@ -1,0 +1,20 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Tera_API.Controllers
+{
+    public class AuthController : Controller
+    {
+        // GET: AuthController
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult Reset()
+        {
+            return View();
+        }
+    }
+}

@@ -1,0 +1,190 @@
+﻿@model IEnumerable<Tera_Web.Entities.UserObj>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<section class="content mt-5 mx-5">
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Registro de usuarios</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive">
+                        <div class="pb-2">
+                            <a href="@Url.Action("Register","User", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                        </div>
+                        <table id="UserTable" class="table table-bordered table-striped ">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.userId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.userGovId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.userName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.userFirstSurname)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.userSecondSurname)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.email)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.password)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.active)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.idRole)
+                                    </th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    @if (Model != null)
+                                    {
+                                        <tr>
+                                            @*USER ID*@
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.userId)
+                                            </td>
+                                            @*GOVERNMENT ID*@
+                                            <td>
+                                                @if (item.userGovId == default(int))
+                                                {
+                                                    <span class="text-center">-</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.userGovId)
+                                                }
+                                            </td>
+                                            @*USER NAME*@
+                                            <td>
+                                                @if (string.IsNullOrEmpty(item.userName))
+                                                {
+                                                    <span class="text-center">-</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.userName)
+                                                }
+                                            </td>
+                                            @*FIRST SURNAME*@
+                                            <td>
+                                                @if (string.IsNullOrEmpty(item.userFirstSurname))
+                                                {
+                                                    <span class="text-center">-</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.userFirstSurname)
+                                                }
+
+                                            </td>
+                                            @*SECOND SURNAME*@
+                                            <td>
+                                                @if (string.IsNullOrEmpty(item.userSecondSurname))
+                                                {
+                                                    <span class="text-center">-</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.userSecondSurname)
+                                                }
+                                            </td>
+                                            @*EMAIL*@
+                                            <td>
+                                                @if (string.IsNullOrEmpty(item.email))
+                                                {
+                                                    <span class="text-center">-</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.email)
+                                                }
+                                            </td>
+                                            @*PASSWORD*@
+                                            <td>
+                                                @if (string.IsNullOrEmpty(item.password))
+                                                {
+                                                    <span class="text-center">-</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.password)
+                                                }
+                                            </td>
+                                            @*ACTIVO*@
+                                            <td class="text-center">
+                                                @Html.DisplayFor(modelItem => item.active)
+                                            </td>
+                                            @*ROLE*@
+                                            <td>
+                                                @if (item.idRole == default(int))
+                                                {
+                                                    <span class="text-center">-</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.idRole)
+                                                }
+                                            </td>
+                                            @*ACTIONS*@
+                                            <td class="text-center">
+                                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr class="text-center">
+                                            <td colspan="9">Sin Datos</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+</section>
+<!-- /.container-fluid -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<script type="text/javascript">
+    $(document).ready(function () {
+        let table = new DataTable('#UserTable', {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+            },
+        });
+    });
+</script>
+
