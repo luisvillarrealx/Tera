@@ -21,7 +21,7 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive">
                         <div class="pb-2">
-                            <a href="@Url.Action("Register","User", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                            <a href="@Url.Action("Register","Role", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
                         </div>
                         <table id="UserTable" class="table table-bordered table-striped ">
                             <thead class="text-center">
@@ -35,25 +35,40 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.roleDescription)
                                     </th>
-                                    <th></th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
+
                                     <tr>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.roleId)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.roleName)
+                                            @if (string.IsNullOrEmpty(item.roleName))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.roleName)
+                                            }
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.roleDescription)
+                                            @if (string.IsNullOrEmpty(item.roleDescription))
+                                            {
+                                                <span class="text-center">- - -</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.roleDescription)
+                                            }
                                         </td>
-                                        <td>
-                                            <a href="@Url.Action("EditUser","User", new { ID = item.roleId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
-                                            <a href="@Url.Action("Delete","User", new { ID = item.roleId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
+                                        <td class="text-center col-1">
+                                            <a href="@Url.Action("EditRole","Role", new { ID = item.roleId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
+                                            <a href="@Url.Action("DeleteRole","Role", new { ID = item.roleId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 }

@@ -20,7 +20,7 @@ namespace Tera_Web.Controllers
         }
 
         // GET: RolesController/Create
-        public ActionResult Create()
+        public ActionResult Register()
         {
             //ViewBag.CodigoProveedor = new SelectList(db.Proveedores, "CodigoProveedor", "Nombre");
             return View();
@@ -30,14 +30,13 @@ namespace Tera_Web.Controllers
 
         // POST: RolesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(RoleObj roleObj)
+        public ActionResult Register(RoleObj roleObj)
         {
             string mensaje = ValidateRoles(roleObj);
             if (string.IsNullOrEmpty(mensaje))
             {
                 roleModel.PostRoles(roleObj);
-                return RedirectToAction("Index", "Roles");
+                return RedirectToAction("List", "Role");
                 //else
                 //{
                 //    ErrorViewModel error = new ErrorViewModel();
@@ -48,7 +47,7 @@ namespace Tera_Web.Controllers
             else
             {
                 ViewBag.MsjError = mensaje;
-                return View("Create");
+                return View("List");
             }
         }
         private string ValidateRoles(RoleObj roleObj)
@@ -64,7 +63,7 @@ namespace Tera_Web.Controllers
 
         // GET: RolesController/Edit/5
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult EditRole(int id)
         {
 
             roleObj = roleModel.GetRole(id);
@@ -79,20 +78,19 @@ namespace Tera_Web.Controllers
 
         // POST: RolesController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(RoleObj roleObj)
+        public ActionResult EditRole(RoleObj roleObj)
         {
             if (ModelState.IsValid)
             {
                 roleModel.PUTRoles(roleObj);
-                return RedirectToAction("Index", "Roles");
+                return RedirectToAction("List", "Role");
             }
             //ViewBag.CodigoProveedor = new SelectList(db.Proveedores, "CodigoProveedor", "Nombre", articulos.CodigoProveedor);
             return View(roleObj);
         }
 
         // GET: RolesController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteRole(int id)
         {
 
             if (id == null)
@@ -104,22 +102,23 @@ namespace Tera_Web.Controllers
             {
                 return NotFound();
             }
-            return RedirectToAction("Index", "Roles");
+            return RedirectToAction("List", "Role");
         }
 
         // POST: ProductosController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+
+        public ActionResult DeleteRole(int id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(List));
             }
             catch
             {
                 return View();
             }
         }
+       
     }
 }

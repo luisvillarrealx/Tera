@@ -17,7 +17,7 @@ namespace Tera_Web.Models
 
 
         //*************************************
-        
+
         public List<RoleObj> GetRoleList()
         {
             //IEnumerable<Carrera> A;
@@ -42,7 +42,7 @@ namespace Tera_Web.Models
                 {
 
                 }
-                
+
             }
             return RoleList;
         }
@@ -74,14 +74,14 @@ namespace Tera_Web.Models
             }
             return roleObj;
         }
-        
+
         public string PostRoles(RoleObj roleObj)
         {
             using (HttpClient acceso = new HttpClient())
             {
 
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
-                string urlApi = "https://localhost:7019/" + "api/Roles/RegistrarRoles";
+                string urlApi = "https://localhost:7021/" + "api/Role/Register";
 
                 JsonContent contenido = JsonContent.Create(roleObj);
 
@@ -95,41 +95,9 @@ namespace Tera_Web.Models
 
             }
         }
-        
-        //**************************************
-        
-        public void DeleteRoles(int id)
-        {
-            //validacion de datos para eliminar los datos
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri("https://localhost:7019/");
-                    var response = client.DeleteAsync("api/Roles/Delete?Rol=" + id);
-                    response.Wait();
-                    var result = response.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        lblmsj = "Se ha eliminado exitosamente.";
-                    }
-                    else
-                    {
-                        lblmsj = "No se encontro la identificacion para eliminar el curso.";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                lblmsj = "Error en el registro de la carrera\n" + ex.StackTrace;
-            }
-        }
-        
-        //**
-
 
         //**************************************
-        
+
         public string PUTRoles(RoleObj roleObj)
         {
             using (HttpClient acceso = new HttpClient())
@@ -137,11 +105,11 @@ namespace Tera_Web.Models
 
 
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
-                string urlApi = "https://localhost:7019/" + "api/Roles/ActualizarRol";
+                string urlApi = "https://localhost:7021/" + "api/Role/EditRole";
 
                 JsonContent contenido = JsonContent.Create(roleObj);
 
-                
+
                 HttpResponseMessage respuesta = acceso.PutAsync(urlApi, contenido).GetAwaiter().GetResult();
 
                 if (respuesta.IsSuccessStatusCode)
@@ -151,5 +119,37 @@ namespace Tera_Web.Models
                 return string.Empty;
             }
         }
+
+        //**************************************
+
+        public void DeleteRoles(int id)
+        {
+            //validacion de datos para eliminar los datos
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://localhost:7021/");
+                    var response = client.DeleteAsync("api/Role/DeleteRole?Rol=" + id);
+                    response.Wait();
+                    var result = response.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        lblmsj = "Se ha eliminado exitosamente.";
+                    }
+                    else
+                    {
+                        lblmsj = "No se encontro la identificacion para eliminar el Rol.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblmsj = "Error en el registro de la carrera\n" + ex.StackTrace;
+            }
+        }
+
+        //**
+
     }
 }

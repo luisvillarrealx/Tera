@@ -23,7 +23,7 @@
                         <div class="pb-2">
                             <a href="@Url.Action("Register","User", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
                         </div>
-                        <table id="UserTable" class="table table-bordered table-striped ">
+                        <table id="Table" class="table table-bordered table-striped ">
                             <thead class="text-center">
                                 <tr>
                                     <th>
@@ -170,15 +170,8 @@
     </div>
 </section>
 <!-- /.container-fluid -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
-        let table = new DataTable('#UserTable', {
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-            },
-        });
+        $('#Table').DataTable();
     });
 </script>
-
