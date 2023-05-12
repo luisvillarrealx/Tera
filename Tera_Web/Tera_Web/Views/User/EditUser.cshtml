@@ -4,28 +4,23 @@
     ViewData["Title"] = "EditUser";
 }
 
-<h1>EditUser</h1>
-
-<h4>UserObj</h4>
-<hr />
-
-
-<section class="content">
-    <div class="offset-4 container-fluid">
-        <div class="row">
+<section class="content mt-5">
+    <div class="offset-4 container-fluid mt-5">
+        <div class="row mt-5">
             <!-- left column -->
             <div class="col-md-4">
                 <!-- general form elements -->
                 <div class="">
                     <div class="card-header">
-                        <h3 class="card-title pb-3 text-center">Edicion de Usuario</h3>
+                        <h3 class="card-title pb-3 text-center">Edición de Usuario</h3>
                     </div>
                     @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group pb-2">
+                            @Html.HiddenFor(m => m.userId)
                             <label asp-for="userId" class="control-label"></label>
-                            <input asp-for="userId" class="form-control" />
+                            <input asp-for="userId" class="form-control" readonly disabled />
                             <span asp-validation-for="userId" class="text-danger"></span>
                         </div>
                         <div class="form-group pb-2">
@@ -49,25 +44,31 @@
                             <span asp-validation-for="userSecondSurname" class="text-danger"></span>
                         </div>
                         <div class="form-group pb-2">
-                            <label asp-for="email" class="control-label"></label>
-                            <input asp-for="email" class="form-control" />
-                            <span asp-validation-for="email" class="text-danger"></span>
+                            <label asp-for="userEmail" class="control-label"></label>
+                            <input asp-for="userEmail" type="email" class="form-control" />
+                            <span asp-validation-for="userEmail" class="text-danger"></span>
                         </div>
-                        <div class="form-group pb-4">
-                            <label asp-for="password" class="control-label"></label>
-                            <input asp-for="password" class="form-control" />
-                            <span asp-validation-for="password" class="text-danger"></span>
+                        <div class="form-group pb-2">
+                            <label asp-for="userPassword" class="control-label"></label>
+                            <input asp-for="userPassword" type="password" class="form-control" />
+                            <span asp-validation-for="userPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group pb-2">
+                            <label asp-for="userRoleId" class="control-label"></label>
+                            <input asp-for="userRoleId" class="form-control" />
+                            <span asp-validation-for="userRoleId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group pb-3">
+                            <label asp-for="userSiteId" class="control-label"></label>
+                            <input asp-for="userSiteId" class="form-control" />
+                            <span asp-validation-for="userSiteId" class="text-danger"></span>
                         </div>
                         <div class="form-group form-check pb-2">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="active" /> @Html.DisplayNameFor(model => model.active)
+                                <input class="form-check-input" asp-for="userActive" /> @Html.DisplayNameFor(model => model.userActive)
                             </label>
                         </div>
-                        <div class="form-group pb-5">
-                            <label asp-for="idRole" class="control-label"></label>
-                            <input asp-for="idRole" class="form-control" />
-                            <span asp-validation-for="idRole" class="text-danger"></span>
-                        </div>
+
                         <div class="form-group">
                             <input type="button" value="Cancelar" class="btn btn-danger offset-2" />
                             <input type="submit" value="Editar" class="btn btn-success offset-4" />

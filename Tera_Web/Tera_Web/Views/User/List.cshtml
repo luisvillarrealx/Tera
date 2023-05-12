@@ -27,9 +27,6 @@
                             <thead class="text-center">
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.userId)
-                                    </th>
-                                    <th>
                                         @Html.DisplayNameFor(model => model.userGovId)
                                     </th>
                                     <th>
@@ -42,16 +39,16 @@
                                         @Html.DisplayNameFor(model => model.userSecondSurname)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.email)
+                                        @Html.DisplayNameFor(model => model.userEmail)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.password)
+                                        @Html.DisplayNameFor(model => model.userActive)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.active)
+                                        @Html.DisplayNameFor(model => model.userRoleId)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.idRole)
+                                        @Html.DisplayNameFor(model => model.userSiteId)
                                     </th>
                                     <th>Acciones</th>
                                 </tr>
@@ -62,10 +59,6 @@
                                     @if (Model != null)
                                     {
                                         <tr>
-                                            @*USER ID*@
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.userId)
-                                            </td>
                                             @*GOVERNMENT ID*@
                                             <td>
                                                 @if (item.userGovId == default(int))
@@ -113,39 +106,38 @@
                                             </td>
                                             @*EMAIL*@
                                             <td>
-                                                @if (string.IsNullOrEmpty(item.email))
+                                                @if (string.IsNullOrEmpty(item.userEmail))
                                                 {
                                                     <span class="text-center">-</span>
                                                 }
                                                 else
                                                 {
-                                                    @Html.DisplayFor(modelItem => item.email)
-                                                }
-                                            </td>
-                                            @*PASSWORD*@
-                                            <td>
-                                                @if (string.IsNullOrEmpty(item.password))
-                                                {
-                                                    <span class="text-center">-</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.password)
+                                                    @Html.DisplayFor(modelItem => item.userEmail)
                                                 }
                                             </td>
                                             @*ACTIVO*@
                                             <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.active)
+                                                @Html.DisplayFor(modelItem => item.userActive)
                                             </td>
                                             @*ROLE*@
                                             <td>
-                                                @if (item.idRole == default(int))
+                                                @if (item.userRoleId == default(int))
                                                 {
                                                     <span class="text-center">-</span>
                                                 }
                                                 else
                                                 {
-                                                    @Html.DisplayFor(modelItem => item.idRole)
+                                                    @Html.DisplayFor(modelItem => item.userRoleId)
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.userSiteId == default(int))
+                                                {
+                                                    <span class="text-center">-</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.userSiteId)
                                                 }
                                             </td>
                                             @*ACTIONS*@

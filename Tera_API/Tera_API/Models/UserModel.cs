@@ -18,7 +18,7 @@ namespace Tera_API.Models
 
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var SqlQuery = connection.Query<UserObj>("SELECT * from Users");
+                var SqlQuery = connection.Query<UserObj>("SELECT * FROM Users");
                 return SqlQuery.ToList();
             }
         }
@@ -29,7 +29,7 @@ namespace Tera_API.Models
 
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var SqlQuery = connection.Query<UserObj>("SELECT * from Users WHERE userId =" + id.ToString()).ToList();
+                var SqlQuery = connection.Query<UserObj>("SELECT * FROM Users WHERE userId =" + id.ToString()).ToList();
                 return SqlQuery[0];
             }
         }
@@ -42,8 +42,8 @@ namespace Tera_API.Models
                 return connection.Execute("InsertUser",
                     new
                     {
-                        user.email,
-                        user.password
+                        user.userEmail,
+                        user.userPassword
                     }, commandType: CommandType.StoredProcedure);
             }
         }
@@ -63,10 +63,11 @@ namespace Tera_API.Models
                     user.userName,
                     user.userFirstSurname,
                     user.userSecondSurname,
-                    user.email,
-                    user.password,
-                    user.active,
-                    user.idRole
+                    user.userEmail,
+                    user.userPassword,
+                    user.userActive,
+                    user.userRoleId,
+                    user.userSiteId
 
                 }, commandType: CommandType.StoredProcedure);
             }

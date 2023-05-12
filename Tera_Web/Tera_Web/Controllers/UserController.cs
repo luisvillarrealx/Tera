@@ -13,16 +13,11 @@ namespace Tera_Web.Controllers
         UserObj userObj = new UserObj();
         UserModel userModel = new UserModel();
 
-        public ActionResult Login()
-        {
-            HttpContext.Session.Clear();
-            return View();
-        }
 
         public IActionResult List()
         {
             List<UserObj> _user = new List<UserObj>();
-            _user = userModel.GetUser().ToList();
+            _user = userModel.GetUserList().ToList();
             //if (HttpContext.Session.GetInt32("TokenState") == 0)
             return View(_user);
         }
@@ -30,6 +25,14 @@ namespace Tera_Web.Controllers
         [HttpGet]
         public ActionResult Register()
         {
+            var Roles = userModel.CheckRoles();
+            var datos = new List<SelectListItem>();
+
+            datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
+            foreach (var item in Roles)
+                datos.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+
+            ViewBag.ComboRoles = datos;
             return View();
         }
 

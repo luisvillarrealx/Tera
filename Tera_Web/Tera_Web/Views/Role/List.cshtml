@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Tera_Web.Entities.RoleObj>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<section class="content mt-5 mx-5">
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Registro de usuarios</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive">
+                        <div class="pb-2">
+                            <a href="@Url.Action("Register","User", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                        </div>
+                        <table id="UserTable" class="table table-bordered table-striped ">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.roleId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.roleName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.roleDescription)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.roleId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.roleName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.roleDescription)
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("EditUser","User", new { ID = item.roleId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
+                                            <a href="@Url.Action("Delete","User", new { ID = item.roleId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+</section>

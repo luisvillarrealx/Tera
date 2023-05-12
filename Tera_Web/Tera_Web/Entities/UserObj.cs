@@ -16,12 +16,15 @@ namespace Tera_Web.Entities
         [DisplayName("Segundo Apellido")]
         public string userSecondSurname { get; set; } = string.Empty;
         [DisplayName("Correo")]
-        public string email { get; set; } = string.Empty;
+        public string userEmail { get; set; } = string.Empty;
         [DisplayName("Contraseña")]
-        public string password { get; set; } = string.Empty;
+        public string userPassword { get; set; } = string.Empty;
         [DisplayName("Activo")]
-        public bool active { get; set; } = true;
+        public bool userActive { get; set; } = true;
         [DisplayName("Rol")]
-        public int idRole { get; set; } = 0;
+        public int userRoleId { get; set; } = 0;
+        [DisplayName("Sede")]
+        public int userSiteId { get; set; } = 0;
+
     }
 }
