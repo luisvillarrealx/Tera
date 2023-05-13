@@ -28,6 +28,12 @@ font & reset css
 reset
 --------------------------------------------- 
 */
+
+.disabled {
+    pointer-events: none;
+    background-color: #E9ECEF;
+    border-color: #DEE2E6;
+}
 .btn-orange {
     background-color: #018BFA;
     border: #018BFA;
