@@ -79,7 +79,7 @@ namespace Tera_API.Models
                 UserObj userObj = new UserObj();
                 userObj.userId = userId;
 
-                return connection.Execute("DeleteProduct",
+                return connection.Execute("DeleteUser",
                     new
                     {
                         userObj.userId

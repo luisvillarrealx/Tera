@@ -16,7 +16,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Registro de usuarios</h3>
+                        <h3 class="card-title">Edicion de Productos</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive">
@@ -38,7 +38,7 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.productMeasurementUnit)
                                     </th>
-                                    <th></th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,15 +49,36 @@
                                             @Html.DisplayFor(modelItem => item.productId)
                                         </td>
                                         <td>
+                                            @if (string.IsNullOrEmpty(item.productName))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
                                             @Html.DisplayFor(modelItem => item.productName)
+                                            }
                                         </td>
                                         <td>
+                                            @if (item.productCost == default(int))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
                                             @Html.DisplayFor(modelItem => item.productCost)
+                                            }
                                         </td>
                                         <td>
+                                            @if (string.IsNullOrEmpty(item.productMeasurementUnit))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
                                             @Html.DisplayFor(modelItem => item.productMeasurementUnit)
+                                            }
                                         </td>
-                                        <td>
+                                        <td class="text-center col-2">
                                             <a href="@Url.Action("EditProduct","Product", new { ID = item.productId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
                                             <a href="@Url.Action("DeleteProduct","Product", new { ID = item.productId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
                                         </td>

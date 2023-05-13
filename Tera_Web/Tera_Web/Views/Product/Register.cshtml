@@ -8,37 +8,33 @@
     <div class="offset-4 container-fluid mt-5">
         <div class="row mt-5">
             <!-- left column -->
-            <div class="col-md-4">
+            <div class="col-md-4 mt-5">
                 <!-- general form elements -->
-                <div class="">
+                <div class="mt-5">
                     <div class="card-header">
                         <h3 class="card-title pb-3 text-center">Registro de Roles</h3>
                     </div>
-                    @using (Html.BeginForm("Register", "Role", FormMethod.Post))
+                    @using (Html.BeginForm("Register", "Product", FormMethod.Post))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="productId" class="control-label"></label>
-                            <input asp-for="productId" class="form-control" />
-                            <span asp-validation-for="productId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
+                        <div class="form-group pb-4">
                             <label asp-for="productName" class="control-label"></label>
                             <input asp-for="productName" class="form-control" />
                             <span asp-validation-for="productName" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group pb-4">
                             <label asp-for="productCost" class="control-label"></label>
                             <input asp-for="productCost" class="form-control" />
                             <span asp-validation-for="productCost" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group pb-4">
                             <label asp-for="productMeasurementUnit" class="control-label"></label>
                             <input asp-for="productMeasurementUnit" class="form-control" />
                             <span asp-validation-for="productMeasurementUnit" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <a href="@Url.Action("List","Product")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check "></i></button>
                         </div>
                     }
                 </div>

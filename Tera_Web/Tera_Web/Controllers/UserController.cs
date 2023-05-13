@@ -83,5 +83,26 @@ namespace Tera_Web.Controllers
                 return View();
             }
         }
+        // GET: UsuarioController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            userModel.DeleteUsers(id);
+            return RedirectToAction("List", "User");
+        }
+
+        // POST: UsuarioController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

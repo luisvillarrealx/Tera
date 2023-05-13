@@ -108,6 +108,38 @@ namespace Tera_Web.Models
                 return string.Empty;
             }
         }
+
+        public void DeleteUsers(int id)
+        {
+            //validacion de datos para eliminar los datos
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    
+                    client.BaseAddress = new Uri("https://localhost:7021/");
+                    var response = client.DeleteAsync("api/User/EliminarUsuario?userId=" + id);
+                    response.Wait();
+                    var result = response.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        lblmsj = "Se ha eliminado exitosamente.";
+                    }
+                    else
+                    {
+                        lblmsj = "No se encontro la identificacion para eliminar el curso.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblmsj = "Error en el registro de la carrera\n" + ex.StackTrace;
+            }
+        }
+
+
+
+
         //En la funcion CheckRoles vamos a crear un combobox para registrar usaurio con Rol
         public List<RoleObj>? CheckRoles(/*string token*/)
         {

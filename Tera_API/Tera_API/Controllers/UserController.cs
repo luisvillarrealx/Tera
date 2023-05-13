@@ -58,5 +58,27 @@ namespace Tera_API.Controllers
             }
             return BadRequest();
         }
+
+        [HttpDelete]
+        [Route("EliminarUsuario")]
+        public ActionResult EliminarUsuario(int userId)
+        {
+            try
+            {
+                if (userId == null)
+                {
+                    NotFound();
+                }
+                else
+                {
+                    var persona = model.DeleteUser(userId, _configuration);
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

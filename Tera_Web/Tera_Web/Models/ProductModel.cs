@@ -81,7 +81,7 @@ namespace Tera_Web.Models
             {
 
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
-                string urlApi = "https://localhost:7019/" + "api/Product/Register";
+                string urlApi = "https://localhost:7021/" + "api/Product/Register";
 
                 JsonContent contenido = JsonContent.Create(Prod);
 
@@ -105,7 +105,7 @@ namespace Tera_Web.Models
 
 
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
-                string urlApi = "https://localhost:7019/" + "api/Product/EditProduct";
+                string urlApi = "https://localhost:7021/" + "api/Product/EditProduct";
 
                 JsonContent contenido = JsonContent.Create(Prod);
 
@@ -131,7 +131,7 @@ namespace Tera_Web.Models
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://localhost:7021/");
-                    var response = client.DeleteAsync("api/Product/DeleteProduct?Rol=" + id);
+                    var response = client.DeleteAsync("api/Product/DeleteProduct?IdProducto=" + id);
                     response.Wait();
                     var result = response.Result;
                     if (result.IsSuccessStatusCode)

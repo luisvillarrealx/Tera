@@ -130,7 +130,7 @@ namespace Tera_Web.Models
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://localhost:7021/");
-                    var response = client.DeleteAsync("api/Role/DeleteRole?Rol=" + id);
+                    var response = client.DeleteAsync("api/Product/DeleteRole?Rol=" + id);
                     response.Wait();
                     var result = response.Result;
                     if (result.IsSuccessStatusCode)

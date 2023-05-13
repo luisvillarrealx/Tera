@@ -45,7 +45,7 @@ namespace Tera_Web.Controllers
             {
 
                 productModel.PostProduct(productObj);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(List));
             }
             catch
             {
@@ -79,7 +79,7 @@ namespace Tera_Web.Controllers
             {
 
                 productModel.PutProduct(productObj);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(List));
             }
             catch
             {
@@ -89,22 +89,22 @@ namespace Tera_Web.Controllers
         }
 
         // GET: ProductosController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteProduct(int id)
         {
 
             productModel.DeleteProduct(id);
-            return RedirectToAction("Index", "Productos");
+            return RedirectToAction("List", "Product");
 
         }
 
         // POST: ProductosController/Delete/5
         [HttpPost]
 
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteProduct(int id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(List));
             }
             catch
             {
