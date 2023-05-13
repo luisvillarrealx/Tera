@@ -25,22 +25,27 @@
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userGovId" class="control-label"></label>
-                            <input asp-for="userGovId" class="form-control" />
+                            @Html.TextBoxFor(m => m.userGovId, new
+                        {
+                        @class = "form-control",
+                        @required = true,
+                        @onkeyUp = "ConsultNameApi();"
+                        })
                             <span asp-validation-for="userGovId" class="text-danger"></span>
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userName" class="control-label"></label>
-                            <input asp-for="userName" class="form-control" />
+                            <input asp-for="userName" id="userName" class="form-control" readonly  />
                             <span asp-validation-for="userName" class="text-danger"></span>
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userFirstSurname" class="control-label"></label>
-                            <input asp-for="userFirstSurname" class="form-control" />
+                            <input asp-for="userFirstSurname" id="userFirstSurname" class="form-control" readonly />
                             <span asp-validation-for="userFirstSurname" class="text-danger"></span>
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userSecondSurname" class="control-label"></label>
-                            <input asp-for="userSecondSurname" class="form-control" />
+                            <input asp-for="userSecondSurname" id="userSecondSurname" class="form-control" readonly />
                             <span asp-validation-for="userSecondSurname" class="text-danger"></span>
                         </div>
                         <div class="form-group pb-2">
@@ -48,11 +53,12 @@
                             <input asp-for="userEmail" type="email" class="form-control" />
                             <span asp-validation-for="userEmail" class="text-danger"></span>
                         </div>
-                        <div class="form-group pb-2">
+                        @Html.HiddenFor(m => m.userPassword)
+                        @*<div class="form-group pb-2">
                             <label asp-for="userPassword" class="control-label"></label>
-                            <input asp-for="userPassword" type="password" class="form-control" />
+                            <input asp-for="userPassword" type="" class="form-control" />
                             <span asp-validation-for="userPassword" class="text-danger"></span>
-                        </div>
+                        </div>*@
                         <div class="form-group pb-2">
                             <label asp-for="userRoleId" class="control-label"></label>
                             <input asp-for="userRoleId" class="form-control" />
@@ -82,3 +88,5 @@
     </div>
     <!-- /.row -->
 </section>
+
+<script src="~/js/ConsultNameApi.js"></script>

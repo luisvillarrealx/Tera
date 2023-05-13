@@ -63,10 +63,7 @@ namespace Tera_Web.Models
                     string resultstr = task2.Result;
                     userObj = JsonConvert.DeserializeObject<UserObj>(resultstr);
                 }
-                else
-                {
-
-                }
+                
             }
             return userObj;
         }
