@@ -12,7 +12,7 @@ namespace Tera_API.Models
 
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var SqlQuery = connection.Query<RoleObj>("SELECT * FROM Roles");
+                var SqlQuery = connection.Query<RoleObj>("SELECT * FROM Roles ORDER BY roleId ASC");
                 return SqlQuery.ToList();
             }
         }
@@ -67,12 +67,12 @@ namespace Tera_API.Models
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                RoleObj ROL = new RoleObj();
-                ROL.roleId = RoleId;
+                RoleObj roleObj = new RoleObj();
+                roleObj.roleId = RoleId;
                 return connection.Execute("DeleteRole",
                     new
                     {
-                        ROL.roleId
+                        roleObj.roleId
                     }, commandType: CommandType.StoredProcedure);
             }
         }

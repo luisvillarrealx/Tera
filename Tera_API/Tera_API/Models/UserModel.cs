@@ -72,5 +72,19 @@ namespace Tera_API.Models
                 }, commandType: CommandType.StoredProcedure);
             }
         }
+        public int DeleteUser(int userId, IConfiguration stringConnection)
+        {
+            using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
+            {
+                UserObj userObj = new UserObj();
+                userObj.userId = userId;
+
+                return connection.Execute("DeleteProduct",
+                    new
+                    {
+                        userObj.userId
+                    }, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }

@@ -25,14 +25,14 @@ namespace Tera_Web.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            var Roles = userModel.CheckRoles();
-            var datos = new List<SelectListItem>();
+        //    var Roles = userModel.CheckRoles();
+        //    var datos = new List<SelectListItem>();
 
-            datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
-            foreach (var item in Roles)
-                datos.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+        //    datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
+        //    foreach (var item in Roles)
+        //        datos.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
 
-            ViewBag.ComboRoles = datos;
+        //    ViewBag.ComboRoles = datos;
             return View();
         }
 

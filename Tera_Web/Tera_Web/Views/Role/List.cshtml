@@ -68,7 +68,15 @@
                                         </td>
                                         <td class="text-center col-1">
                                             <a href="@Url.Action("EditRole","Role", new { ID = item.roleId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
-                                            <a href="@Url.Action("DeleteRole","Role", new { ID = item.roleId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
+                                            @if (item.roleId == 1 || item.roleId == 2 || item.roleId == 3)
+                                            {
+                                                <i class="fa-solid fa-trash px-2 text-dark"></i>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("DeleteRole","Role", new { ID = item.roleId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
+                                            }
+
                                         </td>
                                     </tr>
                                 }

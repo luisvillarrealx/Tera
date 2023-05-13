@@ -33,10 +33,10 @@ reset
     border: #018BFA;
 }
 
-.btn-orange:hover {
+    .btn-orange:hover {
         background-color: #0171F9;
         border: #0171F9;
-}
+    }
 
 .hero-image {
     width: 100%;
@@ -689,7 +689,7 @@ Banner Style
     background-position: center bottom;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 225px 0px;
+    padding: 185px 0px;
 }
 
     .main-banner .caption h6 {
@@ -1420,7 +1420,7 @@ Single Page Style
     display: inline;
 }
 
-.single-product form button {
+    .single-product form button {
         display: inline-block;
         height: 50px;
         line-height: 50px;
@@ -1433,15 +1433,15 @@ Single Page Style
         border: none;
         border-radius: 25px;
         transition: all .3s;
-}
+    }
 
-.single-product form button i {
-    margin-right: 5px;
-}
+        .single-product form button i {
+            margin-right: 5px;
+        }
 
-.single-product form button:hover {
+        .single-product form button:hover {
             background-color: #0071f8;
-}
+        }
 
 .single-product ul {
     margin-top: 60px;
@@ -1454,15 +1454,15 @@ Single Page Style
         color: #0071f8;
     }
 
-.single-product ul li:last-child {
-    margin-bottom: 0px;
-}
+        .single-product ul li:last-child {
+            margin-bottom: 0px;
+        }
 
-.single-product ul li span {
+        .single-product ul li span {
             width: 120px;
             display: inline-block;
             color: #aaa;
-}
+        }
 
 .tabs-content {
     background-color: #f7f7f7;
@@ -1471,7 +1471,7 @@ Single Page Style
     transition: all 0.3s;
 }
 
-.tabs-content .nav-link {
+    .tabs-content .nav-link {
         border: none;
         border-radius: 0px;
         background-color: transparent !important;
@@ -1481,29 +1481,29 @@ Single Page Style
         padding: 0px;
     }
 
-.tabs-content ul.nav-tabs {
+    .tabs-content ul.nav-tabs {
         border-bottom: none;
-}
+    }
 
-.tabs-content ul.nav-tabs li {
+        .tabs-content ul.nav-tabs li {
             border-right: 1px solid #d7d7d7;
             margin-right: 30px;
             padding-right: 30px;
-}
+        }
 
-.tabs-content ul.nav-tabs li:last-child {
+            .tabs-content ul.nav-tabs li:last-child {
                 border-right: none;
                 margin-right: 0px;
                 padding-right: 0px;
-}
+            }
 
-.tabs-content .nav-tabs .nav-link.active {
+    .tabs-content .nav-tabs .nav-link.active {
         color: #0071f8;
-}
+    }
 
-.tabs-content .tab-content {
+    .tabs-content .tab-content {
         margin-top: 30px;
-}
+    }
 
 .related-games .main-button {
     text-align: right;
@@ -1610,9 +1610,13 @@ Responsive Style
 body {
     min-height: 100vh;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     overflow-x: hidden;
 }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
 
 @media (max-width: 767px) {
     .header-area {
