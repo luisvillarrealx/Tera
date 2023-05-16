@@ -3,14 +3,8 @@
 @{
     ViewData["Title"] = "List";
 }
-
-<h1>List</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <section class="content mt-5 mx-5">
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-12">
 
@@ -132,7 +126,7 @@
                                         </td>
                                         <td class="text-center col-2">
                                             <a href="@Url.Action("EditUser","User", new { ID = item.userId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
-                                            <a href="@Url.Action("Delete","User", new { ID = item.userId })" class="text-danger px-2" type="" value="" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa-solid fa-trash"></i></a>
+                                            <a href="#" class="text-danger px-2 delete-button" onclick="confirmDelete('@item.userId')" data-toggle="modal" data-target="#confirm-delete-modal"><i class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 }
@@ -156,42 +150,48 @@
 
 </section>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-delete-modal-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="confirm-delete-modal-label">Confirmar Eliminación</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ...
+                <p>¿Estás seguro de que deseas eliminar este dato?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete-btn">Eliminar</button>
             </div>
         </div>
     </div>
 </div>
 <!-- /.container-fluid -->
 <script>
+    function confirmDelete(userId) {
+        document.getElementById('userIdToDelete').value = userId;
+    }
     $(document).ready(function () {
-        $('#Table').DataTable();
+        $('#confirm-delete-btn').click(function () {
+            var userId = $('#userIdToDelete').val(); // ID del usuario a eliminar
+            var confirmed = true;
 
-        // Capturar el evento de clic en el enlace "Eliminar"
-        $('.delete-link').on('click', function () {
-            var userId = $(this).data('id');
-            var deleteUrl = '@Url.Action("Delete", "User")' + '?ID=' + userId;
-
-            // Mostrar el modal de confirmación de eliminación
-            if (confirm('¿Estás seguro de que deseas eliminar este registro?')) {
-                window.location.href = deleteUrl;
-            }
-
-            // Evitar que se siga ejecutando el evento de clic en el enlace "Eliminar"
-            return false;
+            // Se ha confirmado la eliminación, realizar la solicitud AJAX al controlador
+            $.ajax({
+                url: '@Url.Action("Delete","User")',
+                type: 'POST',
+                data: { id: userId, confirmed: confirmed },
+                success: function (data) {
+                    // Manejar la respuesta del controlador aquí
+                    // Por ejemplo, actualizar la lista de usuarios o redireccionar a otra página
+                },
+                error: function (error) {
+                    // Manejo de errores
+                }
+            });
         });
     });
 </script>
