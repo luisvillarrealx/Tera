@@ -3,7 +3,7 @@
     public class UserObj
     {
         public int userId { get; set; } = 0;
-        public int userGovId { get; set; } = 0;
+        public string userGovId { get; set; } = string.Empty;
         public string userName { get; set; } = string.Empty;
         public string userFirstSurname { get; set; } = string.Empty;
         public string userSecondSurname { get; set; } = string.Empty;

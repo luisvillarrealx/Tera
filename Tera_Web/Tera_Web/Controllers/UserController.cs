@@ -5,6 +5,7 @@ using Tera_Web.Entities;
 using Tera_Web.Models;
 using System.Reflection;
 using System.Runtime.Intrinsics.X86;
+using System.Text.RegularExpressions;
 
 namespace Tera_Web.Controllers
 {
@@ -25,14 +26,14 @@ namespace Tera_Web.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-        //    var Roles = userModel.CheckRoles();
-        //    var datos = new List<SelectListItem>();
+            //    var Roles = userModel.CheckRoles();
+            //    var datos = new List<SelectListItem>();
 
-        //    datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
-        //    foreach (var item in Roles)
-        //        datos.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+            //    datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
+            //    foreach (var item in Roles)
+            //        datos.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
 
-        //    ViewBag.ComboRoles = datos;
+            //    ViewBag.ComboRoles = datos;
             return View();
         }
 
@@ -42,13 +43,36 @@ namespace Tera_Web.Controllers
         {
             try
             {
-                if (userModel.PostUsers(userObj) != string.Empty)
-                    return RedirectToAction(nameof(List));
+                if (string.IsNullOrEmpty(userObj.userEmail))
+                {
+                    ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico.");
+                }
+                else if (!IsValidEmail(userObj.userEmail))
+                {
+                    ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico válido.");
+                }
+
+                if (string.IsNullOrEmpty(userObj.userPassword))
+                {
+                    ModelState.AddModelError("userPassword", "Por favor, ingresa una contraseña.");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    // Los datos del formulario son válidos, realizar acciones adicionales, como guardar en la base de datos.
+                    if (userModel.PostUsers(userObj) != string.Empty)
+                        return RedirectToAction(nameof(List));
+                    else
+                    {
+                        ErrorViewModel error = new ErrorViewModel();
+                        error.RequestId = "01";
+                        return View("Error", error);
+                    }
+                }
                 else
                 {
-                    ErrorViewModel error = new ErrorViewModel();
-                    error.RequestId = "01";
-                    return View("Error", error);
+                    // Si hay errores de validación, vuelve a mostrar el formulario con los mensajes de error.
+                    return View(userObj);
                 }
             }
             catch
@@ -68,21 +92,40 @@ namespace Tera_Web.Controllers
         {
             try
             {
-                userModel.PutUsers(userObj);
-                return RedirectToAction("List", "User");
+                if (string.IsNullOrEmpty(userObj.userEmail))
+                {
+                    ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico.");
+                }
+                else if (!IsValidEmail(userObj.userEmail))
+                {
+                    ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico válido.");
+                }
+
+                if (string.IsNullOrEmpty(userObj.userGovId))
+                {
+                    ModelState.AddModelError("userGovId", "Por favor, ingresa la cédula.");
+                }
+                else if (userObj.userGovId.Length != 9)
+                {
+                    ModelState.AddModelError("userGovId", "La cédula debe tener 9 dígitos.");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    userModel.PutUsers(userObj);
+                    return RedirectToAction("List", "User");
+                }
+                else
+                {
+                    return View(userObj);
+                }
             }
             catch
             {
-                //var Roles = use.ConsultarRoles();
-                //var datos = new List<SelectListItem>();
-
-                //datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
-                //foreach (var item in Roles)
-                //    datos.Add(new SelectListItem { Value = item.IdRol.ToString(), Text = item.Roles });
-
                 return View();
             }
         }
+
         // GET: UsuarioController/Delete/5
         public ActionResult Delete(int id)
         {
@@ -103,6 +146,17 @@ namespace Tera_Web.Controllers
             {
                 return View();
             }
+        }
+
+
+        //Validadores de campos
+        private bool IsValidEmail(string email)
+        {
+            // Expresión regular para validar el formato del correo electrónico
+            string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+
+            // Validar el formato del correo electrónico utilizando la expresión regular
+            return Regex.IsMatch(email, emailPattern);
         }
     }
 }

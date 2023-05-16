@@ -23,7 +23,7 @@
                         <div class="pb-2">
                             <a href="@Url.Action("Register","User", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
                         </div>
-                        <table id="Table" class="table table-bordered table-striped ">
+                        <table id="Table" class="table table-bordered table-striped">
                             <thead class="text-center">
                                 <tr>
                                     <th>
@@ -56,106 +56,91 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    @if (Model != null)
-                                    {
-                                        <tr>
-                                            @*GOVERNMENT ID*@
-                                            <td>
-                                                @if (item.userGovId == default(int))
-                                                {
-                                                    <span class="text-center">-</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.userGovId)
-                                                }
-                                            </td>
-                                            @*USER NAME*@
-                                            <td>
-                                                @if (string.IsNullOrEmpty(item.userName))
-                                                {
-                                                    <span class="text-center">-</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.userName)
-                                                }
-                                            </td>
-                                            @*FIRST SURNAME*@
-                                            <td>
-                                                @if (string.IsNullOrEmpty(item.userFirstSurname))
-                                                {
-                                                    <span class="text-center">-</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.userFirstSurname)
-                                                }
-
-                                            </td>
-                                            @*SECOND SURNAME*@
-                                            <td>
-                                                @if (string.IsNullOrEmpty(item.userSecondSurname))
-                                                {
-                                                    <span class="text-center">-</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.userSecondSurname)
-                                                }
-                                            </td>
-                                            @*EMAIL*@
-                                            <td>
-                                                @if (string.IsNullOrEmpty(item.userEmail))
-                                                {
-                                                    <span class="text-center">-</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.userEmail)
-                                                }
-                                            </td>
-                                            @*ACTIVO*@
-                                            <td class="text-center">
-                                                @Html.DisplayFor(modelItem => item.userActive)
-                                            </td>
-                                            @*ROLE*@
-                                            <td>
-                                                @if (item.userRoleId == default(int))
-                                                {
-                                                    <span class="text-center">-</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.userRoleId)
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.userSiteId == default(int))
-                                                {
-                                                    <span class="text-center">-</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.userSiteId)
-                                                }
-                                            </td>
-                                            @*ACTIONS*@
-                                            <td class="text-center col-2">
-                                               @* @Html.ActionLink("Edit", "EditUser", new { id=item.userId }) |
-                                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                                                <a href="@Url.Action("EditUser","User", new { ID = item.userId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
-                                                <a href="@Url.Action("Delete","User", new { ID = item.userId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                    }
-                                    else
-                                    {
-                                        <tr class="text-center">
-                                            <td colspan="9">Sin Datos</td>
-                                        </tr>
-                                    }
+                                    <tr>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.userGovId))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.userGovId)
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.userName))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.userName)
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.userFirstSurname))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.userFirstSurname)
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.userSecondSurname))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.userSecondSurname)
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.userEmail))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.userEmail)
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            @Html.DisplayFor(modelItem => item.userActive)
+                                        </td>
+                                        <td>
+                                            @if (item.userRoleId == default(int))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem=> item.userRoleId)
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.userSiteId == default(int))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.userSiteId)
+                                            }
+                                        </td>
+                                        <td class="text-center col-2">
+                                            <a href="@Url.Action("EditUser","User", new { ID = item.userId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
+                                            <a href="@Url.Action("Delete","User", new { ID = item.userId })" class="text-danger px-2" type="" value="" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa-solid fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.Count() == 0)
+                                {
+                                    <tr class="text-center">
+                                        <td colspan="9">Sin Datos</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -168,10 +153,45 @@
         </div>
         <!-- /.row -->
     </div>
+
 </section>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /.container-fluid -->
 <script>
     $(document).ready(function () {
         $('#Table').DataTable();
+
+        // Capturar el evento de clic en el enlace "Eliminar"
+        $('.delete-link').on('click', function () {
+            var userId = $(this).data('id');
+            var deleteUrl = '@Url.Action("Delete", "User")' + '?ID=' + userId;
+
+            // Mostrar el modal de confirmación de eliminación
+            if (confirm('¿Estás seguro de que deseas eliminar este registro?')) {
+                window.location.href = deleteUrl;
+            }
+
+            // Evitar que se siga ejecutando el evento de clic en el enlace "Eliminar"
+            return false;
+        });
     });
 </script>

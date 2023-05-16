@@ -25,49 +25,57 @@
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userGovId" class="control-label"></label>
+                            <br>
+                            <span asp-validation-for="userGovId" class="text-danger"></span>
                             @Html.TextBoxFor(m => m.userGovId, new
                         {
                         @class = "form-control",
                         @required = true,
                         @onkeyUp = "ConsultNameApi();"
                         })
-                            <span asp-validation-for="userGovId" class="text-danger"></span>
+
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userName" class="control-label"></label>
-                            <input asp-for="userName" id="userName" class="form-control disabled" readonly />
+                            <br>
                             <span asp-validation-for="userName" class="text-danger"></span>
+                            <input asp-for="userName" id="userName" class="form-control disabled" readonly />
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userFirstSurname" class="control-label"></label>
-                            <input asp-for="userFirstSurname" id="userFirstSurname" class="form-control disabled" readonly />
+                            <br>
                             <span asp-validation-for="userFirstSurname" class="text-danger"></span>
+                            <input asp-for="userFirstSurname" id="userFirstSurname" class="form-control disabled" readonly />
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userSecondSurname" class="control-label"></label>
-                            <input asp-for="userSecondSurname" id="userSecondSurname" class="form-control disabled" readonly />
+                            <br>
                             <span asp-validation-for="userSecondSurname" class="text-danger"></span>
+                            <input asp-for="userSecondSurname" id="userSecondSurname" class="form-control disabled" readonly />
                         </div>
                         <div class="form-group pb-2">
                             <label asp-for="userEmail" class="control-label"></label>
-                            <input asp-for="userEmail" type="email" class="form-control" />
+                            <br>
                             <span asp-validation-for="userEmail" class="text-danger"></span>
+                            <input asp-for="userEmail" type="email" class="form-control" />
                         </div>
                         @Html.HiddenFor(m => m.userPassword)
                         @*<div class="form-group pb-2">
-                            <label asp-for="userPassword" class="control-label"></label>
-                            <input asp-for="userPassword" type="" class="form-control" />
-                            <span asp-validation-for="userPassword" class="text-danger"></span>
-                        </div>*@
+                    <label asp-for="userPassword" class="control-label"></label>
+                    <span asp-validation-for="userPassword" class="text-danger"></span>
+                    <input asp-for="userPassword" type="" class="form-control" />
+                    </div>*@
                         <div class="form-group pb-2">
                             <label asp-for="userRoleId" class="control-label"></label>
-                            <input asp-for="userRoleId" class="form-control" />
+                            <br>
                             <span asp-validation-for="userRoleId" class="text-danger"></span>
+                            <input asp-for="userRoleId" class="form-control" />
                         </div>
                         <div class="form-group pb-3">
                             <label asp-for="userSiteId" class="control-label"></label>
-                            <input asp-for="userSiteId" class="form-control" />
+                            <br>
                             <span asp-validation-for="userSiteId" class="text-danger"></span>
+                            <input asp-for="userSiteId" class="form-control" />
                         </div>
                         <div class="form-group form-check pb-2">
                             <label class="form-check-label">
