@@ -1,24 +1,22 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http.Headers;
 using Tera_Web.Entities;
 
 namespace Tera_Web.Models
 {
-    public class RoleModel
+    public class OrderDetailModel
     {
-
-        string urlGetlist = "https://localhost:7021/api/Role/GetList";
-        string urlGet = "https://localhost:7021/api/Role/GetRole";
+        string urlGetlist = "https://localhost:7021/api/OrderDetails/GetList";
+        string urlGet = "https://localhost:7021/api/OrderDetails/GetOrderDetails";
 
         public string lblmsj { get; set; }
-        List<RoleObj> RoleList = new List<RoleObj>();
-        RoleObj roleObj = new RoleObj();
+        List<OrderDetailObj> OrderDetailsList = new List<OrderDetailObj>();
+        OrderDetailObj orderDetailsObj = new OrderDetailObj();
 
 
 
         //*************************************
 
-        public List<RoleObj> GetRoleList()
+        public List<OrderDetailObj> GetOrderDetailsList()
         {
             //IEnumerable<Carrera> A;
             using (var client = new HttpClient())
@@ -36,7 +34,7 @@ namespace Tera_Web.Models
                         return await message.Content.ReadAsStringAsync();
                     });
                     string resultstr = task2.Result;
-                    RoleList = JsonConvert.DeserializeObject<List<RoleObj>>(resultstr);
+                    OrderDetailsList = JsonConvert.DeserializeObject<List<OrderDetailObj>>(resultstr);
                 }
                 else
                 {
@@ -44,10 +42,10 @@ namespace Tera_Web.Models
                 }
 
             }
-            return RoleList;
+            return OrderDetailsList;
         }
         //We query the API to fill an object that will be edited.
-        public RoleObj GetRole(int id)
+        public OrderDetailObj GetOrder(int id)
         {
             //IEnumerable<Carrera> A;
             using (var client = new HttpClient())
@@ -65,25 +63,25 @@ namespace Tera_Web.Models
                         return await message.Content.ReadAsStringAsync();
                     });
                     string resultstr = task2.Result;
-                    roleObj = JsonConvert.DeserializeObject<RoleObj>(resultstr);
+                    orderDetailsObj = JsonConvert.DeserializeObject<OrderDetailObj>(resultstr);
                 }
                 else
                 {
 
                 }
             }
-            return roleObj;
+            return orderDetailsObj;
         }
 
-        public string PostRoles(RoleObj roleObj)
+        public string Register(OrderDetailObj orderDetailsObj)
         {
             using (HttpClient acceso = new HttpClient())
             {
 
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
-                string urlApi = "https://localhost:7021/" + "api/Role/Register";
+                string urlApi = "https://localhost:7021/" + "api/OrderDetails/Register";
 
-                JsonContent contenido = JsonContent.Create(roleObj);
+                JsonContent contenido = JsonContent.Create(orderDetailsObj);
 
                 HttpResponseMessage respuesta = acceso.PostAsync(urlApi, contenido).GetAwaiter().GetResult();
 
@@ -98,16 +96,16 @@ namespace Tera_Web.Models
 
         //**************************************
 
-        public string PUTRoles(RoleObj roleObj)
+        public string EditOrderDetails(OrderDetailObj orderDetailsObj)
         {
             using (HttpClient acceso = new HttpClient())
             {
 
 
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
-                string urlApi = "https://localhost:7021/" + "api/Role/EditRole";
+                string urlApi = "https://localhost:7021/" + "api/OrderDetails/EditOrderDetails";
 
-                JsonContent contenido = JsonContent.Create(roleObj);
+                JsonContent contenido = JsonContent.Create(orderDetailsObj);
 
 
                 HttpResponseMessage respuesta = acceso.PutAsync(urlApi, contenido).GetAwaiter().GetResult();
@@ -122,7 +120,7 @@ namespace Tera_Web.Models
 
         //**************************************
 
-        public void DeleteRoles(int id)
+        public void DeleteOrderDetails(int id)
         {
             //validacion de datos para eliminar los datos
             try
@@ -130,7 +128,7 @@ namespace Tera_Web.Models
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://localhost:7021/");
-                    var response = client.DeleteAsync("api/Role/DeleteRole?Rol=" + id);
+                    var response = client.DeleteAsync("api/OrderDetails/DeleteOrderDetails?Rol=" + id);
                     response.Wait();
                     var result = response.Result;
                     if (result.IsSuccessStatusCode)
@@ -139,17 +137,14 @@ namespace Tera_Web.Models
                     }
                     else
                     {
-                        lblmsj = "No se encontro la identificacion para eliminar el Rol.";
+                        lblmsj = "No se encontro la identificacion para eliminar la orden.";
                     }
                 }
             }
             catch (Exception ex)
             {
-                lblmsj = "Error en el registro de la carrera\n" + ex.StackTrace;
+                lblmsj = "Error en el registro de la carrera" + ex.StackTrace;
             }
         }
-
-        //**
-
     }
 }

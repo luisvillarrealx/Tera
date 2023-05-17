@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Tera_Web.Entities.OrderDetailObj>
+
+@{
+    ViewData["Title"] = "List";
+}
+<section class="content mt-5 mx-5">
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Registro de usuarios</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive">
+                        <div class="pb-2">
+                            <a href="@Url.Action("Register","User", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                        </div>
+                        <table id="Table" class="table table-bordered table-striped">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.orderDetailsId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.orderId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.productId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.orderDetailsQuantity)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.orderDetailsId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.orderId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.productId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.orderDetailsQuantity)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+</section>
+<!-- Modal -->
+<div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-delete-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirm-delete-modal-label">Confirmar Eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar este dato?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete-btn">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+<script>
+    function confirmDelete(userId) {
+        document.getElementById('userIdToDelete').value = userId;
+    }
+    $(document).ready(function () {
+        $('#confirm-delete-btn').click(function () {
+            var userId = $('#userIdToDelete').val(); // ID del usuario a eliminar
+            var confirmed = true;
+
+            // Se ha confirmado la eliminación, realizar la solicitud AJAX al controlador
+            $.ajax({
+                url: '@Url.Action("Delete","User")',
+                type: 'POST',
+                data: { id: userId, confirmed: confirmed },
+                success: function (data) {
+                    // Manejar la respuesta del controlador aquí
+                    // Por ejemplo, actualizar la lista de usuarios o redireccionar a otra página
+                },
+                error: function (error) {
+                    // Manejo de errores
+                }
+            });
+        });
+    });
+</script>

@@ -1,78 +1,89 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tera_Web.Entities;
+using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
     public class SiteController : Controller
     {
-        // GET: SiteController
-        public ActionResult Index()
+        SiteObj siteObj = new SiteObj();
+        SiteModel siteModel = new SiteModel();
+
+        // GET: Site/List
+        public ActionResult List()
+        {
+            var siteList = siteModel.GetSiteList();
+            return View(siteList);
+        }
+
+        // GET: Site/Register
+        public ActionResult Register()
         {
             return View();
         }
 
-        // GET: SiteController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: SiteController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: SiteController/Create
+        // POST: Site/Register
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Register(SiteObj siteObj)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                siteModel.Register(siteObj);
+                return RedirectToAction("List", "Site");
             }
-            catch
+            else
             {
-                return View();
+                return View(siteObj);
             }
         }
 
-        // GET: SiteController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Site/Edit/5
+        public ActionResult EditSite(int id)
         {
-            return View();
+            var site = siteModel.GetSite(id);
+            if (site == null)
+            {
+                return NotFound();
+            }
+            return View(site);
         }
 
-        // POST: SiteController/Edit/5
+        // POST: Site/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditSite(int id, SiteObj siteObj)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                siteModel.EditSide(siteObj);
+                return RedirectToAction("List", "Site");
             }
-            catch
+            else
             {
-                return View();
+                return View(siteObj);
             }
         }
 
-        // GET: SiteController/Delete/5
+        // GET: Site/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var site = siteModel.GetSite(id);
+            if (site == null)
+            {
+                return NotFound();
+            }
+            return View(site);
         }
 
-        // POST: SiteController/Delete/5
+        // POST: Site/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                siteModel.DeleteSite(id);
+                return RedirectToAction(nameof(List));
             }
             catch
             {

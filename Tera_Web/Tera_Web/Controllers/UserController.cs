@@ -132,7 +132,7 @@ namespace Tera_Web.Controllers
 
         // GET: UsuarioController/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, bool confirmed)
+        public ActionResult DeleteUser(int id, bool confirmed)
         {
             if (confirmed)
             {
@@ -145,7 +145,7 @@ namespace Tera_Web.Controllers
         // POST: UsuarioController/Delete/5
         [HttpPost]
 
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteUser(int id, IFormCollection collection)
         {
             try
             {

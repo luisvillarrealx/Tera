@@ -1,83 +1,74 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using Tera_Web.Entities;
+using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
     public class OrderController : Controller
     {
-        // GET: OrderController
-        public ActionResult Index()
-        {
-            return View();
-        }
+        OrderObj orderObj = new OrderObj();
+        OrderModel orderModel = new OrderModel();
 
-        // GET: OrderController/Details/5
-        public ActionResult Details(int id)
+        // GET: OrderController
+        public ActionResult List()
         {
-            return View();
+            List<OrderObj> orders = orderModel.GetOrderList();
+            return View(orders);
         }
 
         // GET: OrderController/Create
-        public ActionResult Create()
+        public ActionResult Register()
         {
             return View();
         }
 
         // POST: OrderController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Register(OrderObj orderObj)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                orderModel.Register(orderObj);
+                return RedirectToAction(nameof(List));
             }
-            catch
-            {
-                return View();
-            }
+            return View(orderObj);
         }
-
         // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditOrder(int id)
         {
-            return View();
+            OrderObj order = orderModel.GetOrder(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
         }
-
         // POST: OrderController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditOrder(int id, OrderObj orderObj)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                orderModel.EditOrder(orderObj);
+                return RedirectToAction(nameof(List));
             }
-            catch
-            {
-                return View();
-            }
+            return View(orderObj);
         }
-
         // GET: OrderController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteOrder(int id)
         {
-            return View();
+            OrderObj order = orderModel.GetOrder(id);
+            return RedirectToAction(nameof(List));
         }
 
         // POST: OrderController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteOrder(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            orderModel.DeleteOrder(id);
+            return RedirectToAction(nameof(List));
         }
     }
 }

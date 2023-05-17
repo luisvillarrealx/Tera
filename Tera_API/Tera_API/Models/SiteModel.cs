@@ -17,7 +17,7 @@ namespace Tera_API.Models
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
                 // Ejecuta una consulta SQL para obtener todos los sitios ordenados por productId.
-                var SqlQuery = connection.Query<SiteObj>("SELECT * FROM Products ORDER BY productId ASC");
+                var SqlQuery = connection.Query<SiteObj>("SELECT * FROM Sites ORDER BY siteId ASC");
                 return SqlQuery.ToList();
             }
         }
@@ -33,7 +33,7 @@ namespace Tera_API.Models
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
                 // Ejecuta una consulta SQL para obtener un sitio específico según el productId.
-                var SqlQuery = connection.Query<SiteObj>("SELECT * FROM Products WHERE productId =" + id.ToString()).ToList();
+                var SqlQuery = connection.Query<SiteObj>("SELECT * FROM Sites WHERE siteId =" + id.ToString()).ToList();
                 return SqlQuery[0];
             }
         }
@@ -49,7 +49,7 @@ namespace Tera_API.Models
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
                 // Ejecuta un procedimiento almacenado para insertar un nuevo sitio en la base de datos.
-                return connection.Execute("InsertProduct",
+                return connection.Execute("InsertSite",
                     new
                     {
                         siteObj.siteName,
@@ -69,7 +69,7 @@ namespace Tera_API.Models
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
                 // Ejecuta un procedimiento almacenado para editar un sitio en la base de datos.
-                return connection.Execute("EditProduct",
+                return connection.Execute("EditSite",
                     new
                     {
                         siteObj.siteId,
@@ -93,7 +93,7 @@ namespace Tera_API.Models
                 siteObj.siteId = SiteId;
 
                 // Ejecuta un procedimiento almacenado para eliminar un sitio de la base de datos.
-                return connection.Execute("DeleteProduct",
+                return connection.Execute("DeleteSite",
                     new
                     {
                         siteObj.siteId
