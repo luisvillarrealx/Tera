@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Tera_API.Entities;
 using Tera_API.Models;
 
@@ -8,65 +6,55 @@ namespace Tera_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : Controller
+    public class ProductController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        ProductModel productModel = new ProductModel();
+        private readonly ProductModel _productModel;
 
         public ProductController(IConfiguration configuration)
         {
             _configuration = configuration;
+            _productModel = new ProductModel();
         }
 
-        // GET: api/<ProductosController>
-
-        [HttpGet]
-        [Route("GetList")]
-        public List<ProductObj> List()
+        /// <summary>
+        /// Obtiene una lista de todos los productos en la base de datos.
+        /// </summary>
+        [HttpGet("GetList")]
+        public ActionResult<List<ProductObj>> List()
         {
-            var Productos = new List<ProductObj>();
-            ProductObj p = new ProductObj();
-            return productModel.ListProduct(_configuration);
-
-        }
-        // GET: Mostrar datos
-
-        [HttpGet]
-        [Route("GetProducto/{id}")]
-        public ProductObj Get(int id)
-        {
-            var Productos = new ProductObj();
-            return productModel.GetProduct(_configuration, id);
-
+            var products = _productModel.ListProduct(_configuration);
+            return products;
         }
 
-        [HttpPost]
-        [Route("Register")]
-        public ActionResult Register(ProductObj productObj)
+        /// <summary>
+        /// Obtiene un producto de la base de datos por su ID.
+        /// </summary>
+        [HttpGet("GetProducto/{id}")]
+        public ActionResult<ProductObj> Get(int id)
         {
-            if (productModel.Register(productObj, _configuration) > 0)
+            var product = _productModel.GetProduct(_configuration, id);
+            if (product == null)
             {
-                return Ok();
+                return NotFound();
             }
-            return BadRequest();
+            return product;
         }
 
-        [HttpPut]
-        [Route("EditProduct")]
-        public ActionResult EditProduct(ProductObj productObj)
+        /// <summary>
+        /// Registra un nuevo producto en la base de datos.
+        /// </summary>
+        [HttpPost("Register")]
+        public IActionResult Register(ProductObj productObj)
         {
             try
             {
-                if (productObj == null)
+                var result = _productModel.Register(productObj, _configuration);
+                if (result > 0)
                 {
-                    return NoContent();
-
+                    return Ok();
                 }
-                else
-                {
-                    var persona = productModel.EditProduct(productObj, _configuration);
-                    return Ok(productObj);
-                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -74,21 +62,51 @@ namespace Tera_API.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("DeleteProduct")]
-        public ActionResult DeleteProduct(int IdProducto)
+        /// <summary>
+        /// Edita los datos de un producto existente en la base de datos.
+        /// </summary>
+        [HttpPut("EditProduct")]
+        public IActionResult EditProduct(ProductObj productObj)
         {
             try
             {
-                if (IdProducto == null)
+                if (productObj == null)
                 {
-                    NotFound();
+                    return NoContent();
                 }
-                else
+
+                var result = _productModel.EditProduct(productObj, _configuration);
+                if (result > 0)
                 {
-                    var producto = productModel.DeleteProduct(IdProducto, _configuration);
+                    return Ok(productObj);
                 }
-                return Ok(IdProducto);
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Elimina un producto de la base de datos por su ID.
+        /// </summary>
+        [HttpDelete("DeleteProduct")]
+        public IActionResult DeleteProduct(int IdProducto)
+        {
+            try
+            {
+                if (IdProducto == 0)
+                {
+                    return NotFound();
+                }
+
+                var result = _productModel.DeleteProduct(IdProducto, _configuration);
+                if (result > 0)
+                {
+                    return Ok(IdProducto);
+                }
+                return NotFound();
             }
             catch (Exception ex)
             {

@@ -68,14 +68,14 @@ namespace Tera_Web.Models
             return userObj;
         }
 
-        public string PostUsers(UserObj userObj)
+        public string PostUsers(UserEPObj userEPObj)
         {
             using (HttpClient access = new HttpClient())
             {
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
                 string urlApi = "https://localhost:7021/" + "api/User/Register";
 
-                JsonContent content = JsonContent.Create(userObj);
+                JsonContent content = JsonContent.Create(userEPObj);
 
                 HttpResponseMessage response = access.PostAsync(urlApi, content).GetAwaiter().GetResult();
 

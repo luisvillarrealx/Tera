@@ -6,11 +6,15 @@ using Tera_Web.Models;
 using System.Reflection;
 using System.Runtime.Intrinsics.X86;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace Tera_Web.Controllers
 {
     public class UserController : Controller
     {
+        //este se usa por un problema en las validaciones 
+        UserEPObj userEPObj = new UserEPObj();
+        //esto es lo demas
         UserObj userObj = new UserObj();
         UserModel userModel = new UserModel();
 
@@ -39,20 +43,20 @@ namespace Tera_Web.Controllers
 
 
         [HttpPost]
-        public ActionResult Register(UserObj userObj)
+        public ActionResult Register(UserEPObj userEPObj)
         {
             try
             {
-                if (string.IsNullOrEmpty(userObj.userEmail))
+                if (string.IsNullOrEmpty(userEPObj.userEmail))
                 {
                     ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico.");
                 }
-                else if (!IsValidEmail(userObj.userEmail))
+                else if (!IsValidEmail(userEPObj.userEmail))
                 {
                     ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico válido.");
                 }
 
-                if (string.IsNullOrEmpty(userObj.userPassword))
+                if (string.IsNullOrEmpty(userEPObj.userPassword))
                 {
                     ModelState.AddModelError("userPassword", "Por favor, ingresa una contraseña.");
                 }
@@ -60,7 +64,7 @@ namespace Tera_Web.Controllers
                 if (ModelState.IsValid)
                 {
                     // Los datos del formulario son válidos, realizar acciones adicionales, como guardar en la base de datos.
-                    if (userModel.PostUsers(userObj) != string.Empty)
+                    if (userModel.PostUsers(userEPObj) != string.Empty)
                         return RedirectToAction(nameof(List));
                     else
                     {
@@ -72,7 +76,7 @@ namespace Tera_Web.Controllers
                 else
                 {
                     // Si hay errores de validación, vuelve a mostrar el formulario con los mensajes de error.
-                    return View(userObj);
+                    return View(userEPObj);
                 }
             }
             catch
@@ -155,13 +159,48 @@ namespace Tera_Web.Controllers
 
 
         //Validadores de campos
-        private bool IsValidEmail(string email)
+        public static bool IsValidEmail(string email)
         {
-            // Expresión regular para validar el formato del correo electrónico
-            string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
 
-            // Validar el formato del correo electrónico utilizando la expresión regular
-            return Regex.IsMatch(email, emailPattern);
+            try
+            {
+                // Normalize the domain
+                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
+                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
+
+                // Examines the domain part of the email and normalizes it.
+                string DomainMapper(Match match)
+                {
+                    // Use IdnMapping class to convert Unicode domain names.
+                    var idn = new IdnMapping();
+
+                    // Pull out and process domain name (throws ArgumentException on invalid)
+                    string domainName = idn.GetAscii(match.Groups[2].Value);
+
+                    return match.Groups[1].Value + domainName;
+                }
+            }
+            catch (RegexMatchTimeoutException e)
+            {
+                return false;
+            }
+            catch (ArgumentException e)
+            {
+                return false;
+            }
+
+            try
+            {
+                return Regex.IsMatch(email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
         }
     }
 }

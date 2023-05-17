@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Tera_API.Entities;
 using Tera_API.Models;
 
@@ -8,47 +6,55 @@ namespace Tera_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : Controller
+    public class RoleController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        RoleModel model = new RoleModel();
+        private readonly RoleModel _roleModel;
 
         public RoleController(IConfiguration configuration)
         {
             _configuration = configuration;
+            _roleModel = new RoleModel();
         }
 
-        // GET: RolesController
-        [HttpGet]
-        [Route("GetList")]
-        public List<RoleObj> List()
+        /// <summary>
+        /// Obtiene una lista de todos los roles en la base de datos.
+        /// </summary>
+        [HttpGet("GetList")]
+        public ActionResult<List<RoleObj>> List()
         {
-            var roles = new List<RoleObj>();
-            RoleObj r = new RoleObj();
-            return model.LisRole(_configuration);
+            var roles = _roleModel.LisRole(_configuration);
+            return roles;
         }
 
-        // GET: Mostrar datos
-        [HttpGet]
-        [Route("GetRole/{id}")]
-        public RoleObj Get(int id)
+        /// <summary>
+        /// Obtiene un rol de la base de datos por su ID.
+        /// </summary>
+        [HttpGet("GetRole/{id}")]
+        public ActionResult<RoleObj> Get(int id)
         {
-            var roles = new RoleObj();
-            return model.GetRole(_configuration, id);
-
+            var role = _roleModel.GetRole(_configuration, id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            return role;
         }
 
-        //GET: RolesController/Create
-        [HttpPost]
-        [Route("Register")]
-        public ActionResult Register(RoleObj rol)
+        /// <summary>
+        /// Registra un nuevo rol en la base de datos.
+        /// </summary>
+        [HttpPost("Register")]
+        public IActionResult Register(RoleObj roleObj)
         {
             try
             {
-                if (model.RegisterRole(rol, _configuration) > 0)
+                var result = _roleModel.RegisterRole(roleObj, _configuration);
+                if (result > 0)
+                {
                     return Ok();
-                else
-                    return BadRequest();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -57,23 +63,25 @@ namespace Tera_API.Controllers
             }
         }
 
-        // POST: RolesController/Edit/5
-        [HttpPut]
-        [Route("EditRole")]
-        public ActionResult EditRole(RoleObj rol)
+        /// <summary>
+        /// Edita los datos de un rol existente en la base de datos.
+        /// </summary>
+        [HttpPut("EditRole")]
+        public IActionResult EditRole(RoleObj roleObj)
         {
             try
             {
-                if (rol == null)
+                if (roleObj == null)
                 {
                     return NoContent();
+                }
 
-                }
-                else
+                var result = _roleModel.EditRole(roleObj, _configuration);
+                if (result > 0)
                 {
-                    var persona = model.EditRole(rol, _configuration);
-                    return Ok(persona);
+                    return Ok(roleObj);
                 }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -81,23 +89,25 @@ namespace Tera_API.Controllers
             }
         }
 
-
-        // POST: RolesController/Delete/5
-        [HttpDelete]
-        [Route("DeleteRole")]
-        public ActionResult Delete(int Rol)
+        /// <summary>
+        /// Elimina un rol de la base de datos por su ID.
+        /// </summary>
+        [HttpDelete("DeleteRole")]
+        public IActionResult Delete(int roleId)
         {
             try
             {
-                if (Rol == 0)
+                if (roleId == 0)
                 {
-                    NotFound();
+                    return NotFound();
                 }
-                else
+
+                var result = _roleModel.DeleteRole(roleId, _configuration);
+                if (result > 0)
                 {
-                    var persona = model.DeleteRole(Rol, _configuration);
+                    return Ok();
                 }
-                return Ok();
+                return NotFound();
             }
             catch (Exception ex)
             {

@@ -4,26 +4,26 @@
     ViewData["Title"] = "EditUser";
 }
 
-<section class="content mt-5">
+<section class="content mt-4">
     <div class="offset-4 container-fluid mt-5">
         <div class="row mt-5">
             <!-- left column -->
-            <div class="col-md-4">
+            <div class="col-md-4 mt-4">
                 <!-- general form elements -->
                 <div class="">
-                    <div class="card-header">
-                        <h3 class="card-title pb-3 text-center">Edición de Usuario</h3>
+                    <div class="">
+                        <h4 class="card-title text-center">Edición de Usuario</h4>
                     </div>
                     @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group pb-2">
+                        <div class="form-group ">
                             @Html.HiddenFor(m => m.userId)
                             <label asp-for="userId" class="control-label"></label>
                             <input asp-for="userId" class="form-control" readonly disabled />
                             <span asp-validation-for="userId" class="text-danger"></span>
                         </div>
-                        <div class="form-group pb-2">
+                        <div class="form-group ">
                             <label asp-for="userGovId" class="control-label"></label>
                             <br>
                             <span asp-validation-for="userGovId" class="text-danger"></span>
@@ -35,49 +35,49 @@
                         })
 
                         </div>
-                        <div class="form-group pb-2">
+                        <div class="form-group ">
                             <label asp-for="userName" class="control-label"></label>
                             <br>
                             <span asp-validation-for="userName" class="text-danger"></span>
                             <input asp-for="userName" id="userName" class="form-control disabled" readonly />
                         </div>
-                        <div class="form-group pb-2">
+                        <div class="form-group ">
                             <label asp-for="userFirstSurname" class="control-label"></label>
                             <br>
                             <span asp-validation-for="userFirstSurname" class="text-danger"></span>
                             <input asp-for="userFirstSurname" id="userFirstSurname" class="form-control disabled" readonly />
                         </div>
-                        <div class="form-group pb-2">
+                        <div class="form-group ">
                             <label asp-for="userSecondSurname" class="control-label"></label>
                             <br>
                             <span asp-validation-for="userSecondSurname" class="text-danger"></span>
                             <input asp-for="userSecondSurname" id="userSecondSurname" class="form-control disabled" readonly />
                         </div>
-                        <div class="form-group pb-2">
+                        <div class="form-group ">
                             <label asp-for="userEmail" class="control-label"></label>
                             <br>
                             <span asp-validation-for="userEmail" class="text-danger"></span>
                             <input asp-for="userEmail" type="email" class="form-control" />
                         </div>
                         @Html.HiddenFor(m => m.userPassword)
-                        @*<div class="form-group pb-2">
+                        @*<div class="form-group ">
                     <label asp-for="userPassword" class="control-label"></label>
                     <span asp-validation-for="userPassword" class="text-danger"></span>
                     <input asp-for="userPassword" type="" class="form-control" />
                     </div>*@
-                        <div class="form-group pb-2">
+                        <div class="form-group ">
                             <label asp-for="userRoleId" class="control-label"></label>
                             <br>
                             <span asp-validation-for="userRoleId" class="text-danger"></span>
                             <input asp-for="userRoleId" class="form-control" />
                         </div>
-                        <div class="form-group pb-3">
+                        <div class="form-group ">
                             <label asp-for="userSiteId" class="control-label"></label>
                             <br>
                             <span asp-validation-for="userSiteId" class="text-danger"></span>
                             <input asp-for="userSiteId" class="form-control" />
                         </div>
-                        <div class="form-group form-check pb-2">
+                        <div class="form-group form-check ">
                             <label class="form-check-label">
                                 <input class="form-check-input" asp-for="userActive" /> @Html.DisplayNameFor(model => model.userActive)
                             </label>
