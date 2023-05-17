@@ -1,0 +1,46 @@
+﻿@model Tera_Web.Entities.SiteObj
+
+@{
+    ViewData["Title"] = "EditSite";
+}
+
+<section class="content mt-4">
+    <div class="offset-4 container-fluid mt-5">
+        <div class="row mt-5">
+            <!-- left column -->
+            <div class="col-md-4 mt-4">
+                <!-- general form elements -->
+                <div class="">
+                    <div class="">
+                        <h4 class="card-title text-center">Edición de Usuario</h4>
+                    </div>
+                    @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+                    {
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="siteId" class="control-label"></label>
+                            <input asp-for="siteId" class="form-control" />
+                            <span asp-validation-for="siteId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="siteName" class="control-label"></label>
+                            <input asp-for="siteName" class="form-control" />
+                            <span asp-validation-for="siteName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="siteUbication" class="control-label"></label>
+                            <input asp-for="siteUbication" class="form-control" />
+                            <span asp-validation-for="siteUbication" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+        <!--/.col (right) -->
+    </div>
+    <!-- /.row -->
+</section>

@@ -1,0 +1,51 @@
+﻿@model Tera_Web.Entities.OrderDetailObj
+
+@{
+    ViewData["Title"] = "EditOrderDetails";
+}
+
+<section class="content mt-4">
+    <div class="offset-4 container-fluid mt-5">
+        <div class="row mt-5">
+            <!-- left column -->
+            <div class="col-md-4 mt-4">
+                <!-- general form elements -->
+                <div class="">
+                    <div class="">
+                        <h4 class="card-title text-center">Edición de Usuario</h4>
+                    </div>
+                    @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+                    {
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="orderDetailsId" class="control-label"></label>
+                            <input asp-for="orderDetailsId" class="form-control" />
+                            <span asp-validation-for="orderDetailsId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="orderId" class="control-label"></label>
+                            <input asp-for="orderId" class="form-control" />
+                            <span asp-validation-for="orderId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="productId" class="control-label"></label>
+                            <input asp-for="productId" class="form-control" />
+                            <span asp-validation-for="productId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="orderDetailsQuantity" class="control-label"></label>
+                            <input asp-for="orderDetailsQuantity" class="form-control" />
+                            <span asp-validation-for="orderDetailsQuantity" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+        <!--/.col (right) -->
+    </div>
+    <!-- /.row -->
+</section>
