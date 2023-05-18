@@ -16,7 +16,7 @@ namespace Tera_API.Models
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var sqlQuery = connection.Query<UserObj>("SELECT * FROM Users");
+                var sqlQuery = connection.Query<UserObj>("GetUsersWithRoleAndSiteNames");
                 return sqlQuery.ToList();
             }
         }

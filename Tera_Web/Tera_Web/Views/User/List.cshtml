@@ -34,10 +34,10 @@
                                         @Html.DisplayNameFor(model => model.userActive)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.userRoleId)
+                                        @Html.DisplayNameFor(model => model.roleName)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.userSiteId)
+                                        @Html.DisplayNameFor(model => model.siteName)
                                     </th>
                                     <th>Acciones</th>
                                 </tr>
@@ -100,26 +100,26 @@
                                             @Html.DisplayFor(modelItem => item.userActive)
                                         </td>
                                         <td>
-                                            @if (item.userRoleId == default(int))
+                                            @if (string.IsNullOrEmpty(item.roleName))
                                             {
                                                 <span class="text-center">-</span>
                                             }
                                             else
                                             {
-                                                @Html.DisplayFor(modelItem=> item.userRoleId)
+                                                @Html.DisplayFor(modelItem=> item.roleName)
                                             }
                                         </td>
                                         <td>
-                                            @if (item.userSiteId == default(int))
+                                            @if (string.IsNullOrEmpty(item.siteName))
                                             {
                                                 <span class="text-center">-</span>
                                             }
                                             else
                                             {
-                                                @Html.DisplayFor(modelItem => item.userSiteId)
+                                                @Html.DisplayFor(modelItem => item.siteName)
                                             }
                                         </td>
-                                        <td class="text-center col-2">
+                                        <td class="text-center col-1">
                                             <a href="@Url.Action("EditUser","User", new { ID = item.userId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
                                             <a href="#" class="text-danger px-2 delete-button" onclick="confirmDelete('@item.userId')" data-toggle="modal" data-target="#confirm-delete-modal"><i class="fa-solid fa-trash"></i></a>
                                         </td>
