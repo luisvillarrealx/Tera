@@ -26,8 +26,6 @@ namespace Tera_Web.Controllers
             return View();
         }
 
-
-
         // POST: RolesController/Create
         [HttpPost]
         public ActionResult Register(RoleObj roleObj)
@@ -52,12 +50,10 @@ namespace Tera_Web.Controllers
         }
         private string ValidateRoles(RoleObj roleObj)
         {
-
             if (string.IsNullOrEmpty(roleObj.roleName))
             {
                 return "Cree un nombre para el Rol";
             }
-
             return string.Empty;
         }
 
@@ -65,7 +61,6 @@ namespace Tera_Web.Controllers
         [HttpGet]
         public ActionResult EditRole(int id)
         {
-
             roleObj = roleModel.GetRole(id);
 
             if (roleObj == null)
@@ -92,7 +87,6 @@ namespace Tera_Web.Controllers
         // GET: RolesController/Delete/5
         public ActionResult DeleteRole(int id)
         {
-
             if (id == null)
             {
                 return BadRequest();
@@ -107,7 +101,6 @@ namespace Tera_Web.Controllers
 
         // POST: ProductosController/Delete/5
         [HttpPost]
-
         public ActionResult DeleteRole(int id, IFormCollection collection)
         {
             try
@@ -119,6 +112,5 @@ namespace Tera_Web.Controllers
                 return View();
             }
         }
-       
     }
 }

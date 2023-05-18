@@ -43,11 +43,10 @@ namespace Tera_Web.Entities
         [DisplayName("Sede")]
         public int userSiteId { get; set; } = 0;
 
-
         [DisplayName("Rol")]
         public string roleName { get; set; } = string.Empty;
 
-        [DisplayName("sede")]
+        [DisplayName("Sede")]
         public string siteName { get; set; } = string.Empty;
     }
 }
