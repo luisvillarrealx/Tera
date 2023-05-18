@@ -1,29 +1,18 @@
 ﻿@model IEnumerable<Tera_Web.Entities.ProductObj>
 
-@{
-    ViewData["Title"] = "List";
-}
-
-<h1>List</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<section class="content mt-5 mx-5">
-    <div class="container-fluid mt-3">
+<section class="content mt-5">
+    <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-12">
-
-                <div class="card">
+                <div class="card mb-5">
                     <div class="card-header">
-                        <h3 class="card-title">Edicion de Productos</h3>
+                        <h3 class="card-title">Registro de productos</h3>
                     </div>
-                    <!-- /.card-header -->
                     <div class="card-body table-responsive">
                         <div class="pb-2">
-                            <a href="@Url.Action("Register","Product", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                            <a href="@Url.Action("Register","Product")" class="btn btn-primary ml-auto" type="button" value=""><i class="fa-solid fa-plus"></i></a>
                         </div>
-                        <table id="Table" class="table table-bordered table-striped ">
+                        <table id="Table" class="table table-bordered table-hover table-striped ">
                             <thead class="text-center">
                                 <tr>
                                     <th>
@@ -87,12 +76,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
     </div>
 </section>

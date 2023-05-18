@@ -1,24 +1,18 @@
 ﻿@model IEnumerable<Tera_Web.Entities.OrderObj>
 
-@{
-    ViewData["Title"] = "List";
-}
-
-<section class="content mt-5 mx-5">
+<section class="content mt-5">
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-12">
-
-                <div class="card">
+                <div class="card mb-5">
                     <div class="card-header">
-                        <h3 class="card-title">Registro de usuarios</h3>
+                        <h3 class="card-title">Registro de pedidos</h3>
                     </div>
-                    <!-- /.card-header -->
                     <div class="card-body table-responsive">
                         <div class="pb-2">
-                            <a href="@Url.Action("Register","User", new {})" class="btn btn-success ml-auto btn_orange" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                            <a href="@Url.Action("Register","Order")" class="btn btn-primary ml-auto" type="button" value=""><i class="fa-solid fa-plus"></i></a>
                         </div>
-                        <table id="Table" class="table table-bordered table-striped">
+                        <table id="Table" class="table table-bordered table-hover table-striped">
                             <thead class="text-center">
                                 <tr>
                                     <th>
@@ -62,15 +56,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
     </div>
-
 </section>
 <!-- Modal -->
 <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-delete-modal-label" aria-hidden="true">
@@ -92,7 +81,7 @@
         </div>
     </div>
 </div>
-<!-- /.container-fluid -->
+
 <script>
     function confirmDelete(userId) {
         document.getElementById('userIdToDelete').value = userId;

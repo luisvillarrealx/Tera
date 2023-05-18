@@ -4,7 +4,7 @@ namespace Tera_Web.Entities
 {
     public class OrderObj
     {
-        [DisplayName("Id")]
+        [DisplayName("ID")]
         public int orderId { get; set; } = 0;
         [DisplayName("Usuario")]
         public string orderUser { get; set; } = string.Empty;

@@ -5,7 +5,7 @@ namespace Tera_Web.Entities
 {
     public class UserObj
     {
-        [DisplayName("Id")]
+        [DisplayName("ID")]
         public int userId { get; set; } = 0;
 
         [DisplayName("Cédula")]
@@ -22,7 +22,7 @@ namespace Tera_Web.Entities
         public string userFirstSurname { get; set; } = string.Empty;
 
         [DisplayName("Segundo Apellido")]
-        [Required(ErrorMessage = "Por favor, ingresa la cédula para que salga tu 2°Apellido")]
+        [Required(ErrorMessage = "Por favor, ingresa la cédula para que salga tu 2° apellido")]
         public string userSecondSurname { get; set; } = string.Empty;
 
         [DisplayName("Correo")]

@@ -7,13 +7,9 @@
 <section class="content mt-5">
     <div class="offset-4 container-fluid mt-5">
         <div class="row mt-5">
-            <!-- left column -->
             <div class="col-md-4">
-                <!-- general form elements -->
                 <div class="">
-                    <div class="card-header">
-                        <h3 class="card-title pb-3 text-center">Registro de Roles</h3>
-                    </div>
+                        <h3 class="card-title pb-3 text-center">Registrar rol</h3>
                     @using (Html.BeginForm("Register", "Role", FormMethod.Post))
                     {
                         <div class="form-group pb-2">
@@ -27,8 +23,7 @@
                             <span asp-validation-for="roleDescription" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <a href="@Url.Action("List","Role")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
-                            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check "></i></button>
+                            <input type="submit" value="Registrar" class="btn btn-primary" />
                         </div>
                     }
                 </div>

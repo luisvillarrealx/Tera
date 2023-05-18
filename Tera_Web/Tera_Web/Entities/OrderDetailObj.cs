@@ -4,7 +4,7 @@ namespace Tera_Web.Entities
 {
     public class OrderDetailObj
     {
-        [DisplayName("Id")]
+        [DisplayName("ID")]
         public int orderDetailsId { get; set; } = 0;
         [DisplayName("Id de orden")]
         public int orderId { get; set; } = 0;

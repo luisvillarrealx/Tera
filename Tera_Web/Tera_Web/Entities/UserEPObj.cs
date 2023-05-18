@@ -5,7 +5,7 @@ namespace Tera_Web.Entities
 {
     public class UserEPObj
     {
-        [DisplayName("Id")]
+        [DisplayName("ID")]
         public int userId { get; set; } = 0;
 
         [DisplayName("Correo")]

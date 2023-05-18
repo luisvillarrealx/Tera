@@ -4,13 +4,13 @@ namespace Tera_Web.Entities
 {
     public class ProductObj
     {
-        [DisplayName("Id")]
+        [DisplayName("ID")]
         public int productId { get; set; } = 0;
 
         [DisplayName("Producto")]
         public string productName { get; set; } = string.Empty;
 
-        [DisplayName("Costo")]
+        [DisplayName("Precio (₡)")]
         public int productCost { get; set; } = 0;
 
         [DisplayName("Unidad")]

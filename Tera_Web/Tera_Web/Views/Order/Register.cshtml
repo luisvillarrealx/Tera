@@ -7,14 +7,10 @@
 <section class="content mt-4">
     <div class="offset-4 container-fluid mt-5">
         <div class="row mt-5">
-            <!-- left column -->
             <div class="col-md-4 mt-4">
-                <!-- general form elements -->
-                <div class="">
-                    <div class="">
-                        <h4 class="card-title text-center">Edición de Usuario</h4>
-                    </div>
-                    @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+                <div>
+                    <h4 class="card-title text-center">Registrar orden</h4>
+                    @using (Html.BeginForm("Register", "Order", FormMethod.Post))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
@@ -38,14 +34,12 @@
                             <span asp-validation-for="orderTotal" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <input type="submit" value="Registrar" class="btn btn-primary" />
                         </div>
                     }
                 </div>
             </div>
 
         </div>
-        <!--/.col (right) -->
     </div>
-    <!-- /.row -->
 </section>

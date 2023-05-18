@@ -4,7 +4,7 @@ namespace Tera_Web.Entities
 {
     public class SiteObj
     {
-        [DisplayName("Id")]
+        [DisplayName("ID")]
         public int siteId { get; set; } = 0;
         [DisplayName("Nombre")]
         public string siteName { get; set; } = string.Empty;

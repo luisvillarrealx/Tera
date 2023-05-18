@@ -5,7 +5,7 @@ namespace Tera_Web.Entities
 {
     public class RoleObj
     {
-        [DisplayName("Id")]
+        [DisplayName("ID")]
         public int roleId { get; set; } = 0;
         [DisplayName("Rol")]
         public string roleName { get; set; } = string.Empty;
