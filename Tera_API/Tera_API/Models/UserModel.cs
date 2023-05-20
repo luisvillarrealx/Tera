@@ -50,7 +50,9 @@ namespace Tera_API.Models
                     new
                     {
                         user.userEmail,
-                        user.userPassword
+                        user.userPassword,
+                        user.userRoleId,
+                        user.userSiteId
                     }, commandType: CommandType.StoredProcedure);
             }
         }

@@ -16,5 +16,13 @@ namespace Tera_Web.Entities
         [DisplayName("Contraseña")]
         [Required(ErrorMessage = "Por favor, ingresa una contraseña.")]
         public string userPassword { get; set; } = string.Empty;
+
+        [DisplayName("Rol")]
+        [Required(ErrorMessage = "Por favor, selecciona un rol.")]
+        public int userRoleId { get; set; } = 0;
+
+        [DisplayName("Sede")]
+        [Required(ErrorMessage = "Por favor, selecciona una sede.")]
+        public int userSiteId { get; set; } = 0;
     }
 }

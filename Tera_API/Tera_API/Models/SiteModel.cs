@@ -100,5 +100,21 @@ namespace Tera_API.Models
                     }, commandType: CommandType.StoredProcedure);
             }
         }
+
+        // Esto es para un combobox
+
+        /// <summary>
+        /// Consulta todos los roles de la base de datos para llenar un combobox.
+        /// </summary>
+        /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
+        /// <returns>Una lista de objetos RoleObj que representan los roles.</returns>
+        public List<SiteObj> ComboBoxSites(IConfiguration stringConnection)
+        {
+            using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
+            {
+                var datos = connection.Query<SiteObj>("SELECT * FROM Sites").ToList();
+                return datos;
+            }
+        }
     }
 }

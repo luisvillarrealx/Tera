@@ -138,18 +138,37 @@ namespace Tera_Web.Models
 
 
         //En la funcion CheckRoles vamos a crear un combobox para registrar usaurio con Rol
-        public List<RoleObj>? CheckRoles(/*string token*/)
+        public List<RoleObj>? ComboBoxRoles(/*string token*/)
         {
             using (HttpClient acceso = new HttpClient())
             {
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/GetTiposUsuario";
-                string urlApi = "https://localhost:7021/" + "api/Usuario/CheckRoles";
+                string urlApi = "https://localhost:7021/" + "api/User/ComboBoxConsultRoles";
 
                 //acceso.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = acceso.GetAsync(urlApi).GetAwaiter().GetResult();
 
                 if (respuesta.IsSuccessStatusCode)
                     return respuesta.Content.ReadFromJsonAsync<List<RoleObj>>().Result;
+                else
+                    return null;
+            }
+        }
+
+
+        //En la funcion CheckRoles vamos a crear un combobox para registrar usaurio con Rol
+        public List<SiteObj>? ComboBoxSites(/*string token*/)
+        {
+            using (HttpClient acceso = new HttpClient())
+            {
+                //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/GetTiposUsuario";
+                string urlApi = "https://localhost:7021/" + "api/User/ComboBoxConsultSites";
+
+                //acceso.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = acceso.GetAsync(urlApi).GetAwaiter().GetResult();
+
+                if (respuesta.IsSuccessStatusCode)
+                    return respuesta.Content.ReadFromJsonAsync<List<SiteObj>>().Result;
                 else
                     return null;
             }
