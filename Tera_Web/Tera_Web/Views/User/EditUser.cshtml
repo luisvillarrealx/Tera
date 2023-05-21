@@ -66,16 +66,16 @@
                     <input asp-for="userPassword" type="" class="form-control" />
                     </div>*@
                         <div class="form-group ">
-                            <label asp-for="userRoleId" class="control-label"></label>
-                            <br>
-                            <span asp-validation-for="userRoleId" class="text-danger"></span>
-                            <input asp-for="userRoleId" class="form-control" />
-                        </div>
-                        <div class="form-group ">
                             <label asp-for="userSiteId" class="control-label"></label>
                             <br>
                             <span asp-validation-for="userSiteId" class="text-danger"></span>
-                            <input asp-for="userSiteId" class="form-control" />
+                            @Html.DropDownListFor(m => m.userSiteId,ViewBag.CombouserSiteId as List<SelectListItem>, new { @class="form-control" })
+                        </div>
+                        <div class="form-group ">
+                            <label asp-for="userRoleId" class="control-label"></label>
+                            <br>
+                            <span asp-validation-for="userRoleId" class="text-danger"></span>
+                            @Html.DropDownListFor(m => m.userRoleId,ViewBag.CombouserRoleId as List<SelectListItem>, new { @class="form-control" })
                         </div>
                         <div class="form-group form-check ">
                             <label class="form-check-label">

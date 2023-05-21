@@ -36,22 +36,6 @@ namespace Tera_API.Models
             }
         }
 
-        // Esto es para un combobox
-
-        /// <summary>
-        /// Consulta todos los roles de la base de datos para llenar un combobox.
-        /// </summary>
-        /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
-        /// <returns>Una lista de objetos RoleObj que representan los roles.</returns>
-        public List<RoleObj> ConsultarRoles(IConfiguration stringConnection)
-        {
-            using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
-            {
-                var datos = connection.Query<RoleObj>("SELECT * FROM ORDER").ToList();
-                return datos;
-            }
-        }
-
         /// <summary>
         /// Registra un nuevo rol en la base de datos.
         /// </summary>
@@ -112,5 +96,22 @@ namespace Tera_API.Models
                     }, commandType: CommandType.StoredProcedure);
             }
         }
+
+        // Esto es para un combobox
+
+        /// <summary>
+        /// Consulta todos los roles de la base de datos para llenar un combobox.
+        /// </summary>
+        /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
+        /// <returns>Una lista de objetos RoleObj que representan los roles.</returns>
+        public List<RoleObj> ComboBoxRoles(IConfiguration stringConnection)
+        {
+            using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
+            {
+                var datos = connection.Query<RoleObj>("SELECT * FROM Roles").ToList();
+                return datos;
+            }
+        }
+
     }
 }

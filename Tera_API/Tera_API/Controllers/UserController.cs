@@ -14,6 +14,11 @@ namespace Tera_API.Controllers
         private readonly IConfiguration _configuration;
         private UserModel userModel = new UserModel();
 
+        //lo usamos para el combobox
+        private RoleModel roleModel = new RoleModel();
+        private SiteModel siteModel = new SiteModel();
+
+
         /// <summary>
         /// Crea una nueva instancia del controlador UserController.
         /// </summary>
@@ -111,5 +116,20 @@ namespace Tera_API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("ComboBoxConsultRoles")]
+        public ActionResult<List<RoleObj>> ComboBoxConsultRoles()
+        {
+            return Ok(roleModel.ComboBoxRoles(_configuration));
+        }
+        
+        [HttpGet]
+        [Route("ComboBoxConsultSites")]
+        public ActionResult<List<SiteObj>> ComboBoxConsultSites()
+        {
+            return Ok(siteModel.ComboBoxSites(_configuration));
+        }
+
     }
 }

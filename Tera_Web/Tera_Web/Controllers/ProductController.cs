@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Tera_Web.Entities;
 using Tera_Web.Models;
 
@@ -63,7 +64,15 @@ namespace Tera_Web.Controllers
         // GET: ProductosController/Edit/5
         public ActionResult EditProduct(int id)
         {
+            var userUnitListCombo = new List<SelectListItem>();
 
+            userUnitListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una unidad" });
+            userUnitListCombo.Add(new SelectListItem { Value = "Kg", Text = "Kilogramo" });
+            userUnitListCombo.Add(new SelectListItem { Value = "G", Text = "Gramo" });
+            userUnitListCombo.Add(new SelectListItem { Value = "Gal", Text = "Galón" });
+            userUnitListCombo.Add(new SelectListItem { Value = "Unidad", Text = "Unidad" });
+
+            ViewBag.ComboUnit = userUnitListCombo;
             productObj = productModel.GetProduct(id);
             return View(productObj);
         }

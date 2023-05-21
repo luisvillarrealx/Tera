@@ -30,14 +30,23 @@ namespace Tera_Web.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            //    var Roles = userModel.CheckRoles();
-            //    var datos = new List<SelectListItem>();
+            var userRoleIdCombo = userModel.ComboBoxRoles();
+            var userRoleIdListCombo = new List<SelectListItem>();
 
-            //    datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
-            //    foreach (var item in Roles)
-            //        datos.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+            userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+            foreach (var item in userRoleIdCombo)
+                userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
 
-            //    ViewBag.ComboRoles = datos;
+            // SiteCombo
+            var userSiteIdCombo = userModel.ComboBoxSites();
+            var userSiteIdListCombo = new List<SelectListItem>();
+
+            userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+            foreach (var item in userSiteIdCombo)
+                userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+
+            ViewBag.CombouserRoleId = userRoleIdListCombo;
+            ViewBag.CombouserSiteId = userSiteIdListCombo;
             return View();
         }
 
@@ -94,6 +103,25 @@ namespace Tera_Web.Controllers
         public ActionResult EditUser(int id)
         {
             userObj = userModel.GetUser(id);
+
+
+            var userRoleIdCombo = userModel.ComboBoxRoles();
+            var userRoleIdListCombo = new List<SelectListItem>();
+
+            userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+            foreach (var item in userRoleIdCombo)
+                userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+
+            // SiteCombo
+            var userSiteIdCombo = userModel.ComboBoxSites();
+            var userSiteIdListCombo = new List<SelectListItem>();
+
+            userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+            foreach (var item in userSiteIdCombo)
+                userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+
+            ViewBag.CombouserRoleId = userRoleIdListCombo;
+            ViewBag.CombouserSiteId = userSiteIdListCombo;
             return View(userObj);
         }
 
