@@ -67,6 +67,13 @@ namespace Tera_API.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        [Route("EmailExists")]
+        public string EmailExists(string validateEmailExists)
+        {
+            return userModel.EmailExists(validateEmailExists);
+        }
+
         /// <summary>
         /// Actualiza los datos de un usuario existente.
         /// </summary>

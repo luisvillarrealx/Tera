@@ -146,37 +146,14 @@
             </div>
             <div class="modal-body">
                 <p>¿Estás seguro de que deseas eliminar este dato?</p>
+                <input type="hidden" id="idModalHidden">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirm-delete-btn">Eliminar</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete-btn" onclick="ChangeUserActive();">Eliminar</button>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    function confirmDelete(userId) {
-        document.getElementById('userIdToDelete').value = userId;
-    }
-    $(document).ready(function () {
-        $('#confirm-delete-btn').click(function () {
-            var userId = $('#userIdToDelete').val(); // ID del usuario a eliminar
-            var confirmed = true;
-
-            // Se ha confirmado la eliminación, realizar la solicitud AJAX al controlador
-            $.ajax({
-                url: '@Url.Action("Delete","User")',
-                type: 'POST',
-                data: { id: userId, confirmed: confirmed },
-                success: function (data) {
-                    // Manejar la respuesta del controlador aquí
-                    // Por ejemplo, actualizar la lista de usuarios o redireccionar a otra página
-                },
-                error: function (error) {
-                    // Manejo de errores
-                }
-            });
-        });
-    });
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="~/js/emailexists.js"></script>
