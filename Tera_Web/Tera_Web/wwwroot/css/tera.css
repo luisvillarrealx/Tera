@@ -12,11 +12,32 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900");
 
+.btnsize {
+    font-size: 20px;
+}
+
+.buttons-copy {
+    background-color: #007bff !important; /* Cambiar el color de fondo a rojo */
+}
+
+.buttons-excel {
+    background-color: #4CAF50 !important; /* Cambiar el color de fondo a rojo */
+}
+
+.buttons-csv {
+    background-color: #FFC107 !important; /* Cambiar el color de fondo a rojo */
+}
+
+.buttons-pdf {
+    background-color: #F44336 !important; /* Cambiar el color de fondo a rojo */
+}
+
 .disabled {
     pointer-events: none;
     background-color: #E9ECEF;
     border-color: #DEE2E6;
 }
+
 .btn-orange {
     background-color: #018BFA;
     border: #018BFA;
