@@ -134,8 +134,29 @@ namespace Tera_Web.Models
             }
         }
 
+        public string EmailExists(string validateEmailExists)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = "https://localhost:7021//api/EmailExists?validateEmailExists=" + validateEmailExists;
+                HttpResponseMessage response = client.GetAsync(url).GetAwaiter().GetResult();
 
+                if (response.IsSuccessStatusCode)
+                    return response.Content.ReadFromJsonAsync<string>().Result;
 
+                return "ERROR";
+            }
+        }
+
+        public void ChangeUserActive(long id)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = "https://localhost:7021/api/ChangeUserActive?q=" + id;
+
+                HttpResponseMessage response = client.DeleteAsync(url).GetAwaiter().GetResult();
+            }
+        }
 
         //En la funcion CheckRoles vamos a crear un combobox para registrar usaurio con Rol
         public List<RoleObj>? CheckRoles(/*string token*/)

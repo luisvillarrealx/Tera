@@ -1,19 +1,11 @@
 ﻿@model Tera_Web.Entities.RoleObj
 
-@{
-    ViewData["Title"] = "Register";
-}
-
 <section class="content mt-5 pt-5">
     <div class="offset-4 container-fluid mt-5">
         <div class="row mt-5">
-            <!-- left column -->
             <div class="col-md-4">
-                <!-- general form elements -->
                 <div class="">
-                    <div class="card-header">
-                        <h3 class="card-title pb-3 text-center">Edición de Roles</h3>
-                    </div>
+                        <h3 class="pb-3 text-center">Edición de Roles</h3>
                     @using (Html.BeginForm("EditRole", "Role", FormMethod.Post))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -42,7 +34,5 @@
             </div>
 
         </div>
-        <!--/.col (right) -->
     </div>
-    <!-- /.row -->
 </section>

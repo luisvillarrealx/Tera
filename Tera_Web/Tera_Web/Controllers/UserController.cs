@@ -85,6 +85,12 @@ namespace Tera_Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult EmailExists(string validateEmailExists)
+        {
+            return Json(userModel.EmailExists(validateEmailExists));
+        }
+
         public ActionResult EditUser(int id)
         {
             userObj = userModel.GetUser(id);
@@ -144,25 +150,17 @@ namespace Tera_Web.Controllers
 
         // POST: UsuarioController/Delete/5
         [HttpPost]
-
-        public ActionResult DeleteUser(int id, IFormCollection collection)
+        public ActionResult ChangeUserActive(long id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            userModel.ChangeUserActive(id);
+            return Json("Ok");
         }
 
 
         //Validadores de campos
         public static bool IsValidEmail(string email)
         {
-            if (string.IsNullOrWhiteSpace(email))
-                return false;
+            if (string.IsNullOrWhiteSpace(email)) return false;
 
             try
             {

@@ -836,34 +836,24 @@ Footer Style
 footer {
     margin-top: auto;
     background-color: #0071f8;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
     footer p {
         text-align: center;
-        line-height: 20px;
         color: #fff;
         font-size: 14px;
         font-weight: 400;
     }
-
-        footer p a {
-            color: #fff;
-            transition: all .3s;
-            position: relative;
-            z-index: 3;
-        }
-
-            footer p a:hover {
-                opacity: 0.75;
-            }
 
 /* 
 ---------------------------------------------
 Contact PAge Style
 --------------------------------------------- 
 */
+
+.register-user {
+    margin: auto;
+}
 
 .contact-page .left-text {
     background-color: #f7f7f7;
@@ -930,24 +920,30 @@ Contact PAge Style
         margin-bottom: 30px;
     }
 
-    .contact-page .right-content form button {
-        display: inline-block;
-        height: 50px;
-        line-height: 50px;
-        background-color: #ee626b;
-        color: #fff;
-        font-size: 15px;
-        text-transform: uppercase;
-        font-weight: 500;
-        padding: 0px 25px;
-        border: none;
-        border-radius: 25px;
-        transition: all .3s;
-    }
+.btn-form-submit {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    background-color: #ee626b;
+    color: #fff;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 0px 25px;
+    border: none;
+    border-radius: 25px;
+    transition: all .3s;
+}
 
-        .contact-page .right-content form button:hover {
-            background-color: #0071f8;
-        }
+.btn-form-submit:hover {
+    background-color: #0071f8;
+}
+
+.btn-form-submit:disabled {
+    cursor: not-allowed;
+    background-color: #929191;
+    border-color: #DEE2E6;
+}
 
 /* 
 ---------------------------------------------
