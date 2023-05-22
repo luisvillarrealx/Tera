@@ -3,10 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tera_Web.Entities
 {
-    public class UserEPObj
+    public class UserLoginObj
     {
         [DisplayName("ID")]
         public int userId { get; set; } = 0;
+        public string userGovId { get; set; } = string.Empty;
+        public string userName { get; set; } = string.Empty;
+        public string userFirstSurname { get; set; } = string.Empty;
+        public string userSecondSurname { get; set; } = string.Empty;
 
         [DisplayName("Correo")]
         [Required(ErrorMessage = "Por favor, ingresa un correo electrónico.")]
@@ -16,13 +20,9 @@ namespace Tera_Web.Entities
         [DisplayName("Contraseña")]
         [Required(ErrorMessage = "Por favor, ingresa una contraseña.")]
         public string userPassword { get; set; } = string.Empty;
-
-        [DisplayName("Rol")]
-        [Required(ErrorMessage = "Por favor, selecciona un rol.")]
+        public bool userActive { get; set; } = false;
         public int userRoleId { get; set; } = 0;
-
-        [DisplayName("Sede")]
-        [Required(ErrorMessage = "Por favor, selecciona una sede.")]
         public int userSiteId { get; set; } = 0;
+
     }
 }

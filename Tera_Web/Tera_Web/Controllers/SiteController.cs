@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Tera_Web.Entities;
 using Tera_Web.Models;
 
@@ -77,7 +76,7 @@ namespace Tera_Web.Controllers
 
         // POST: Site/Delete/5
         [HttpPost]
-        
+
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

@@ -1,17 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
+using Tera_API.Entities;
+using Tera_API.Models;
 
 namespace Tera_API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AuthController : Controller
     {
-        public IActionResult Login()
+        private readonly IConfiguration _configuration;
+        AuthModel authModel = new AuthModel();
+        //RolesModel rolmodel = new RolesModel();
+
+        public AuthController(IConfiguration configuration)
         {
-            return View();
+            _configuration = configuration;
         }
 
-        public IActionResult Reset()
+        [HttpPost]
+        [Route("UserValidate")]
+        public ActionResult<UserObj> ValidarUsuario(UserObj userObj)
         {
-            return View();
+            try
+            {
+                var datos = authModel.UserValidate(userObj, _configuration);
+                if (datos != null)
+                    return Ok(datos);
+                else
+                    return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                //bitacoraM.RegistrarErrores(usuario.Usuario, ex, ControllerContext.ActionDescriptor.ActionName, _configuration);
+                return BadRequest("Se presentó un inconveniente");
+            }
         }
+
     }
 }

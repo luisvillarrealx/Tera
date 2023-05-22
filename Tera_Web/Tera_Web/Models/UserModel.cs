@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Tera_Web.Entities;
-using System.Net.Http.Headers;
-using System.Runtime.Intrinsics.X86;
 
 namespace Tera_Web.Models
 {
@@ -63,19 +61,19 @@ namespace Tera_Web.Models
                     string resultstr = task2.Result;
                     userObj = JsonConvert.DeserializeObject<UserObj>(resultstr);
                 }
-                
+
             }
             return userObj;
         }
 
-        public string PostUsers(UserEPObj userEPObj)
+        public string PostUsers(UserRegisterObj userRegisterObj)
         {
             using (HttpClient access = new HttpClient())
             {
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
                 string urlApi = "https://localhost:7021/" + "api/User/Register";
 
-                JsonContent content = JsonContent.Create(userEPObj);
+                JsonContent content = JsonContent.Create(userRegisterObj);
 
                 HttpResponseMessage response = access.PostAsync(urlApi, content).GetAwaiter().GetResult();
 
@@ -113,7 +111,7 @@ namespace Tera_Web.Models
             {
                 using (var client = new HttpClient())
                 {
-                    
+
                     client.BaseAddress = new Uri("https://localhost:7021/");
                     var response = client.DeleteAsync("api/User/EliminarUsuario?userId=" + id);
                     response.Wait();

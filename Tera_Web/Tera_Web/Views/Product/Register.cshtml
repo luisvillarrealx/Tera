@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group pb-4">
                             <label asp-for="productCost" class="control-label"></label>
-                            <input asp-for="productCost" class="form-control" />
+                            <input asp-for="productCost" id="productCostInput" class="form-control" pattern="[0-9]+" />
                             <span asp-validation-for="productCost" class="text-danger"></span>
                         </div>
                         <div class="form-group pb-4">
@@ -40,3 +40,14 @@
     </div>
     <!-- /.row -->
 </section>
+
+<script>
+    document.getElementById('productCostInput').addEventListener('input', function () {
+        var value = this.value.trim();
+        var regex = /^[0-9]+$/;
+
+        if (!regex.test(value) || parseInt(value) < 0) {
+            this.value = '';
+        }
+    });
+</script>

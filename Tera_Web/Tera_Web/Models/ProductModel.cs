@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http.Headers;
 using Tera_Web.Entities;
 
 namespace Tera_Web.Models
@@ -23,7 +22,7 @@ namespace Tera_Web.Models
             {
                 var task = Task.Run(async () =>
                 {
-                    
+
                     return await client.GetAsync(urlGetList);
                 }
                 );
@@ -52,7 +51,7 @@ namespace Tera_Web.Models
             {
                 var task = Task.Run(async () =>
                 {
-                    
+
                     return await client.GetAsync(urlGet + "/" + id.ToString());
                 }
                 );
@@ -85,7 +84,7 @@ namespace Tera_Web.Models
 
                 JsonContent contenido = JsonContent.Create(Prod);
 
-                
+
                 HttpResponseMessage respuesta = acceso.PostAsync(urlApi, contenido).GetAwaiter().GetResult();
 
                 if (respuesta.IsSuccessStatusCode)
@@ -109,7 +108,7 @@ namespace Tera_Web.Models
 
                 JsonContent contenido = JsonContent.Create(Prod);
 
-                
+
                 HttpResponseMessage respuesta = acceso.PutAsync(urlApi, contenido).GetAwaiter().GetResult();
 
                 if (respuesta.IsSuccessStatusCode)

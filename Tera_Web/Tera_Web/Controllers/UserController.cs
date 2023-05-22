@@ -1,19 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Configuration;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using Tera_Web.Entities;
 using Tera_Web.Models;
-using System.Reflection;
-using System.Runtime.Intrinsics.X86;
-using System.Text.RegularExpressions;
-using System.Globalization;
 
 namespace Tera_Web.Controllers
 {
     public class UserController : Controller
     {
         //este se usa por un problema en las validaciones 
-        UserEPObj userEPObj = new UserEPObj();
+        UserRegisterObj userRegisterObj = new UserRegisterObj();
         //esto es lo demas
         UserObj userObj = new UserObj();
         UserModel userModel = new UserModel();
@@ -52,20 +49,20 @@ namespace Tera_Web.Controllers
 
 
         [HttpPost]
-        public ActionResult Register(UserEPObj userEPObj)
+        public ActionResult Register(UserRegisterObj UserRegisterObj)
         {
             try
             {
-                if (string.IsNullOrEmpty(userEPObj.userEmail))
+                if (string.IsNullOrEmpty(UserRegisterObj.userEmail))
                 {
                     ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico.");
                 }
-                else if (!IsValidEmail(userEPObj.userEmail))
+                else if (!IsValidEmail(UserRegisterObj.userEmail))
                 {
                     ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico válido.");
                 }
 
-                if (string.IsNullOrEmpty(userEPObj.userPassword))
+                if (string.IsNullOrEmpty(UserRegisterObj.userPassword))
                 {
                     ModelState.AddModelError("userPassword", "Por favor, ingresa una contraseña.");
                 }
@@ -73,7 +70,7 @@ namespace Tera_Web.Controllers
                 if (ModelState.IsValid)
                 {
                     // Los datos del formulario son válidos, realizar acciones adicionales, como guardar en la base de datos.
-                    if (userModel.PostUsers(userEPObj) != string.Empty)
+                    if (userModel.PostUsers(userRegisterObj) != string.Empty)
                         return RedirectToAction(nameof(List));
                     else
                     {
@@ -85,7 +82,7 @@ namespace Tera_Web.Controllers
                 else
                 {
                     // Si hay errores de validación, vuelve a mostrar el formulario con los mensajes de error.
-                    return View(userEPObj);
+                    return View(UserRegisterObj);
                 }
             }
             catch

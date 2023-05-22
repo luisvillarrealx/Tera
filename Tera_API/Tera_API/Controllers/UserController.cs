@@ -95,27 +95,27 @@ namespace Tera_API.Controllers
         /// </summary>
         /// <param name="userId">El ID del usuario a eliminar.</param>
         /// <returns>Un ActionResult que indica el resultado de la operación.</returns>
-        [HttpDelete]
-        [Route("DeleteUser")]
-        public ActionResult DeleteUser(int userId)
-        {
-            try
-            {
-                if (userId == null)
-                {
-                    NotFound();
-                }
-                else
-                {
-                    var persona = userModel.DeleteUser(userId, _configuration);
-                }
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
+        //[HttpDelete]
+        //[Route("DeleteUser")]
+        //public ActionResult DeleteUser(int userId)
+        //{
+        //    try
+        //    {
+        //        if (userId == null)
+        //        {
+        //            NotFound();
+        //        }
+        //        else
+        //        {
+        //            var persona = userModel.DeleteUser(userId, _configuration);
+        //        }
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
 
         [HttpGet]
         [Route("ComboBoxConsultRoles")]
