@@ -6,7 +6,6 @@ using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
-    [ResponseCache(Duration = 0)]
     public class AuthController : Controller
     {
         //este se usa por un problema en las validaciones 
@@ -107,6 +106,13 @@ namespace Tera_Web.Controllers
             {
                 return false;
             }
+
+
+        }
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Auth");
         }
     }
 }

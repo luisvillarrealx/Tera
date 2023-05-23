@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Tera_Web.Models;
+using Tera_Web.Filters;
 
 namespace Tera_Web.Controllers
 {
-
+    [FilterSession]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -13,12 +14,9 @@ namespace Tera_Web.Controllers
         {
             _logger = logger;
         }
+        
         public IActionResult Index()
         {
-            //if (HttpContext.Request.Headers["Cache-Control"] == "no-cache")
-            //{
-            //    return RedirectToAction("Login", "Auth");
-            //}
             return View();
         }
 

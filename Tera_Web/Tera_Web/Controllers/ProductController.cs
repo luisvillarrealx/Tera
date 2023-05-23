@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Tera_Web.Entities;
 using Tera_Web.Models;
+using Tera_Web.Filters;
 
 namespace Tera_Web.Controllers
 {
+    [FilterSession]
     public class ProductController : Controller
     {
         //private readonly ILogger<Usuario> _logger;

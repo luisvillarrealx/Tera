@@ -4,9 +4,11 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using Tera_Web.Entities;
 using Tera_Web.Models;
+using Tera_Web.Filters;
 
 namespace Tera_Web.Controllers
 {
+    [FilterSession]
     public class UserController : Controller
     {
         //este se usa por un problema en las validaciones 
