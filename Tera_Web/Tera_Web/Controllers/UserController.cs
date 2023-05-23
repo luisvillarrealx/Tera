@@ -51,20 +51,20 @@ namespace Tera_Web.Controllers
 
 
         [HttpPost]
-        public ActionResult Register(UserRegisterObj UserRegisterObj)
+        public ActionResult Register(UserRegisterObj userRegisterObj)
         {
             try
             {
-                if (string.IsNullOrEmpty(UserRegisterObj.userEmail))
+                if (string.IsNullOrEmpty(userRegisterObj.userEmail))
                 {
                     ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico.");
                 }
-                else if (!IsValidEmail(UserRegisterObj.userEmail))
+                else if (!IsValidEmail(userRegisterObj.userEmail))
                 {
                     ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico válido.");
                 }
 
-                if (string.IsNullOrEmpty(UserRegisterObj.userPassword))
+                if (string.IsNullOrEmpty(userRegisterObj.userPassword))
                 {
                     ModelState.AddModelError("userPassword", "Por favor, ingresa una contraseña.");
                 }
@@ -84,7 +84,7 @@ namespace Tera_Web.Controllers
                 else
                 {
                     // Si hay errores de validación, vuelve a mostrar el formulario con los mensajes de error.
-                    return View(UserRegisterObj);
+                    return View(userRegisterObj);
                 }
             }
             catch

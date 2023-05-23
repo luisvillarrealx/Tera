@@ -37,7 +37,6 @@ namespace Tera_API.Models
                     {
                         user.userEmail,
                         user.userPassword,
-                        user.userActive,
                         user.userRoleId,
                         user.userSiteId
                     }, commandType: CommandType.StoredProcedure);
