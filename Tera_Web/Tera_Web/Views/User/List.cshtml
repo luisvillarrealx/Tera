@@ -13,7 +13,7 @@
                             <a href="@Url.Action("Register","User")" class="btn btn-primary ml-auto" type="button" value=""><i class="fa-solid fa-plus"></i></a>
                         </div>
                         <table id="Table" class="table table-bordered table-hover table-striped">
-                            <thead class="text-center">
+                            <thead>
                                 <tr>
                                     <th>
                                         @Html.DisplayNameFor(model => model.userGovId)
@@ -39,7 +39,7 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.siteName)
                                     </th>
-                                    <th>Acciones</th>
+                                    <th class="text-center">Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -120,8 +120,9 @@
                                             }
                                         </td>
                                         <td class="text-center col-1">
-                                            <a href="@Url.Action("EditUser","User", new { ID = item.userId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
-                                            <a href="#" class="text-danger px-2 delete-button" onclick="confirmDelete('@item.userId')" data-toggle="modal" data-target="#confirm-delete-modal"><i class="fa-solid fa-trash"></i></a>
+                                            <a href="@Url.Action("EditUser","User", new { ID = item.userId })" class="btn btn-primary px-2" type="" value="">
+                                                <i class="fas fa-angle-double-right"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 }
@@ -133,27 +134,4 @@
         </div>
     </div>
 </section>
-
-<!-- Modal -->
-<div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-delete-modal-label" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirm-delete-modal-label">Confirmar Eliminación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>¿Estás seguro de que deseas eliminar este dato?</p>
-                <input type="hidden" id="idModalHidden">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirm-delete-btn" onclick="ChangeUserActive();">Eliminar</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="~/js/emailexists.js"></script>

@@ -7,11 +7,7 @@ namespace Tera_API.Models
 {
     public class UserModel
     {
-        /// <summary>
         /// Obtiene una lista de todos los usuarios en la base de datos.
-        /// </summary>
-        /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
-        /// <returns>Una lista de objetos UserObj que representan a los usuarios.</returns>
         public List<UserObj> ListUser(IConfiguration stringConnection)
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
@@ -21,12 +17,7 @@ namespace Tera_API.Models
             }
         }
 
-        /// <summary>
         /// Obtiene un usuario de la base de datos por su ID.
-        /// </summary>
-        /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
-        /// <param name="id">El ID del usuario.</param>
-        /// <returns>Un objeto UserObj que representa al usuario encontrado.</returns>
         public UserObj GetUser(IConfiguration stringConnection, int id)
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
@@ -36,12 +27,7 @@ namespace Tera_API.Models
             }
         }
 
-        /// <summary>
         /// Registra un nuevo usuario en la base de datos.
-        /// </summary>
-        /// <param name="user">El objeto UserObj que contiene los datos del usuario a registrar.</param>
-        /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
-        /// <returns>El número de filas afectadas en la base de datos.</returns>
         public int Register(UserObj user, IConfiguration stringConnection)
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
@@ -51,6 +37,7 @@ namespace Tera_API.Models
                     {
                         user.userEmail,
                         user.userPassword,
+                        user.userActive,
                         user.userRoleId,
                         user.userSiteId
                     }, commandType: CommandType.StoredProcedure);
@@ -92,12 +79,7 @@ namespace Tera_API.Models
             }
         }
 
-        /// <summary>
         /// Actualiza los datos de un usuario existente en la base de datos.
-        /// </summary>
-        /// <param name="user">El objeto UserObj que contiene los datos actualizados del usuario.</param>
-        /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
-        /// <returns>El número de filas afectadas en la base de datos.</returns>
         public int EditUser(UserObj user, IConfiguration stringConnection)
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
@@ -118,27 +100,5 @@ namespace Tera_API.Models
                 }, commandType: CommandType.StoredProcedure);
             }
         }
-
-        /// <summary>
-        /// Elimina un usuario de la base de datos por su ID.
-        /// </summary>
-        /// <param name="UserId">El ID del usuario a eliminar.</param>
-        /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
-        /// <returns>El número de filas afectadas en la base de datos.</returns>
-        //public int DeleteUser(int UserId, IConfiguration stringConnection)
-        //{
-        //    using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
-        //    {
-        //        // Crea un objeto UserObj con el ID del Usuario a eliminar.
-        //        UserObj userObj = new UserObj();
-        //        userObj.userId = UserId;
-        //        // Ejecuta un procedimiento almacenado para eliminar un Sitio de la base de datos.
-        //        return connection.Execute("DeleteUser",
-        //        new
-        //        {
-        //            userObj.userId
-        //        }, commandType: CommandType.StoredProcedure);
-        //    }
-        //}
     }
 }

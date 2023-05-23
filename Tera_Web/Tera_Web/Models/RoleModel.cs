@@ -5,17 +5,12 @@ namespace Tera_Web.Models
 {
     public class RoleModel
     {
-
         string urlGetlist = "https://localhost:7021/api/Role/GetList";
         string urlGet = "https://localhost:7021/api/Role/GetRole";
 
         public string lblmsj { get; set; }
         List<RoleObj> RoleList = new List<RoleObj>();
         RoleObj roleObj = new RoleObj();
-
-
-
-        //*************************************
 
         public List<RoleObj> GetRoleList()
         {
@@ -41,7 +36,6 @@ namespace Tera_Web.Models
                 {
 
                 }
-
             }
             return RoleList;
         }
@@ -95,19 +89,14 @@ namespace Tera_Web.Models
             }
         }
 
-        //**************************************
-
         public string PUTRoles(RoleObj roleObj)
         {
             using (HttpClient acceso = new HttpClient())
             {
-
-
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
                 string urlApi = "https://localhost:7021/" + "api/Role/EditRole";
 
                 JsonContent contenido = JsonContent.Create(roleObj);
-
 
                 HttpResponseMessage respuesta = acceso.PutAsync(urlApi, contenido).GetAwaiter().GetResult();
 
@@ -118,8 +107,6 @@ namespace Tera_Web.Models
                 return string.Empty;
             }
         }
-
-        //**************************************
 
         public void DeleteRoles(int id)
         {
@@ -147,8 +134,5 @@ namespace Tera_Web.Models
                 lblmsj = "Error en el registro de la carrera\n" + ex.StackTrace;
             }
         }
-
-        //**
-
     }
 }

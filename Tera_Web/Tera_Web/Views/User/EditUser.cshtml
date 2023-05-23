@@ -7,9 +7,7 @@
 <section class="content mt-4">
     <div class="offset-4 container-fluid mt-5">
         <div class="row mt-5">
-            <!-- left column -->
             <div class="col-md-4 mt-4">
-                <!-- general form elements -->
                 <div class="">
                     <div class="">
                         <h4 class="card-title text-center">Edición de Usuario</h4>
@@ -60,11 +58,6 @@
                             <input asp-for="userEmail" type="email" class="form-control" />
                         </div>
                         @Html.HiddenFor(m => m.userPassword)
-                        @*<div class="form-group ">
-                    <label asp-for="userPassword" class="control-label"></label>
-                    <span asp-validation-for="userPassword" class="text-danger"></span>
-                    <input asp-for="userPassword" type="" class="form-control" />
-                    </div>*@
                         <div class="form-group ">
                             <label asp-for="userSiteId" class="control-label"></label>
                             <br>
@@ -92,9 +85,7 @@
             </div>
 
         </div>
-        <!--/.col (right) -->
     </div>
-    <!-- /.row -->
 </section>
 
 <script src="~/js/ConsultNameApi.js"></script>

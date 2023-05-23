@@ -31,7 +31,7 @@ namespace Tera_API.Models
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var SqlQuery = connection.Query<RoleObj>("SELECT * FROM ORDER WHERE roleId =" + id.ToString()).ToList();
+                var SqlQuery = connection.Query<RoleObj>("SELECT * FROM Roles WHERE roleId =" + id.ToString()).ToList();
                 return SqlQuery[0];
             }
         }

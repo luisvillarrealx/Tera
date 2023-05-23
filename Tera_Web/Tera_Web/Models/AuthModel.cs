@@ -3,25 +3,21 @@ namespace Tera_Web.Models
 {
     public class AuthModel
     {
-        string urlPut = "https://localhost:7021/ActualizarRol?IdRol=11&Roles=Admin";
-        string urlPuut = "https://localhost:7021/ActualizarRol?IdRol=11&Roles=Admin";
-
-
         public string lblmsj { get; set; }
 
         UserLoginObj UserLoginObj = new UserLoginObj();
 
         public UserLoginObj? UserValidate(UserLoginObj userLoginObj)
         {
-            using (HttpClient acceso = new HttpClient())
+            using (HttpClient access = new HttpClient())
             {
                 string urlApi = "https://localhost:7021/api/Auth/UserValidate";
-                JsonContent contenido = JsonContent.Create(userLoginObj);
+                JsonContent content = JsonContent.Create(userLoginObj);
 
-                HttpResponseMessage respuesta = acceso.PostAsync(urlApi, contenido).GetAwaiter().GetResult();
+                HttpResponseMessage response = access.PostAsync(urlApi, content).GetAwaiter().GetResult();
 
-                if (respuesta.IsSuccessStatusCode)
-                    return respuesta.Content.ReadFromJsonAsync<UserLoginObj>().Result;
+                if (response.IsSuccessStatusCode)
+                    return response.Content.ReadFromJsonAsync<UserLoginObj>().Result;
                 else
                     return null;
             }

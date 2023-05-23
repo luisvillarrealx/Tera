@@ -7,13 +7,9 @@
 <section class="content mt-5">
     <div class="offset-4 container-fluid mt-5">
         <div class="row mt-5">
-            <!-- left column -->
             <div class="col-md-4">
-                <!-- general form elements -->
-                <div class="">
-                    <div class="card-header">
-                        <h4 class="card-title pb-3 text-center">Edición de Producto</h4>
-                    </div>
+                <div>
+                    <h4 class="pb-3 text-center">Edición de producto</h4>
                     @using (Html.BeginForm("EditProduct", "Product", FormMethod.Post))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -45,11 +41,8 @@
                     }
                 </div>
             </div>
-
         </div>
-        <!--/.col (right) -->
     </div>
-    <!-- /.row -->
 </section>
 <script>
     document.getElementById('productCostInput').addEventListener('input', function () {

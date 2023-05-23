@@ -27,7 +27,7 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.orderTotal)
                                     </th>
-                                    <th></th>
+                                    <th class="text-center">Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,9 +47,9 @@
                                             @Html.DisplayFor(modelItem => item.orderTotal)
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                            <a href="@Url.Action("EditOrder","Order", new { ID = item.orderId })" class="btn btn-primary px-2" type="" value="">
+                                                <i class="fas fa-angle-double-right"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 }
@@ -81,29 +81,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    function confirmDelete(userId) {
-        document.getElementById('userIdToDelete').value = userId;
-    }
-    $(document).ready(function () {
-        $('#confirm-delete-btn').click(function () {
-            var userId = $('#userIdToDelete').val(); // ID del usuario a eliminar
-            var confirmed = true;
-
-            // Se ha confirmado la eliminación, realizar la solicitud AJAX al controlador
-            $.ajax({
-                url: '@Url.Action("Delete","User")',
-                type: 'POST',
-                data: { id: userId, confirmed: confirmed },
-                success: function (data) {
-                    // Manejar la respuesta del controlador aquí
-                    // Por ejemplo, actualizar la lista de usuarios o redireccionar a otra página
-                },
-                error: function (error) {
-                    // Manejo de errores
-                }
-            });
-        });
-    });
-</script>

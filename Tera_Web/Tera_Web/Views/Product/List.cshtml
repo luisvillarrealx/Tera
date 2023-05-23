@@ -27,7 +27,7 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.productMeasurementUnit)
                                     </th>
-                                    <th>Acciones</th>
+                                    <th class="text-center">Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,8 +70,9 @@
                                             }
                                         </td>
                                         <td class="text-center col-2">
-                                            <a href="@Url.Action("EditProduct","Product", new { ID = item.productId })" class="text-warning px-2" type="" value=""><i class="fa-solid fa-file-pen"></i></a>
-                                            <a href="@Url.Action("DeleteProduct","Product", new { ID = item.productId })" class="text-danger px-2" type="" value=""><i class="fa-solid fa-trash"></i></a>
+                                            <a href="@Url.Action("EditProduct","Product", new { ID = item.productId })" class="btn btn-primary px-2" type="" value="">
+                                                <i class="fas fa-angle-double-right"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 }
