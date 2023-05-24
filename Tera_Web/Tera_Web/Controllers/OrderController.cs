@@ -70,5 +70,25 @@ namespace Tera_Web.Controllers
             orderModel.DeleteOrder(id);
             return RedirectToAction(nameof(List));
         }
+
+        public ActionResult CreateOrder()
+        {
+
+            List<OrderObj> _Productos = new List<OrderObj>();
+            _Productos = orderModel.GetProductList().ToList();
+            return View(_Productos);
+        }
+        [HttpPost]
+        public ActionResult CreateOrder(OrderObj orderObj)
+        {
+
+            if (ModelState.IsValid)
+            {
+                orderModel.Register(orderObj);
+                return RedirectToAction(nameof(List));
+            }
+            return View();
+        }
+
     }
 }

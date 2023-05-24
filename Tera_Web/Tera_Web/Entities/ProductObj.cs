@@ -16,5 +16,10 @@ namespace Tera_Web.Entities
         [DisplayName("Unidad")]
         public string productMeasurementUnit { get; set; } = string.Empty;
 
+
+
+        [DisplayName("Cantidad")]
+        public int cuantity { get; set; } = 0;
+
     }
 }

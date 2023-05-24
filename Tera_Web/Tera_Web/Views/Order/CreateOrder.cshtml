@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Tera_Web.Entities.OrderObj>
+
+@{
+    ViewData["Title"] = "CreateOrderv2";
+    var userId = Context.Session.GetString("userId");
+    var userName = Context.Session.GetString("userName");
+    var userFirstSurname = Context.Session.GetString("userFirstSurname");
+    var userSecondSurname = Context.Session.GetString("userSecondSurname");
+    var UserEmail = Context.Session.GetString("userEmail");
+    string fullName = userName + " " + userFirstSurname + " " + userSecondSurname + "!!";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        CREA TU ORDEN  @if (userName == null)
+                        {
+                            @UserEmail
+                        }
+                        else
+                        {
+                            @fullName
+                        }
+                    </h5>
+                    @using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Costo</th>
+                                        <th scope="col">Unidad</th>
+                                        <th scope="col">Si / No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            @Html.HiddenFor(modelItem => item.productId)
+                                            <td>@Html.DisplayFor(modelItem => item.productName)</td>
+                                            <td><input type="number" class="form-control quantity-input" disabled></td>
+                                            <td>@Html.DisplayFor(modelItem => item.productCost)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.productMeasurementUnit)</td>
+                                            <td class="text-center"><input type="checkbox" class="checkbox-input"></td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("List","User")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                            <input type="submit" value="Create" class="btn btn-primary text-center" />
+                        </div>
+                        }
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.checkbox-input').change(function () {
+            var isChecked = $(this).is(':checked');
+            $(this).closest('tr').find('.quantity-input').prop('disabled', !isChecked);
+        });
+    });
+</script>

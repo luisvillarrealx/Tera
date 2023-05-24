@@ -5,6 +5,8 @@ namespace Tera_Web.Models
 {
     public class OrderModel
     {
+
+        string urlGetListForOrder = "https://localhost:7021/api/Product/GetList";
         string urlGetlist = "https://localhost:7021/api/Order/GetList";
         string urlGet = "https://localhost:7021/api/Order/GetOrder";
 
@@ -145,6 +147,35 @@ namespace Tera_Web.Models
             {
                 lblmsj = "Error en el registro de la carrera" + ex.StackTrace;
             }
+        }
+        //llamo para poder mostrar la lista de los productos en la vista
+        public List<OrderObj> GetProductList()
+        {
+            //IEnumerable<Carrera> A;
+            using (var client = new HttpClient())
+            {
+                var task = Task.Run(async () =>
+                {
+
+                    return await client.GetAsync(urlGetListForOrder);
+                }
+                );
+                HttpResponseMessage message = task.Result;
+                if (message.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var task2 = Task<string>.Run(async () =>
+                    {
+                        return await message.Content.ReadAsStringAsync();
+                    });
+                    string resultstr = task2.Result;
+                    OrderList = JsonConvert.DeserializeObject<List<OrderObj>>(resultstr);
+                }
+                else
+                {
+
+                }
+            }
+            return OrderList;
         }
     }
 }
