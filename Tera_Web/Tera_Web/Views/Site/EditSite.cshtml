@@ -12,22 +12,23 @@
                     <div class="">
                         <h4 class="card-title text-center">Edición de sede</h4>
                     </div>
-                    @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+                    @using (Html.BeginForm("EditSite", "Site", FormMethod.Post))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
+                            @Html.HiddenFor(m => m.siteId)
                             <label asp-for="siteId" class="control-label"></label>
-                            <input asp-for="siteId" class="form-control" />
+                            <input asp-for="siteId" class="form-control" disabled />
                             <span asp-validation-for="siteId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="siteName" class="control-label"></label>
-                            <input asp-for="siteName" class="form-control" />
+                            <input asp-for="siteName" id="siteNameInput" class="form-control" />
                             <span asp-validation-for="siteName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="siteUbication" class="control-label"></label>
-                            <input asp-for="siteUbication" class="form-control" />
+                            <input asp-for="siteUbication" id="siteUbicationInput" class="form-control" />
                             <span asp-validation-for="siteUbication" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -39,3 +40,4 @@
         </div>
     </div>
 </section>
+<script src="~/js/sitevalidation.js"></script>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Tera_Web.Models;
 using Tera_Web.Filters;
+using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
@@ -14,7 +14,7 @@ namespace Tera_Web.Controllers
         {
             _logger = logger;
         }
-        
+
         public IActionResult Index()
         {
             return View();

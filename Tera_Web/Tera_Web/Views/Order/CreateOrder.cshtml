@@ -24,41 +24,49 @@
                             @fullName
                         }
                     </h5>
-                    @using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
-                    {
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Producto</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Costo</th>
-                                        <th scope="col">Unidad</th>
-                                        <th scope="col">Si / No</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            @Html.HiddenFor(modelItem => item.productId)
-                                            <td>@Html.DisplayFor(modelItem => item.productName)</td>
-                                            <td><input type="number" class="form-control quantity-input" disabled></td>
-                                            <td>@Html.DisplayFor(modelItem => item.productCost)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.productMeasurementUnit)</td>
-                                            <td class="text-center"><input type="checkbox" class="checkbox-input"></td>
-                                        </tr>
-                                    }
-                                </tbody>
+                    @*@using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
+                    {*@
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Costo</th>
+                                    <th scope="col">Unidad</th>
+                                    <th scope="col"></th>
 
-                            </table>
-                        </div>
-                        <div>
-                            <a href="@Url.Action("List","User")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
-                            <input type="submit" value="Create" class="btn btn-primary text-center" />
-                        </div>
-                        }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            <input type="hidden" name="productId" value="@item.productId" />
+                                            @Html.DisplayFor(modelItem => item.productName)
+                                        </td>
+                                        <td><input name="[@item.productId].cuantity" id="txt_@item.productId" class="form-control quantity-input" /></td>
+                                        <td>@Html.DisplayFor(modelItem => item.productCost)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.productMeasurementUnit)</td>
+                                        <td>
+                                            <a href="javascript:void(0)" id="add_@item.productId" onclick="addProduct(@item.productId,@item.productCost)" class="btn btn-primary" style="display:block">Añadir</a>
+                                            <a href="javascript:void(0)" id="delete_@item.productId" onclick="deleteProduct(@item.productId)" class="btn btn-danger" style="display:none">Quitar</a>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
                     </div>
+                    <div>
+                        <a href="@Url.Action("List","User")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                        <input type="button" onclick="CreateOrder()" value="Create" class="btn btn-primary text-center" />
+                    </div>
+                    @*}*@
+                </div>
             </div>
         </div>
     </div>
@@ -72,4 +80,78 @@
             $(this).closest('tr').find('.quantity-input').prop('disabled', !isChecked);
         });
     });
+    function CreateOrder() {
+
+    }
+    function addProduct(productId, cost) {
+        var quantity = $("#txt_" + productId).val();
+        if (quantity == "" || quantity == "0") {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atención!',
+                text: 'La cantida tiene que ser mayor a 0!',
+                allowOutsideClick: false
+            })
+        }
+        else {
+            $.ajax({
+                url: addProductRoute,
+                type: "POST",
+                data: { 'id': productId, 'quantity': quantity, 'cost': cost },
+                dataType: "json",
+                success: function (data) {
+                    if (data.result) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Correcto!',
+                            text: 'Producto añadido',
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $("#add_" + productId).css("display", "none"); 
+                                $("#delete_" + productId).css("display", "block");
+                                $("#txt_" + productId).attr("readonly",true);
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+                    mostrarMensajeNotificacion(data.mensaje, "error", "Favor comun&iacute;quese con el administrador del sistema");
+                }
+            });
+        }
+
+    }
+    function deleteProduct(productId) {
+
+        $.ajax({
+            url: deleteProductRoute,
+            type: "POST",
+            data: { 'id': productId },
+            dataType: "json",
+            success: function (data) {
+                if (data.result) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Correcto!',
+                        text: 'Producto eliminado',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed)
+                        {
+                            $("#add_" + productId).css("display", "block");
+                            $("#delete_" + productId).css("display", "none");
+                            $("#txt_" + productId).removeAttr("readonly");
+                        }
+                        });
+                }
+            },
+            error: function (data) {
+                mostrarMensajeNotificacion(data.mensaje, "error", "Favor comun&iacute;quese con el administrador del sistema");
+            }
+        });
+
+
+    }
 </script>

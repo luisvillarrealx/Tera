@@ -15,16 +15,16 @@
                             <input asp-for="roleId" class="form-control" readonly disabled />
                             <span asp-validation-for="roleId" class="text-danger"></span>
                         </div>
-                        <div class="form-group pb-2">
-                            <label asp-for="roleName" class="control-label"></label>
-                            <input asp-for="roleName" class="form-control" />
-                            <span asp-validation-for="roleName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group pb-4">
-                            <label asp-for="roleDescription" class="control-label"></label>
-                            <input asp-for="roleDescription" class="form-control" />
-                            <span asp-validation-for="roleDescription" class="text-danger"></span>
-                        </div>
+                           <div class="form-group pb-2">
+                                <label asp-for="roleName" class="control-label"></label>
+                                <input asp-for="roleName" id="roleNameInput" class="form-control" />
+                                <span asp-validation-for="roleName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group pb-4">
+                                <label asp-for="roleDescription" class="control-label"></label>
+                                <input asp-for="roleDescription" id="roleDescriptionInput" class="form-control" />
+                                <span asp-validation-for="roleDescription" class="text-danger"></span>
+                            </div>
                         <div class="form-group">
                             <a href="@Url.Action("List","Role")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
                             <button type="submit" class="btn btn-success"><i class="fa-solid fa-check "></i></button>
@@ -36,3 +36,4 @@
         </div>
     </div>
 </section>
+<script src="~/js/rolevalidation.js"></script>

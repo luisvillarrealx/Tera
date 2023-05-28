@@ -31,11 +31,17 @@
 .buttons-pdf {
     background-color: #F44336 !important; /* Cambiar el color de fondo a rojo */
 }
+.buttons-colvis {
+    background-color: #777777 !important; /* Cambiar el color de fondo a rojo */
+}
+.buttons-columnVisibility {
+    background-color: #A5A5A5 !important; /* Cambiar el color de fondo a rojo */
+}
 
 .disabled {
     pointer-events: none;
-    background-color: #E9ECEF;
-    border-color: #DEE2E6;
+    background-color: #E9ECEF !important;
+    border-color: #DEE2E6 !important;
 }
 
 .btn-orange {

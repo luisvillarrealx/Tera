@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tera_Web.Entities;
-using Tera_Web.Models;
 using Tera_Web.Filters;
+using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {

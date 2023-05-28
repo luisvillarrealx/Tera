@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Tera_Web.Entities;
-using Tera_Web.Models;
 using Tera_Web.Filters;
+using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
@@ -26,14 +26,15 @@ namespace Tera_Web.Controllers
 
         public ActionResult Register()
         {
-            //    var Roles = userModel.CheckRoles();
-            //    var datos = new List<SelectListItem>();
+            var userUnitListCombo = new List<SelectListItem>();
 
-            //    datos.Add(new SelectListItem { Value = "0", Text = "Selecciona" });
-            //    foreach (var item in Roles)
-            //        datos.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+            userUnitListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una unidad" });
+            userUnitListCombo.Add(new SelectListItem { Value = "Kg", Text = "Kilogramo" });
+            userUnitListCombo.Add(new SelectListItem { Value = "G", Text = "Gramo" });
+            userUnitListCombo.Add(new SelectListItem { Value = "Gal", Text = "Galón" });
+            userUnitListCombo.Add(new SelectListItem { Value = "Unidad", Text = "Unidad" });
 
-            //    ViewBag.ComboRoles = datos;
+            ViewBag.ComboUnit = userUnitListCombo;
             return View();
         }
 

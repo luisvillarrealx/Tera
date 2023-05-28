@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Tera_Web.Entities;
-using Tera_Web.Models;
 using Tera_Web.Filters;
+using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
@@ -29,67 +29,54 @@ namespace Tera_Web.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            var userRoleIdCombo = userModel.ComboBoxRoles();
-            var userRoleIdListCombo = new List<SelectListItem>();
+            try
+            {
+                var userRoleIdCombo = userModel.ComboBoxRoles();
+                var userRoleIdListCombo = new List<SelectListItem>();
 
-            userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
-            foreach (var item in userRoleIdCombo)
-                userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+                userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+                foreach (var item in userRoleIdCombo)
+                    userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
 
-            // SiteCombo
-            var userSiteIdCombo = userModel.ComboBoxSites();
-            var userSiteIdListCombo = new List<SelectListItem>();
+                // SiteCombo
+                var userSiteIdCombo = userModel.ComboBoxSites();
+                var userSiteIdListCombo = new List<SelectListItem>();
 
-            userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
-            foreach (var item in userSiteIdCombo)
-                userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+                userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+                foreach (var item in userSiteIdCombo)
+                    userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
 
-            ViewBag.CombouserRoleId = userRoleIdListCombo;
-            ViewBag.CombouserSiteId = userSiteIdListCombo;
-            return View();
+                ViewBag.CombouserRoleId = userRoleIdListCombo.AsEnumerable();
+                ViewBag.CombouserSiteId = userSiteIdListCombo.AsEnumerable(); // Convertir a IEnumerable<SelectListItem>
+                return View();
+            }
+            catch
+            {
+                // Manejo de errores
+                return View();
+            }
         }
 
 
         [HttpPost]
-        public ActionResult Register(UserRegisterObj userRegisterObj)
+        public IActionResult Register(UserRegisterObj userRegisterObj)
         {
             try
             {
-                if (string.IsNullOrEmpty(userRegisterObj.userEmail))
-                {
-                    ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico.");
-                }
-                else if (!IsValidEmail(userRegisterObj.userEmail))
-                {
-                    ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico válido.");
-                }
 
-                if (string.IsNullOrEmpty(userRegisterObj.userPassword))
-                {
-                    ModelState.AddModelError("userPassword", "Por favor, ingresa una contraseña.");
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // Los datos del formulario son válidos, realizar acciones adicionales, como guardar en la base de datos.
-                    if (userModel.PostUsers(userRegisterObj) != string.Empty)
-                        return RedirectToAction(nameof(List));
-                    else
-                    {
-                        ErrorViewModel error = new ErrorViewModel();
-                        error.RequestId = "01";
-                        return View("Error", error);
-                    }
-                }
+                // Los datos del formulario son válidos, realizar acciones adicionales, como guardar en la base de datos.
+                if (userModel.PostUsers(userRegisterObj) != string.Empty)
+                    return RedirectToAction(nameof(List));
                 else
                 {
-                    // Si hay errores de validación, vuelve a mostrar el formulario con los mensajes de error.
-                    return View(userRegisterObj);
+                    ErrorViewModel error = new ErrorViewModel();
+                    error.RequestId = "01";
+                    return View("Error", error);
                 }
             }
             catch
             {
-                return RedirectToAction(nameof(View));
+                return RedirectToAction(nameof(List));
             }
         }
 
@@ -101,27 +88,50 @@ namespace Tera_Web.Controllers
 
         public ActionResult EditUser(int id)
         {
-            userObj = userModel.GetUser(id);
+            try
+            {
+                userObj = userModel.GetUser(id);
+                var userRoleIdCombo = userModel.ComboBoxRoles();
+                var userRoleIdListCombo = new List<SelectListItem>();
 
+                userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+                foreach (var item in userRoleIdCombo)
+                    userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
 
-            var userRoleIdCombo = userModel.ComboBoxRoles();
-            var userRoleIdListCombo = new List<SelectListItem>();
+                // SiteCombo
+                var userSiteIdCombo = userModel.ComboBoxSites();
+                var userSiteIdListCombo = new List<SelectListItem>();
 
-            userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
-            foreach (var item in userRoleIdCombo)
-                userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+                userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+                foreach (var item in userSiteIdCombo)
+                    userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
 
-            // SiteCombo
-            var userSiteIdCombo = userModel.ComboBoxSites();
-            var userSiteIdListCombo = new List<SelectListItem>();
+                ViewBag.CombouserRoleId = userRoleIdListCombo;
+                ViewBag.CombouserSiteId = userSiteIdListCombo;
+                return View(userObj);
+            }
+            catch
+            {
+                var userRoleIdCombo = userModel.ComboBoxRoles();
+                var userRoleIdListCombo = new List<SelectListItem>();
 
-            userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
-            foreach (var item in userSiteIdCombo)
-                userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+                userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+                foreach (var item in userRoleIdCombo)
+                    userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
 
-            ViewBag.CombouserRoleId = userRoleIdListCombo;
-            ViewBag.CombouserSiteId = userSiteIdListCombo;
-            return View(userObj);
+                // SiteCombo
+                var userSiteIdCombo = userModel.ComboBoxSites();
+                var userSiteIdListCombo = new List<SelectListItem>();
+
+                userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+                foreach (var item in userSiteIdCombo)
+                    userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+
+                ViewBag.CombouserRoleId = userRoleIdListCombo;
+                ViewBag.CombouserSiteId = userSiteIdListCombo;
+                return View(userObj);
+            }
+
         }
 
         [HttpPost]

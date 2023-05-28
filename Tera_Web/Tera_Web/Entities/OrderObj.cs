@@ -24,10 +24,16 @@ namespace Tera_Web.Entities
 
         [DisplayName("Cantidad")]
         public int cuantity { get; set; } = 0;
+
         [DisplayName("Precio (₡)")]
         public int productCost { get; set; } = 0;
 
         [DisplayName("Unidad")]
         public string productMeasurementUnit { get; set; } = string.Empty;
+
+
+
+        [DisplayName("ID")]
+        public int userId { get; set; } = 0;
     }
 }

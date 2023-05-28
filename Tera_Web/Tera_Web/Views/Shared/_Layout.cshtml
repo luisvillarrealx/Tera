@@ -17,8 +17,13 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a2721d9abd.js" crossorigin="anonymous"></script>
+
+
+    <link href="~/sweetalert/css/sweetalert2.css" rel="stylesheet" />
+    <link href="~/sweetalert/css/sweetalert2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -68,7 +73,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
+
+    <script src="~/sweetalert/js/sweetalert2.all.js"></script>
+    <script src="~/sweetalert/js/sweetalert2.all.min.js"></script>
+    <script src="~/sweetalert/js/sweetalert2.js"></script>
+    <script src="~/sweetalert/js/sweetalert2.min.js"></script>
+
     <script type="text/javascript">
+
+        var addProductRoute = '@Url.Action("AddProduct","Order")';
+        var deleteProductRoute = '@Url.Action("DeleteProduct","Order")';
 
         $(document).ready(function () {
             var table = $('#Table').DataTable({
@@ -99,7 +114,8 @@
                         "copy": "Copiar",
                         "excel": "Exportar a Excel",
                         "csv": "Exportar a CSV",
-                        "pdf": "Exportar a PDF"
+                        "pdf": "Exportar a PDF",
+                        "colvis": "Visibilidad de columnas" // Texto personalizado para el botón ColVis
                     }
                 },
                 responsive: true,
@@ -124,21 +140,24 @@
                         extend: 'pdfHtml5',
                         text: '<i class="fa-solid fa-file-pdf text-light btnsize"></i>',
                         titleAttr: 'Exportar a PDF'
-                    }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: '<i class="fa-solid fa-eye text-light btnsize"></i>',
+                        titleAttr: 'Exportar a PDF'
+                    },
                 ],
                 columnDefs: [
                     {
-                        targets: 'th.acciones',
-                        visible: false,
-                        searchable: false
-                    },
-                    {
-                        targets: 'td.acciones',
-                        visible: false
+                        targets: '.column-editar', // Clase CSS de la columna "Editar"
+                        visible: false, // Ocultar la columna
+                        export: false // No exportar la columna
                     }
                 ]
             });
         });
+
+
     </script>
     <script src="~/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/js/counter.js"></script>

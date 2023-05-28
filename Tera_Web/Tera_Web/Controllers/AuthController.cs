@@ -50,6 +50,7 @@ namespace Tera_Web.Controllers
                         HttpContext.Session.SetString("userId", result.userId.ToString());
 
 
+
                         return RedirectToAction("Index", "Home");
                     }
                     else

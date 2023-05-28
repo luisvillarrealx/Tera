@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Tera_Web.Entities;
-using Tera_Web.Models;
 using Tera_Web.Filters;
+using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
@@ -73,22 +74,79 @@ namespace Tera_Web.Controllers
 
         public ActionResult CreateOrder()
         {
+            HttpContext.Session.Remove("Orders");
 
             List<OrderObj> _Productos = new List<OrderObj>();
             _Productos = orderModel.GetProductList().ToList();
             return View(_Productos);
         }
         [HttpPost]
-        public ActionResult CreateOrder(OrderObj orderObj)
+        public IActionResult CreateOrder(string[] productId, List<OrderObj> orders)
+        {
+            // Aquí puedes usar el array productId y la lista de órdenes para procesar los datos
+            // Recuerda que la longitud de productId y orders debería ser la misma
+
+            // Ejemplo de uso
+            for (int i = 0; i < productId.Length; i++)
+            {
+                string currentProductId = productId[i];
+                OrderObj currentOrder = orders[i];
+
+                // Procesar los datos según tus necesidades
+            }
+
+            return RedirectToAction(nameof(List));
+            // Resto de la lógica de la acción CreateOrder
+        }
+        [HttpPost]
+        public JsonResult AddProduct(int id, int quantity, int cost)
         {
 
-            if (ModelState.IsValid)
+            List<OrderObj> OrderOBJList = new List<OrderObj>();
+
+            if (HttpContext.Session.GetString("Orders") != null)
             {
-                orderModel.Register(orderObj);
-                return RedirectToAction(nameof(List));
+                OrderOBJList = JsonConvert.DeserializeObject<List<OrderObj>>(HttpContext.Session.GetString("Orders"));
+                OrderOBJList.Add(new OrderObj
+                {
+                    userId = Convert.ToInt32(HttpContext.Session.GetString("userId")),
+                    productId = id,
+                    cuantity = quantity,
+                    productCost = cost * quantity
+                });
+                HttpContext.Session.SetString("Orders", JsonConvert.SerializeObject(OrderOBJList));
             }
-            return View();
+            else
+            {
+                OrderOBJList.Add(new OrderObj
+                {
+                    userId = Convert.ToInt32(HttpContext.Session.GetString("userId")),
+                    productId = id,
+                    cuantity = quantity,
+                    productCost = cost * quantity
+                });
+                HttpContext.Session.SetString("Orders", JsonConvert.SerializeObject(OrderOBJList));
+            }
+
+            int total = OrderOBJList.Sum(x => x.productCost);
+            return Json(new { result = true });
         }
 
+        public JsonResult DeleteProduct(int id)
+        {
+
+            List<OrderObj> OrderOBJList = new List<OrderObj>();
+
+            if (HttpContext.Session.GetString("Orders") != null)
+            {
+                OrderOBJList = JsonConvert.DeserializeObject<List<OrderObj>>(HttpContext.Session.GetString("Orders"));
+                OrderOBJList.RemoveAll(x => x.productId == id);
+
+                HttpContext.Session.SetString("Orders", JsonConvert.SerializeObject(OrderOBJList));
+            }
+            int total = OrderOBJList.Sum(x => x.productCost);
+
+            return Json(new { result = true });
+        }
     }
 }
