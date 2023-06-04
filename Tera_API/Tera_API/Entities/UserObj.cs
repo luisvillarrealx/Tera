@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Tera_API.Entities
+﻿namespace Tera_API.Entities
 {
     public class UserObj
     {
@@ -17,7 +15,7 @@ namespace Tera_API.Entities
 
 
 
-        
+
         public string roleName { get; set; } = string.Empty;
         public string siteName { get; set; } = string.Empty;
     }

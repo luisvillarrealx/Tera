@@ -1,6 +1,6 @@
-﻿using System.Data.SqlClient;
+﻿using Dapper;
 using System.Data;
-using Dapper;
+using System.Data.SqlClient;
 using Tera_API.Entities;
 
 namespace Tera_API.Models

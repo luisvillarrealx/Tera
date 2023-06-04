@@ -4,32 +4,27 @@
     ViewData["Title"] = "EditUser";
 }
 
-<section class="content mt-4">
+<section class="content mt-5">
     <div class="offset-4 container-fluid mt-5">
         <div class="row mt-5">
-            <div class="col-md-4 mt-4">
+            <div class="col-md-4 mt-5">
                 <div class="">
                     <div class="">
-                        <h4 class="card-title text-center">Edición de Usuario</h4>
+                        <h4 class="card-title text-center"><i class="fa-solid fa-user" style="color: #ee626b;"></i></i></h4>
                     </div>
                     @using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { onsubmit = "return validateForm();" }))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group ">
                             @Html.HiddenFor(m => m.userId)
-                            <label asp-for="userId" class="control-label"></label>
-                            <input asp-for="userId" class="form-control" readonly disabled />
-                            <span asp-validation-for="userId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group ">
+                        <div class="form-group">
                             <label asp-for="userGovId" class="control-label"></label>
-                            
+
                             @Html.TextBoxFor(m => m.userGovId, new
                         {
                         @class = "form-control",
                         @required = true,
                         @id = "userGovId",
-                        @onkeyup = "validateUserGovId(); ConsultNameApi();"
+                        @onkeyup = "validateUserGovId(); ConsultNameApi();"                      
                         })
                             <span asp-validation-for="userGovId" id="userGovIdError" class="text-danger"></span>
                         </div>
@@ -39,37 +34,37 @@
                             <span asp-validation-for="userName" id="userNameError" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="userFirstSurname"  class="control-label"></label>
+                            <label asp-for="userFirstSurname" class="control-label"></label>
                             <input asp-for="userFirstSurname" id="userFirstSurname" class="form-control disabled" readonly onkeyup="validateUserFirstSurname()" />
                             <span asp-validation-for="userFirstSurname" id="userFirstSurnameError" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="userSecondSurname" class="control-label"></label>
-                            
+
                             <input asp-for="userSecondSurname" id="userSecondSurname" class="form-control disabled" readonly onkeyup="validateUserSecondSurname()" />
                             <span asp-validation-for="userSecondSurname" id="userSecondSurnameError" class="text-danger"></span>
                         </div>
-                        <div class="form-group ">
+                        <div class="form-group">
                             <label asp-for="userEmail" class="control-label"></label>
                             <input asp-for="userEmail" type="email" class="form-control" id="userEmail" onkeyup="validateUserEmail();" />
                             <span asp-validation-for="userEmail" id="userEmailError" class="text-danger"></span>
                         </div>
                         @Html.HiddenFor(m => m.userPassword)
-                        <div class="form-group ">
-                            <label asp-for="userSiteId" class="control-label"></label>
-                            @Html.DropDownListFor(m => m.userSiteId, ViewBag.CombouserSiteId as List<SelectListItem>, new { @class = "form-control", @onchange = "validateUserSiteId();" })
-                            <span asp-validation-for="userSiteId" id="userSiteIdError" class="text-danger"></span>
+                        <div class="form-group">
+                            <label asp-for="userPassword" class="control-label"></label>
+                            <div class="input-group">
+                                <input asp-for="userPassword" type="" class="form-control col-12" id="userPassword" disabled onkeyup="" />
+                                <div class="input-group-append">
+                                    <a href="@Url.Action("ResetPassword","User", new { ID = Model.userId })" class="btn btn-warning col-auto" type="button">
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <span asp-validation-for="userPassword" id="userSiteIdError" class="text-danger" ></span>
                         </div>
-                        <div class="form-group ">
-                            <label asp-for="userRoleId" class="control-label"></label>
-                            @Html.DropDownListFor(m => m.userRoleId, ViewBag.CombouserRoleId as List<SelectListItem>, new { @class = "form-control", @onchange = "validateUserRole();" })
-                            <span asp-validation-for="userRoleId" id="userRoleError" class="text-danger"></span>
-                        </div>
-                        <div class="form-group form-check pb-2">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="userActive" /> @Html.DisplayNameFor(model => model.userActive)
-                            </label>
-                        </div>
+                        @Html.HiddenFor(m => m.userSiteId)
+                        @Html.HiddenFor(m => m.userRoleId)
+                        @Html.HiddenFor(m => m.userActive)
                         <div class="form-group">
                             <a href="@Url.Action("List","User")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
                             <button id="modeButton" type="button" class="btn btn-primary" onclick="toggleMode()">Manual</button>
@@ -84,4 +79,4 @@
 </section>
 
 <script src="~/js/ConsultNameApi.js"></script>
-<script src="~/js/uservalidation.js"></script>
+<script src="~/js/userprofilevalidation.js"></script>

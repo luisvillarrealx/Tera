@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
 using Tera_API.Entities;
 using Tera_API.Models;
 

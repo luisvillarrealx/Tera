@@ -90,6 +90,24 @@ namespace Tera_API.Controllers
             return BadRequest();
         }
 
+        [HttpPut]
+        [Route("ResetPassword")]
+        public ActionResult ResetPassword(UserObj userObj)
+        {
+            if (userModel.ResetPassword(userObj, _configuration) > 0)
+            {
+                return Ok(userObj);
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("ResetPasswordSmtp")]
+        public void ResetPasswordSmtp(UserObj userObj)
+        {
+            userModel.ResetPasswordSmtp(userObj, _configuration);
+        }
+
         /// <summary>
         /// Elimina un usuario por su ID.
         /// </summary>
@@ -123,7 +141,7 @@ namespace Tera_API.Controllers
         {
             return Ok(roleModel.ComboBoxRoles(_configuration));
         }
-        
+
         [HttpGet]
         [Route("ComboBoxConsultSites")]
         public ActionResult<List<SiteObj>> ComboBoxConsultSites()

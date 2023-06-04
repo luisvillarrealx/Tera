@@ -110,6 +110,28 @@ namespace Tera_Web.Controllers
 
 
         }
+        [HttpGet]
+        public ActionResult Reset()
+        {
+            HttpContext.Session.Clear();
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult Reset(UserObj userObj)
+        {
+            //try
+            //{
+            authModel.ResetPassword(userObj);
+            return RedirectToAction("Login", "Auth");
+            //}
+            //catch (Exception ex)
+            //{
+            //    RegistrarLog(ex, ControllerContext);
+            //    return View("Index");
+            //}
+            //return View();
+        }
         public IActionResult LogOut()
         {
             HttpContext.Session.Clear();

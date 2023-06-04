@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 using Tera_Web.Entities;
 using Tera_Web.Filters;
@@ -11,11 +12,12 @@ namespace Tera_Web.Controllers
     [FilterSession]
     public class UserController : Controller
     {
-        //este se usa por un problema en las validaciones 
+        //Objs
         UserRegisterObj userRegisterObj = new UserRegisterObj();
-        //esto es lo demas
         UserObj userObj = new UserObj();
+        //models
         UserModel userModel = new UserModel();
+        AuthModel authModel = new AuthModel();
 
 
         public IActionResult List()
@@ -59,14 +61,21 @@ namespace Tera_Web.Controllers
 
 
         [HttpPost]
-        public IActionResult Register(UserRegisterObj userRegisterObj)
+        public IActionResult Register(UserObj userObj)
         {
             try
             {
+                // Generar una contraseña aleatoria de máximo 10 caracteres
+                string password = GenerateRandomPassword(10);
+
+                userObj.userPassword = password;
 
                 // Los datos del formulario son válidos, realizar acciones adicionales, como guardar en la base de datos.
-                if (userModel.PostUsers(userRegisterObj) != string.Empty)
+                if (userModel.PostUsers(userObj) != string.Empty)
+                {
+                    authModel.ResetPassword(userObj);
                     return RedirectToAction(nameof(List));
+                }
                 else
                 {
                     ErrorViewModel error = new ErrorViewModel();
@@ -78,6 +87,21 @@ namespace Tera_Web.Controllers
             {
                 return RedirectToAction(nameof(List));
             }
+        }
+
+        private string GenerateRandomPassword(int length)
+        {
+            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder password = new StringBuilder();
+            Random random = new Random();
+
+            while (password.Length < length)
+            {
+                int index = random.Next(validChars.Length);
+                password.Append(validChars[index]);
+            }
+
+            return password.ToString();
         }
 
         [HttpPost]
@@ -173,6 +197,54 @@ namespace Tera_Web.Controllers
             }
         }
 
+        public ActionResult UserProfile()
+        {
+
+            try
+            {
+                userObj = userModel.GetUser(Convert.ToInt32(HttpContext.Session.GetString("userId")));
+                userModel.PutUsers(userObj);
+                var userRoleIdCombo = userModel.ComboBoxRoles();
+                var userRoleIdListCombo = new List<SelectListItem>();
+
+                userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+                foreach (var item in userRoleIdCombo)
+                    userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+
+                // SiteCombo
+                var userSiteIdCombo = userModel.ComboBoxSites();
+                var userSiteIdListCombo = new List<SelectListItem>();
+
+                userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+                foreach (var item in userSiteIdCombo)
+                    userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+
+                ViewBag.CombouserRoleId = userRoleIdListCombo;
+                ViewBag.CombouserSiteId = userSiteIdListCombo;
+                return View(userObj);
+
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult UserProfile(UserObj userObj)
+        {
+            try
+            {
+                userModel.PutUsers(userObj);
+                return RedirectToAction("List", "User");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         // GET: UsuarioController/Delete/5
         [HttpPost]
         public ActionResult DeleteUser(int id, bool confirmed)
@@ -236,6 +308,17 @@ namespace Tera_Web.Controllers
             {
                 return false;
             }
+        }
+        public ActionResult ResetPassword(int id)
+        {
+            userObj.userId = id;
+            return View(userObj);
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(UserObj userObj)
+        {
+            userModel.ResetPassword(userObj);
+            return RedirectToAction("UserProfile", "User");
         }
     }
 }

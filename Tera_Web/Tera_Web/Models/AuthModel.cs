@@ -1,4 +1,5 @@
-﻿using Tera_Web.Entities;
+﻿using System.Net.Mail;
+using Tera_Web.Entities;
 namespace Tera_Web.Models
 {
     public class AuthModel
@@ -20,6 +21,15 @@ namespace Tera_Web.Models
                     return response.Content.ReadFromJsonAsync<UserLoginObj>().Result;
                 else
                     return null;
+            }
+        }
+        public void ResetPassword(UserObj userObj)
+        {
+            using (HttpClient access = new HttpClient())
+            {
+                JsonContent body = JsonContent.Create(userObj);
+                string url = "https://localhost:7021/api/User/ResetPasswordSmtp";
+                HttpResponseMessage respuesta = access.PostAsync(url, body).GetAwaiter().GetResult();
             }
         }
     }

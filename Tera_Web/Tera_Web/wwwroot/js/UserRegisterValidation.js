@@ -17,31 +17,31 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-function validatePassword() {
-    var passwordInput = document.getElementById("password");
-    var password = passwordInput.value;
-    var errorElement = document.getElementById("userPassword-error");
+//function validatePassword() {
+//    var passwordInput = document.getElementById("password");
+//    var password = passwordInput.value;
+//    var errorElement = document.getElementById("userPassword-error");
 
-    if (password.trim().length === 0) {
-        errorElement.textContent = "Por favor, ingrese una contraseña";
-    } else {
-        errorElement.textContent = "";
-    }
-}
+//    if (password.trim().length === 0) {
+//        errorElement.textContent = "Por favor, ingrese una contraseña";
+//    } else {
+//        errorElement.textContent = "";
+//    }
+//}
 
-function validateConfirmPassword() {
-    var passwordInput = document.getElementById("password");
-    var confirmPasswordInput = document.getElementById("confirmPassword");
-    var password = passwordInput.value;
-    var confirmPassword = confirmPasswordInput.value;
-    var errorElement = document.getElementById("confirmPassword-error");
+//function validateConfirmPassword() {
+//    var passwordInput = document.getElementById("password");
+//    var confirmPasswordInput = document.getElementById("confirmPassword");
+//    var password = passwordInput.value;
+//    var confirmPassword = confirmPasswordInput.value;
+//    var errorElement = document.getElementById("confirmPassword-error");
 
-    if (password === confirmPassword) {
-        errorElement.textContent = "";
-    } else {
-        errorElement.textContent = "Las contraseñas no coinciden.";
-    }
-}
+//    if (password === confirmPassword) {
+//        errorElement.textContent = "";
+//    } else {
+//        errorElement.textContent = "Las contraseñas no coinciden.";
+//    }
+//}
 
 function validateSiteId() {
     var siteIdSelect = document.getElementById("userSiteId");
@@ -88,8 +88,8 @@ function clearError(event) {
 
 function validateForm() {
     var emailInput = document.getElementById("email");
-    var passwordInput = document.getElementById("password");
-    var confirmPasswordInput = document.getElementById("confirmPassword");
+    //var passwordInput = document.getElementById("password");
+    //var confirmPasswordInput = document.getElementById("confirmPassword");
     var siteIdSelect = document.getElementById("userSiteId");
     var roleIdSelect = document.getElementById("userRoleId");
 
@@ -105,24 +105,24 @@ function validateForm() {
         document.getElementById("userEmail-error").textContent = "";
     }
 
-    if (passwordInput.value.trim() === "") {
-        document.getElementById("userPassword-error").textContent = "Por favor, ingrese una contraseña";
-        isFormValid = false;
-    } else {
-        document.getElementById("userPassword-error").textContent = "";
-    }
+    //if (passwordInput.value.trim() === "") {
+    //    document.getElementById("userPassword-error").textContent = "Por favor, ingrese una contraseña";
+    //    isFormValid = false;
+    //} else {
+    //    document.getElementById("userPassword-error").textContent = "";
+    //}
 
-    if (confirmPasswordInput.value.trim() === "") {
-        document.getElementById("confirmPassword-error").textContent = "Por favor, confirme la contraseña";
-        isFormValid = false;
-    } else {
-        document.getElementById("confirmPassword-error").textContent = "";
-    }
+    //if (confirmPasswordInput.value.trim() === "") {
+    //    document.getElementById("confirmPassword-error").textContent = "Por favor, confirme la contraseña";
+    //    isFormValid = false;
+    //} else {
+    //    document.getElementById("confirmPassword-error").textContent = "";
+    //}
 
-    if (passwordInput.value !== confirmPasswordInput.value) {
-        document.getElementById("confirmPassword-error").textContent = "Las contraseñas no coinciden";
-        isFormValid = false;
-    }
+    //if (passwordInput.value !== confirmPasswordInput.value) {
+    //    document.getElementById("confirmPassword-error").textContent = "Las contraseñas no coinciden";
+    //    isFormValid = false;
+    //}
 
     if (siteIdSelect.value === "0") {
         document.getElementById("userSiteId-error").textContent = "Por favor, selecciona una sede";

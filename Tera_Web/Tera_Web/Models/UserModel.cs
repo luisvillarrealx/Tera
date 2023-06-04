@@ -66,14 +66,14 @@ namespace Tera_Web.Models
             return userObj;
         }
 
-        public string PostUsers(UserRegisterObj userRegisterObj)
+        public string PostUsers(UserObj userObj)
         {
             using (HttpClient access = new HttpClient())
             {
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
                 string urlApi = "https://localhost:7021/" + "api/User/Register";
 
-                JsonContent content = JsonContent.Create(userRegisterObj);
+                JsonContent content = JsonContent.Create(userObj);
 
                 HttpResponseMessage response = access.PostAsync(urlApi, content).GetAwaiter().GetResult();
 
@@ -190,6 +190,24 @@ namespace Tera_Web.Models
                     return respuesta.Content.ReadFromJsonAsync<List<SiteObj>>().Result;
                 else
                     return null;
+            }
+        }
+        public string ResetPassword(UserObj userObj)
+        {
+            using (HttpClient access = new HttpClient())
+            {
+                //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
+                string urlApi = "https://localhost:7021/" + "api/User/ResetPassword";
+
+                JsonContent content = JsonContent.Create(userObj);
+
+                HttpResponseMessage response = access.PutAsync(urlApi, content).GetAwaiter().GetResult();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return "OK";
+                }
+                return string.Empty;
             }
         }
     }
