@@ -28,7 +28,7 @@
 
 <body>
     <header class="header-area header-sticky background-header">
-        <div class="container">
+        <div class="px-5 mx-5">
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
@@ -43,6 +43,7 @@
                             <li>@Html.ActionLink("Pedidos", "List", "Order")</li>
                             <li>@Html.ActionLink("Pedidos detalles", "List", "OrderDetail")</li>
                             <li>@Html.ActionLink("Sedes", "List", "Site")</li>
+                            <li><a href="@Url.Action("UserProfile","User")"><i class="fa-regular fa-user"></i></a></li>
                             <li><a href="@Url.Action("LogOut","Auth")"><i class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i></a></li>
                         </ul>
                         <a class='menu-trigger'>

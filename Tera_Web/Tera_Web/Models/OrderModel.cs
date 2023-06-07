@@ -75,7 +75,7 @@ namespace Tera_Web.Models
             return orderObj;
         }
 
-        public string Register(OrderObj OrderObj)
+        public string Register(List<OrderObj> orderObjList)
         {
             using (HttpClient acceso = new HttpClient())
             {
@@ -83,7 +83,7 @@ namespace Tera_Web.Models
                 //string urlApi = "http://localhost/SERVICE/" + "api/UsuarioApi/CreateUsuario";
                 string urlApi = "https://localhost:7021/" + "api/Order/Register";
 
-                JsonContent contenido = JsonContent.Create(OrderObj);
+                JsonContent contenido = JsonContent.Create(orderObjList);
 
                 HttpResponseMessage respuesta = acceso.PostAsync(urlApi, contenido).GetAwaiter().GetResult();
 

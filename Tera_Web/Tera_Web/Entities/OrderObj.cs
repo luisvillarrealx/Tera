@@ -7,7 +7,7 @@ namespace Tera_Web.Entities
         [DisplayName("ID")]
         public int orderId { get; set; } = 0;
         [DisplayName("Usuario")]
-        public string orderUser { get; set; } = string.Empty;
+        public int orderUser { get; set; } = 0;
         [DisplayName("Fecha")]
         public DateTime orderDate { get; set; } = DateTime.Now;
         [DisplayName("Total")]

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace Tera_Web.Entities
 {
@@ -23,7 +22,7 @@ namespace Tera_Web.Entities
         [DisplayName("Correo")]
         public string userEmail { get; set; } = string.Empty;
         [DisplayName("Contraseña")]
-        
+
         public string userPassword { get; set; } = string.Empty;
 
         [DisplayName("Confirmar Contraseña")]

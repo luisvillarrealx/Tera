@@ -42,19 +42,49 @@ namespace Tera_API.Models
         /// <param name="orderObj">El objeto OrderObj que contiene los datos del usuario a registrar.</param>
         /// <param name="stringConnection">La cadena de conexión a la base de datos.</param>
         /// <returns>El número de filas afectadas en la base de datos.</returns>
-        public int Register(OrderObj orderObj, IConfiguration stringConnection)
+        public int Register(List<OrderObj> orders, IConfiguration stringConnection)
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                return connection.Execute("InsertorderObj",
-                    new
+                connection.Open();
+                var transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // Insertar en la tabla "Order" y obtener el orderId generado
+                    var orderId = connection.ExecuteScalar<int>("INSERT INTO [dbo].[Order] (orderUserId, orderDate, orderTotal) VALUES (@orderUserId, @orderDate, @orderTotal); SELECT SCOPE_IDENTITY();",
+                        new
+                        {
+                            orderUserId = orders[0].userId, // Suponemos que todos los pedidos tienen el mismo userId
+                            orderDate = DateTime.Now.Date,
+                            orderTotal = orders.Sum(o => o.productCost * o.cuantity)
+                        },
+                        transaction: transaction);
+
+                    // Insertar los detalles del pedido en la tabla "OrderDetails"
+                    foreach (var order in orders)
                     {
-                        orderObj.orderUser,
-                        orderObj.orderDate,
-                        orderObj.orderTotal
-                    }, commandType: CommandType.StoredProcedure);
+                        connection.Execute("INSERT INTO [dbo].[OrderDetails] (orderId, productId, orderDetailsQuantity) VALUES (@orderId, @productId, @orderDetailsQuantity);",
+                            new
+                            {
+                                orderId,
+                                order.productId,
+                                order.cuantity
+                            },
+                            transaction: transaction);
+                    }
+
+                    transaction.Commit();
+                    return orderId;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
             }
         }
+
 
         /// <summary>
         /// Actualiza los datos de un usuario existente en la base de datos.
@@ -66,7 +96,7 @@ namespace Tera_API.Models
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                return connection.Execute("EditorderObj",
+                return connection.Execute("Editorder",
                 new
                 {
                     orderObj.orderId,
@@ -92,7 +122,7 @@ namespace Tera_API.Models
                 orderObj.orderId = OrderId;
 
                 // Ejecuta un procedimiento almacenado para eliminar un Producto de la base de datos.
-                return connection.Execute("DeleteorderObj",
+                return connection.Execute("Deleteorder",
                 new
                 {
                     orderObj.orderId

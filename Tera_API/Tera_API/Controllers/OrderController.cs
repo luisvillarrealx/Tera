@@ -56,11 +56,11 @@ namespace Tera_API.Controllers
         /// <returns>Un ActionResult que indica el resultado de la operación.</returns>
         [HttpPost]
         [Route("Register")]
-        public ActionResult Register(OrderObj orderObj)
+        public ActionResult Register(List<OrderObj> orders)
         {
             try
             {
-                if (orderModel.Register(orderObj, _configuration) > 0)
+                if (orderModel.Register(orders, _configuration) > 0)
                     return Ok();
                 else
                     return BadRequest();

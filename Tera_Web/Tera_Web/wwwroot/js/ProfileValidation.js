@@ -112,28 +112,6 @@ function clearErrorMessages() {
     userFirstSurnameError.textContent = '';
     userSecondSurnameError.textContent = '';
 }
-function validateUserSiteId() {
-    var userSiteIdSelect = document.getElementById('userSiteId');
-    var userSiteIdError = document.getElementById('userSiteIdError');
-    var userSiteIdValue = userSiteIdSelect.value;
-
-    if (userSiteIdValue === '0') {
-        userSiteIdError.textContent = 'Por favor, selecciona una sede';
-    } else {
-        userSiteIdError.textContent = '';
-    }
-}
-function validateUserRole() {
-    var userRoleSelect = document.getElementById('userRoleId');
-    var userRoleError = document.getElementById('userRoleError');
-    var userRoleValue = userRoleSelect.value;
-
-    if (userRoleValue === '0') {
-        userRoleError.textContent = 'Por favor, selecciona un rol';
-    } else {
-        userRoleError.textContent = '';
-    }
-}
 function validateForm() {
     // Realiza todas las validaciones necesarias y verifica si hay errores
     var userGovIdError = document.getElementById('userGovIdError');
@@ -141,17 +119,13 @@ function validateForm() {
     var userFirstSurnameError = document.getElementById('userFirstSurnameError');
     var userSecondSurnameError = document.getElementById('userSecondSurnameError');
     var userEmailError = document.getElementById('userEmailError');
-    var userSiteIdError = document.getElementById('userSiteIdError');
-    var userRoleError = document.getElementById('userRoleError');
 
     // Verifica si hay errores en algún campo
     if (userGovIdError.textContent !== '' ||
         userNameError.textContent !== '' ||
         userFirstSurnameError.textContent !== '' ||
         userSecondSurnameError.textContent !== '' ||
-        userEmailError.textContent !== '' ||
-        userSiteIdError.textContent !== '' ||
-        userRoleError.textContent !== '') {
+        userEmailError.textContent !== '') {
         // Si hay errores, no se envía el formulario
         return false;
     }

@@ -66,7 +66,7 @@
                         @Html.HiddenFor(m => m.userRoleId)
                         @Html.HiddenFor(m => m.userActive)
                         <div class="form-group">
-                            <a href="@Url.Action("List","User")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                            <a href="@Url.Action("Index","Home")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
                             <button id="modeButton" type="button" class="btn btn-primary" onclick="toggleMode()">Manual</button>
                             <button type="submit" class="btn btn-success"><i class="fa-solid fa-check "></i></button>
                         </div>
@@ -79,4 +79,4 @@
 </section>
 
 <script src="~/js/ConsultNameApi.js"></script>
-<script src="~/js/userprofilevalidation.js"></script>
+<script src="~/js/profilevalidation.js"></script>

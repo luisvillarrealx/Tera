@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Data;
 using Tera_Web.Entities;
 using Tera_Web.Filters;
 using Tera_Web.Models;
@@ -9,8 +10,12 @@ namespace Tera_Web.Controllers
     [FilterSession]
     public class OrderController : Controller
     {
+        //Objs
         OrderObj orderObj = new OrderObj();
+        //Models
         OrderModel orderModel = new OrderModel();
+
+        List<OrderObj> OrderOBJList = new List<OrderObj>();
 
         // GET: OrderController
         public ActionResult List()
@@ -31,7 +36,7 @@ namespace Tera_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                orderModel.Register(orderObj);
+                //orderModel.Register(orderObj);
                 return RedirectToAction(nameof(List));
             }
             return View(orderObj);
@@ -81,28 +86,17 @@ namespace Tera_Web.Controllers
             return View(_Productos);
         }
         [HttpPost]
-        public IActionResult CreateOrder(string[] productId, List<OrderObj> orders)
+        public IActionResult CreateOrder(List<OrderObj> orders)
         {
-            // Aquí puedes usar el array productId y la lista de órdenes para procesar los datos
-            // Recuerda que la longitud de productId y orders debería ser la misma
 
-            // Ejemplo de uso
-            for (int i = 0; i < productId.Length; i++)
-            {
-                string currentProductId = productId[i];
-                OrderObj currentOrder = orders[i];
-
-                // Procesar los datos según tus necesidades
-            }
+            OrderOBJList = JsonConvert.DeserializeObject<List<OrderObj>>(HttpContext.Session.GetString("Orders"));
+            orderModel.Register(OrderOBJList);
 
             return RedirectToAction(nameof(List));
-            // Resto de la lógica de la acción CreateOrder
         }
         [HttpPost]
         public JsonResult AddProduct(int id, int quantity, int cost)
         {
-
-            List<OrderObj> OrderOBJList = new List<OrderObj>();
 
             if (HttpContext.Session.GetString("Orders") != null)
             {
@@ -129,13 +123,12 @@ namespace Tera_Web.Controllers
             }
 
             int total = OrderOBJList.Sum(x => x.productCost);
+            HttpContext.Session.SetInt32("Total", total);
             return Json(new { result = true });
         }
 
         public JsonResult DeleteProduct(int id)
         {
-
-            List<OrderObj> OrderOBJList = new List<OrderObj>();
 
             if (HttpContext.Session.GetString("Orders") != null)
             {
@@ -145,7 +138,7 @@ namespace Tera_Web.Controllers
                 HttpContext.Session.SetString("Orders", JsonConvert.SerializeObject(OrderOBJList));
             }
             int total = OrderOBJList.Sum(x => x.productCost);
-
+            HttpContext.Session.SetInt32("Total", total);
             return Json(new { result = true });
         }
     }

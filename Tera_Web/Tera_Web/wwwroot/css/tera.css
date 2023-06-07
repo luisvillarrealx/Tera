@@ -412,11 +412,11 @@ Header Style
         letter-spacing: .25px;
     }
 
-    .header-area .main-nav .nav li:last-child a {
+    .header-area .main-nav .nav li:nth-last-child(-n+2) a {
         background-color: #EE626B;
     }
 
-    .header-area .main-nav .nav li:last-child:hover a {
+    .header-area .main-nav .nav li:nth-last-child(-n+2):hover a {
         background-color: #DE5B64;
     }
 

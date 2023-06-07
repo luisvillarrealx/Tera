@@ -13,7 +13,6 @@ namespace Tera_Web.Controllers
     public class UserController : Controller
     {
         //Objs
-        UserRegisterObj userRegisterObj = new UserRegisterObj();
         UserObj userObj = new UserObj();
         //models
         UserModel userModel = new UserModel();

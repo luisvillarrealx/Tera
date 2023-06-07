@@ -24,48 +24,48 @@
                             @fullName
                         }
                     </h5>
-                    @*@using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
-                    {*@
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Producto</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Costo</th>
-                                    <th scope="col">Unidad</th>
-                                    <th scope="col"></th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                    @using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
                                     <tr>
-
-                                        <td>
-                                            <input type="hidden" name="productId" value="@item.productId" />
-                                            @Html.DisplayFor(modelItem => item.productName)
-                                        </td>
-                                        <td><input name="[@item.productId].cuantity" id="txt_@item.productId" class="form-control quantity-input" /></td>
-                                        <td>@Html.DisplayFor(modelItem => item.productCost)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.productMeasurementUnit)</td>
-                                        <td>
-                                            <a href="javascript:void(0)" id="add_@item.productId" onclick="addProduct(@item.productId,@item.productCost)" class="btn btn-primary" style="display:block">Añadir</a>
-                                            <a href="javascript:void(0)" id="delete_@item.productId" onclick="deleteProduct(@item.productId)" class="btn btn-danger" style="display:none">Quitar</a>
-                                        </td>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Costo</th>
+                                        <th scope="col">Unidad</th>
+                                        <th scope="col"></th>
 
                                     </tr>
-                                }
-                            </tbody>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
 
-                        </table>
-                    </div>
-                    <div>
-                        <a href="@Url.Action("List","User")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
-                        <input type="button" onclick="CreateOrder()" value="Create" class="btn btn-primary text-center" />
-                    </div>
-                    @*}*@
+                                            <td>
+                                                <input type="hidden" name="productId" value="@item.productId" />
+                                                @Html.DisplayFor(modelItem => item.productName)
+                                            </td>
+                                            <td><input type="number" value="0" name="[@item.productId].cuantity" id="txt_@item.productId" class="form-control quantity-input" /></td>
+                                            <td>@Html.DisplayFor(modelItem => item.productCost)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.productMeasurementUnit)</td>
+                                            <td>
+                                                <a href="javascript:void(0)" id="add_@item.productId" onclick="addProduct(@item.productId,@item.productCost)" class="btn btn-primary" style="display:block">Añadir</a>
+                                                <a href="javascript:void(0)" id="delete_@item.productId" onclick="deleteProduct(@item.productId)" class="btn btn-danger" style="display:none">Quitar</a>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("List","User")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                            <input type="submit" onclick="CreateOrder()" value="Create" class="btn btn-primary text-center" />
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -109,9 +109,9 @@
                             allowOutsideClick: false
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                $("#add_" + productId).css("display", "none"); 
+                                $("#add_" + productId).css("display", "none");
                                 $("#delete_" + productId).css("display", "block");
-                                $("#txt_" + productId).attr("readonly",true);
+                                $("#txt_" + productId).attr("readonly", true);
                             }
                         });
                     }
@@ -138,13 +138,12 @@
                         text: 'Producto eliminado',
                         allowOutsideClick: false
                     }).then((result) => {
-                        if (result.isConfirmed)
-                        {
+                        if (result.isConfirmed) {
                             $("#add_" + productId).css("display", "block");
                             $("#delete_" + productId).css("display", "none");
                             $("#txt_" + productId).removeAttr("readonly");
                         }
-                        });
+                    });
                 }
             },
             error: function (data) {
