@@ -20,7 +20,7 @@ namespace Tera_API.Models
                 // Ejecuta una consulta SQL para obtener todos los detalles de los pedidos ordenados por orderId.
                 // La consulta se realiza utilizando Dapper, una biblioteca que simplifica el acceso a la base de datos.
                 // Se especifica el tipo de objeto que se espera como resultado (OrderDetailsObj) y la consulta SQL.
-                var sqlQuery = connection.Query<OrderDetailsObj>("SELECT * FROM OrderDetails ORDER BY orderId ASC");
+                var sqlQuery = connection.Query<OrderDetailsObj>("GetOrderDetailsWithProductNames");
 
                 // Convierte los resultados de la consulta en una lista y la devuelve.
                 return sqlQuery.ToList();

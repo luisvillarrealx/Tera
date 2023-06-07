@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using Tera_Web.Entities;
 using Tera_Web.Models;
 

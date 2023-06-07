@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
 using Tera_API.Entities;
@@ -16,7 +18,7 @@ namespace Tera_API.Models
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var sqlQuery = connection.Query<OrderObj>("SELECT * FROM [Order] ORDER BY orderId ASC");
+                var sqlQuery = connection.Query<OrderObj>("GetOrdersWithUserNames");
                 return sqlQuery.ToList();
             }
         }
@@ -44,6 +46,7 @@ namespace Tera_API.Models
         /// <returns>El número de filas afectadas en la base de datos.</returns>
         public int Register(List<OrderObj> orders, IConfiguration stringConnection)
         {
+            
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
                 connection.Open();
@@ -52,12 +55,15 @@ namespace Tera_API.Models
                 try
                 {
                     // Insertar en la tabla "Order" y obtener el orderId generado
-                    var orderId = connection.ExecuteScalar<int>("INSERT INTO [dbo].[Order] (orderUserId, orderDate, orderTotal) VALUES (@orderUserId, @orderDate, @orderTotal); SELECT SCOPE_IDENTITY();",
+                    var orderId = connection.ExecuteScalar<int>("DECLARE @OrderId INT; " +
+                        "INSERT INTO [dbo].[Order] (orderUserId, orderDate, orderTotal) VALUES (@orderUserId, @orderDate, @orderTotal); " +
+                        "SET @OrderId = SCOPE_IDENTITY(); " +
+                        "SELECT @OrderId;",
                         new
                         {
-                            orderUserId = orders[0].userId, // Suponemos que todos los pedidos tienen el mismo userId
+                            orderUserId = orders.First().userId,
                             orderDate = DateTime.Now.Date,
-                            orderTotal = orders.Sum(o => o.productCost * o.cuantity)
+                            orderTotal = orders.Sum(o => o.productCost * o.orderDetailsQuantity)
                         },
                         transaction: transaction);
 
@@ -69,7 +75,7 @@ namespace Tera_API.Models
                             {
                                 orderId,
                                 order.productId,
-                                order.cuantity
+                                order.orderDetailsQuantity
                             },
                             transaction: transaction);
                     }
@@ -100,7 +106,7 @@ namespace Tera_API.Models
                 new
                 {
                     orderObj.orderId,
-                    orderObj.orderUser,
+                    orderObj.orderUserId,
                     orderObj.orderDate,
                     orderObj.orderTotal
                 }, commandType: CommandType.StoredProcedure);

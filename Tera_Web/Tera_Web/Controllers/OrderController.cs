@@ -88,11 +88,21 @@ namespace Tera_Web.Controllers
         [HttpPost]
         public IActionResult CreateOrder(List<OrderObj> orders)
         {
+            try
+            {
+                OrderOBJList = JsonConvert.DeserializeObject<List<OrderObj>>(HttpContext.Session.GetString("Orders"));
+                //int total = Convert.ToInt32(HttpContext.Session.GetString("Total"));
+                orderModel.Register(OrderOBJList);
 
-            OrderOBJList = JsonConvert.DeserializeObject<List<OrderObj>>(HttpContext.Session.GetString("Orders"));
-            orderModel.Register(OrderOBJList);
+                return RedirectToAction(nameof(List));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(List));
+            }
 
-            return RedirectToAction(nameof(List));
+
+
         }
         [HttpPost]
         public JsonResult AddProduct(int id, int quantity, int cost)
@@ -105,7 +115,7 @@ namespace Tera_Web.Controllers
                 {
                     userId = Convert.ToInt32(HttpContext.Session.GetString("userId")),
                     productId = id,
-                    cuantity = quantity,
+                    orderDetailsQuantity = quantity,
                     productCost = cost * quantity
                 });
                 HttpContext.Session.SetString("Orders", JsonConvert.SerializeObject(OrderOBJList));
@@ -116,7 +126,7 @@ namespace Tera_Web.Controllers
                 {
                     userId = Convert.ToInt32(HttpContext.Session.GetString("userId")),
                     productId = id,
-                    cuantity = quantity,
+                    orderDetailsQuantity = quantity,
                     productCost = cost * quantity
                 });
                 HttpContext.Session.SetString("Orders", JsonConvert.SerializeObject(OrderOBJList));

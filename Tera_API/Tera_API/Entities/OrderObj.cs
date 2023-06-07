@@ -4,36 +4,26 @@ namespace Tera_API.Entities
 {
     public class OrderObj
     {
-        [DisplayName("ID")]
+        //Order Table
         public int orderId { get; set; } = 0;
-        [DisplayName("Usuario")]
-        public int orderUser { get; set; } = 0;
-        [DisplayName("Fecha")]
+        public int orderUserId { get; set; } = 0;
         public DateTime orderDate { get; set; } = DateTime.Now;
-        [DisplayName("Total")]
         public int orderTotal { get; set; } = 0;
 
 
-
-        [DisplayName("ID")]
+        //Product Table 
         public int productId { get; set; } = 0;
-
-
-        [DisplayName("Producto")]
         public string productName { get; set; } = string.Empty;
-
-        [DisplayName("Cantidad")]
-        public int cuantity { get; set; } = 0;
-
-        [DisplayName("Precio (₡)")]
+        public int orderDetailsQuantity { get; set; } = 0;
         public int productCost { get; set; } = 0;
-
-        [DisplayName("Unidad")]
         public string productMeasurementUnit { get; set; } = string.Empty;
 
 
-
-        [DisplayName("ID")]
+        //User Table
         public int userId { get; set; } = 0;
+
+        //Props for inner joins
+        public string FullName { get; set; } = string.Empty;
+
     }
 }
