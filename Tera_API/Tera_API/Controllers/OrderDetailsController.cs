@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Tera_API.Entities;
 using Tera_API.Models;
 
@@ -32,6 +33,14 @@ namespace Tera_API.Controllers
         *  El atributo Route se utiliza para establecer una ruta adicional para el método.
         *  El método crea una nueva instancia de OrderDetailsObj y devuelve la lista de detalles de pedidos utilizando el modelo OrderDetailsModel.
         */
+
+        [HttpGet]
+        [Route("GetOrderDetailsListUser/{id}")]
+        public List<OrderDetailsObj> GetOrderDetailsListUser(int id)
+        {
+            var roles = new OrderObj();
+            return OrderDetailsModel.GetOrderDetailsListUser(_configuration, id);
+        }
 
         // GET: Mostrar datos
         [HttpGet]
@@ -134,5 +143,14 @@ namespace Tera_API.Controllers
         *  El atributo Route se utiliza para establecer una ruta adicional para el método.
         *  El método intenta eliminar el detalle de pedido utilizando el modelo OrderDetailsModel y devuelve un resultado Ok o StatusCode según el resultado.
         */
+
+        [HttpGet]
+        [Route("ComboBoxConsultProducts")]
+        public ActionResult<List<ProductObj>> ComboBoxConsultProducts()
+        {
+            return Ok(OrderDetailsModel.ComboBoxProduct(_configuration));
+        }
+
     }
+
 }

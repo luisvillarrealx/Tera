@@ -20,10 +20,16 @@ namespace Tera_Web.Controllers
         // GET: OrderController
         public ActionResult List()
         {
+
             List<OrderObj> orders = orderModel.GetOrderList();
             return View(orders);
         }
-
+        public ActionResult ListUser()
+        {
+            int id = Convert.ToInt32(HttpContext.Session.GetString("userId"));
+            List<OrderObj> orders = orderModel.GetOrderListUser(id);
+            return View(orders);
+        }
         // GET: OrderController/Create
         public ActionResult Register()
         {
@@ -62,6 +68,7 @@ namespace Tera_Web.Controllers
             }
             return View(orderObj);
         }
+
         // GET: OrderController/Delete/5
         public ActionResult DeleteOrder(int id)
         {

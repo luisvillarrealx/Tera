@@ -39,6 +39,36 @@ namespace Tera_API.Models
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stringConnection"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<OrderObj> GetOrderListUser(IConfiguration stringConnection, int orderUserId)
+        {
+
+            using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
+            {
+                var sqlQuery = connection.Query<OrderObj>("SELECT \r\n\tO.[orderId]," +
+                    "CONCAT(U.[userName], ' '," +
+                    " U.[userFirstSurname], ' ', " +
+                    "U.[userSecondSurname])" +
+                    " \r\n\t\tAS " +
+                    "\r\n\t\tFullName," +
+                    "\r\n\tO.orderDate," +
+                    "\r\n\tO.[orderTotal]  \r\n    " +
+                    "FROM \r\n\t[dbo].[Order] " +
+                    "\r\n\tAS O\r\n    " +
+                    "INNER JOIN [dbo].[Users] " +
+                    "AS U ON " +
+                    "O.[orderUserId] = U.[userId]" +
+                    "\r\n\tWHERE " +
+                    "U.[userId] = @orderUserId", new { orderUserId });
+                return sqlQuery.ToList();
+            }
+        }
+
+        /// <summary>
         /// Registra un nuevo usuario en la base de datos.
         /// </summary>
         /// <param name="orderObj">El objeto OrderObj que contiene los datos del usuario a registrar.</param>

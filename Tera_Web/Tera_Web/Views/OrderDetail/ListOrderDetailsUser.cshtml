@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Tera_Web.Entities.OrderDetailObj>
+
+@{
+    ViewData["Title"] = "ListOrderDetailsUser";
+
+}
+
+
+
+<section class="content mt-5">
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-5">
+                    <h3 class="card-title">Registro de detalle de pedidos</h3>
+                    <div class="card-body table-responsive">
+                        <div class="pb-2">
+                            @if (Model.Any())
+                            {
+                                var firstOrder = Model.First();
+                                int orderId = firstOrder.orderId;
+
+                                <a href="@Url.Action("InsertOrderDetails", "OrderDetail", new { ID = orderId })" class="btn btn-primary ml-auto" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                            }
+                        </div>
+                        <table id="Table" class="table table-bordered table-hover table-striped">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.orderDetailsId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.orderId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.productName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.orderDetailsQuantity)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.orderDetailsId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.orderId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.productName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.orderDetailsQuantity)
+                                        </td>
+                                        <td class="text-center col-1">
+                                            <a href="@Url.Action("EditOrderDetails","OrderDetail", new { ID = item.orderDetailsId })" class="btn btn-warning px-2" type="" value="">
+                                                <i class="fas fa-angle-double-right text-light"></i>
+                                            </a>
+                                            <a href="@Url.Action("DeleteOrderDetails","OrderDetail", new { ID = item.orderDetailsId })" class="btn btn-danger px-2" type="" value="">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

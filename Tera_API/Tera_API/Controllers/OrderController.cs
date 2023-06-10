@@ -36,6 +36,15 @@ namespace Tera_API.Controllers
             return orderModel.ListOrder(_configuration);
         }
 
+
+        [HttpGet]
+        [Route("GetOrderListUser/{id}")]
+        public List<OrderObj> GetOrderListUser(int id)
+        {
+            var roles = new OrderObj();
+            return orderModel.GetOrderListUser(_configuration, id);
+        }
+
         /// <summary>
         /// Obtiene un pedido por su ID.
         /// </summary>

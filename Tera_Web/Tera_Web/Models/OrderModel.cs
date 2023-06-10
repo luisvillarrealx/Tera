@@ -9,6 +9,7 @@ namespace Tera_Web.Models
         string urlGetListForOrder = "https://localhost:7021/api/Product/GetList";
         string urlGetlist = "https://localhost:7021/api/Order/GetList";
         string urlGet = "https://localhost:7021/api/Order/GetOrder";
+        string urlGetOrderList = "https://localhost:7021/api/Order/GetOrderListUser";
 
         public string lblmsj { get; set; }
         List<OrderObj> OrderList = new List<OrderObj>();
@@ -46,6 +47,35 @@ namespace Tera_Web.Models
             }
             return OrderList;
         }
+        public List<OrderObj> GetOrderListUser(int id)
+        {
+            //IEnumerable<Carrera> A;
+            using (var client = new HttpClient())
+            {
+                var task = Task.Run(async () =>
+                {
+                    return await client.GetAsync(urlGetOrderList + "/" + id.ToString());
+                }
+                );
+                HttpResponseMessage message = task.Result;
+                if (message.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var task2 = Task<string>.Run(async () =>
+                    {
+                        return await message.Content.ReadAsStringAsync();
+                    });
+                    string resultstr = task2.Result;
+                    OrderList = JsonConvert.DeserializeObject<List<OrderObj>>(resultstr);
+                }
+                else
+                {
+
+                }
+
+            }
+            return OrderList;
+        }
+
         //We query the API to fill an object that will be edited.
         public OrderObj GetOrder(int id)
         {

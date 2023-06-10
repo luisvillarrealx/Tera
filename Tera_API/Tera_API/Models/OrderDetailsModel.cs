@@ -26,6 +26,36 @@ namespace Tera_API.Models
                 return sqlQuery.ToList();
             }
         }
+        
+        // Obtiene una lista de todos los detalles de los pedidos en la base de datos.
+        public List<OrderDetailsObj> GetOrderDetailsListUser(IConfiguration stringConnection , int orderId)
+        {
+            using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
+            {
+                // Crea una conexión a la base de datos utilizando la cadena de conexión proporcionada.
+                // SqlConnection es una clase de .NET para conectarse a una base de datos SQL Server.
+                // La cadena de conexión se obtiene de la configuración de la aplicación.
+                // Aquí se utiliza la sección "ConnectionStrings:Connection" de la configuración.
+
+                // Ejecuta una consulta SQL para obtener todos los detalles de los pedidos ordenados por orderId.
+                // La consulta se realiza utilizando Dapper, una biblioteca que simplifica el acceso a la base de datos.
+                // Se especifica el tipo de objeto que se espera como resultado (OrderDetailsObj) y la consulta SQL.
+                var sqlQuery = connection.Query<OrderDetailsObj>("SELECT OD.[orderDetailsId]," +
+                    " OD.[orderId]," +
+                    " P.[productName]," +
+                    " OD.[orderDetailsQuantity]\r\n    " +
+                    "FROM [dbo].[OrderDetails] " +
+                    "AS OD\r\n    " +
+                    "INNER JOIN " +
+                    "[dbo].[Products] " +
+                    "AS P ON " +
+                    "OD.[productId] = P.[productId]\r\n\t" +
+                    "Where OD.orderId = @orderId", new { orderId });
+
+                // Convierte los resultados de la consulta en una lista y la devuelve.
+                return sqlQuery.ToList();
+            }
+        }
 
         // Obtiene un detalle de pedido de la base de datos por su ID.
         public OrderDetailsObj GetOrderDetails(IConfiguration stringConnection, int id)
@@ -107,6 +137,14 @@ namespace Tera_API.Models
                 {
                     orderDetailsObj.orderDetailsId
                 }, commandType: CommandType.StoredProcedure);
+            }
+        }
+        public List<ProductObj> ComboBoxProduct(IConfiguration stringConnection)
+        {
+            using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
+            {
+                var datos = connection.Query<ProductObj>("SELECT * FROM Products").ToList();
+                return datos;
             }
         }
     }

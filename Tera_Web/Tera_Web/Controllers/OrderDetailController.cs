@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Tera_Web.Entities;
 using Tera_Web.Filters;
 using Tera_Web.Models;
@@ -18,10 +19,40 @@ namespace Tera_Web.Controllers
             return View(orders);
         }
 
-        // GET: Order/InsertOrderDetails
-        public ActionResult InsertOrderDetails()
+        public IActionResult ListOrderDetailsUser(int orderId)
         {
-            return View();
+            List<OrderDetailObj> orders = orderDetailsModel.GetOrderDetailsListUser(orderId);
+            return View(orders);
+        }
+
+        // GET: Order/InsertOrderDetails
+        public ActionResult InsertOrderDetails(int id)
+        {
+            try
+            {
+                orderDetailsObj.orderId = id;
+                var ProductIdCombo = orderDetailsModel.ComboBoxProduct();
+                var ProductIdListCombo = new List<SelectListItem>();
+
+                ProductIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Producto" });
+                foreach (var item in ProductIdCombo)
+                    ProductIdListCombo.Add(new SelectListItem { Value = item.productId.ToString(), Text = item.productName });
+
+                ViewBag.ComboProductId = ProductIdListCombo.AsEnumerable();
+                return View(orderDetailsObj);
+            }
+            catch
+            {
+                var ProductIdCombo = orderDetailsModel.ComboBoxProduct();
+                var ProductIdListCombo = new List<SelectListItem>();
+
+                ProductIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Producto" });
+                foreach (var item in ProductIdCombo)
+                    ProductIdListCombo.Add(new SelectListItem { Value = item.productId.ToString(), Text = item.productName });
+
+                ViewBag.ComboProductId = ProductIdListCombo.AsEnumerable();
+                return View(orderDetailsObj);
+            }
         }
 
         // POST: Order/InsertOrderDetails
@@ -31,7 +62,7 @@ namespace Tera_Web.Controllers
             if (ModelState.IsValid)
             {
                 orderDetailsModel.Register(orderDetailsObj);
-                return RedirectToAction(nameof(List));
+                return RedirectToAction(nameof(ListOrderDetailsUser));
             }
             return View(orderDetailsObj);
         }
@@ -39,12 +70,40 @@ namespace Tera_Web.Controllers
         // GET: Order/EditOrderDetails/5
         public ActionResult EditOrderDetails(int id)
         {
-            OrderDetailObj order = orderDetailsModel.GetOrder(id);
-            if (order == null)
+            try
             {
-                return NotFound();
+                var ProductIdCombo = orderDetailsModel.ComboBoxProduct();
+                var ProductIdListCombo = new List<SelectListItem>();
+
+                ProductIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Producto" });
+                foreach (var item in ProductIdCombo)
+                    ProductIdListCombo.Add(new SelectListItem { Value = item.productId.ToString(), Text = item.productName });
+
+                ViewBag.ComboProductId = ProductIdListCombo.AsEnumerable();
+
+                orderDetailsObj = orderDetailsModel.GetOrder(id);
+                if (orderDetailsObj == null)
+                {
+                    return RedirectToAction(nameof(List)); ;
+                }
+                return View(orderDetailsObj);
             }
-            return View(order);
+            catch
+            {
+                var ProductIdCombo = orderDetailsModel.ComboBoxProduct();
+                var ProductIdListCombo = new List<SelectListItem>();
+
+                ProductIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Producto" });
+                foreach (var item in ProductIdCombo)
+                    ProductIdListCombo.Add(new SelectListItem { Value = item.productId.ToString(), Text = item.productName });
+
+                ViewBag.ComboProductId = ProductIdListCombo.AsEnumerable();
+
+                orderDetailsObj = orderDetailsModel.GetOrder(id);
+
+                return View(orderDetailsObj);
+            }
+
         }
 
         // POST: Order/EditOrderDetails/5
@@ -57,6 +116,29 @@ namespace Tera_Web.Controllers
                 return RedirectToAction(nameof(List));
             }
             return View(orderDetailsModel);
+        }
+
+
+        // GET: OrderController/Edit/5
+        public ActionResult EditOrderDetailsUser(int id)
+        {
+            //OrderObj order = orderDetailsModel.GetOrderDetailsUser();
+            //if (order == null)
+            //{
+            //    return NotFound();
+            //}
+            return View(/*order*/);
+        }
+        // POST: OrderController/Edit/5
+        [HttpPost]
+        public ActionResult EditOrderDetailsUser(int id, OrderObj orderObj)
+        {
+            if (ModelState.IsValid)
+            {
+                //orderModel.EditOrder(orderObj);
+                return RedirectToAction(nameof(List));
+            }
+            return View(orderObj);
         }
 
         // GET: Order/DeleteOrderDetails/5
