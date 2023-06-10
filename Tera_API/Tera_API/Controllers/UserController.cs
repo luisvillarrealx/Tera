@@ -69,9 +69,10 @@ namespace Tera_API.Controllers
 
         [HttpGet]
         [Route("EmailExists")]
-        public string EmailExists(string validateEmailExists)
+        public bool EmailExists(string userEmail)
         {
-            return userModel.EmailExists(validateEmailExists);
+            UserModel userModel = new UserModel();
+            return userModel.EmailExists(userEmail, _configuration);
         }
 
         /// <summary>

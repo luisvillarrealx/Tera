@@ -132,19 +132,39 @@ namespace Tera_Web.Models
             }
         }
 
-        public string EmailExists(string validateEmailExists)
+        public bool EmailExists(string userEmail)
         {
             using (var client = new HttpClient())
             {
-                string url = "https://localhost:7021//api/EmailExists?validateEmailExists=" + validateEmailExists;
-                HttpResponseMessage response = client.GetAsync(url).GetAwaiter().GetResult();
+                string url = $"https://localhost:7021/api/User/EmailExists?userEmail={userEmail}";
 
-                if (response.IsSuccessStatusCode)
-                    return response.Content.ReadFromJsonAsync<string>().Result;
+                try
+                {
+                    HttpResponseMessage response = client.GetAsync(url).GetAwaiter().GetResult();
 
-                return "ERROR";
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                        bool emailExists = bool.Parse(responseContent);
+                        return emailExists;
+                    }
+                    else
+                    {
+                        // Manejar la respuesta no exitosa si es necesario
+                        Console.WriteLine("Error en la solicitud: " + response.StatusCode);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Manejar excepciones si ocurren
+                    Console.WriteLine("Error al realizar la solicitud: " + ex.Message);
+                }
             }
+
+            return false;
         }
+
+
 
         public void ChangeUserActive(long id)
         {

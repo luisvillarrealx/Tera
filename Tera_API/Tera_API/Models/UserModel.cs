@@ -65,19 +65,16 @@ namespace Tera_API.Models
             }
         }
 
-        public string EmailExists(string validateEmailExists)
+        public bool EmailExists(string userEmail, IConfiguration configuration)
         {
-            using (var client = new HttpClient())
+            string connectionString = configuration.GetConnectionString("Connection");
+            using (var connection = new SqlConnection(connectionString))
             {
-                string url = "https://localhost:7021//api/EmailExists?validateEmailExists=" + validateEmailExists;
-                HttpResponseMessage response = client.GetAsync(url).GetAwaiter().GetResult();
-
-                if (response.IsSuccessStatusCode)
-                    return response.Content.ReadFromJsonAsync<string>().Result;
-
-                return "ERROR";
+                var sqlQuery = connection.Query<UserObj>("SELECT * FROM Users WHERE userEmail = @userEmail", new { userEmail }).ToList();
+                return sqlQuery.Any(); // Devuelve true si se encuentra al menos un usuario con el correo electrónico dado
             }
         }
+
 
         /// Actualiza los datos de un usuario existente en la base de datos.
         public int EditUser(UserObj user, IConfiguration stringConnection)

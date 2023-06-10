@@ -1,14 +1,14 @@
 ﻿function validateEmail() {
     var emailInput = document.getElementById('email');
     var emailError = document.getElementById('userEmail-error');
-
     var email = emailInput.value.trim();
+
     if (email === '') {
-        emailError.innerText = 'Por favor, ingrese su correo';
+        showError(emailError, 'Por favor, ingrese su correo');
     } else if (!validateEmailFormat(email)) {
-        emailError.innerText = 'No cumple con el formato de correo electrónico';
+        showError(emailError, 'No cumple con el formato de correo electrónico');
     } else {
-        emailError.innerText = '';
+        clearError(emailError);
     }
 }
 
@@ -17,30 +17,86 @@ function validateEmailFormat(email) {
     return emailPattern.test(email);
 }
 
+function validateEmailExist() {
+    var userEmail = $("#email").val();
+
+    // Realizar una solicitud AJAX para verificar si el correo electrónico existe
+    $.ajax({
+        url: "/User/EmailExists",
+        type: "POST",
+        data: { userEmail: userEmail },
+        success: function (result) {
+            if (result === true) {
+                // El correo electrónico existe, muestra el mensaje de error
+                $("#userEmail-error").text("El correo electrónico ya está registrado.");
+            }
+        },
+        error: function () {
+            // Manejar el error de la solicitud AJAX si es necesario
+            console.log("Error al verificar el correo electrónico.");
+        }
+    });
+}
+
+
 function validateSiteId() {
     var siteIdDropdown = document.getElementById('userSiteId');
     var siteIdError = document.getElementById('userSiteId-error');
 
     if (siteIdDropdown.selectedIndex === 0) {
-        siteIdError.innerText = 'Por favor, selecciona una sede';
+        showError(siteIdError, 'Por favor, selecciona una sede');
     } else {
-        siteIdError.innerText = '';
+        clearError(siteIdError);
     }
 }
 
-function clearError(elementId) {
-    var errorElement = document.getElementById(elementId + '-error');
+function validateRoleId() {
+    var roleIdDropdown = document.getElementById('userRoleId');
+    var roleIdError = document.getElementById('userRoleId-error');
+
+    if (roleIdDropdown.selectedIndex === 0) {
+        showError(roleIdError, 'Por favor, selecciona un Rol');
+    } else {
+        clearError(roleIdError);
+    }
+}
+function validateRoleId() {
+    var roleIdDropdown = document.getElementById('userRoleId');
+    var roleIdError = document.getElementById('userRoleId-error');
+
+    if (roleIdDropdown.selectedIndex === 0) {
+        showError(roleIdError, 'Por favor, selecciona un Rol');
+    } else {
+        clearError(roleIdError);
+    }
+}
+
+function showError(errorElement, errorMessage) {
+    errorElement.innerText = errorMessage;
+}
+
+function clearError(errorElement) {
     errorElement.innerText = '';
 }
 
-document.getElementById('user-form').addEventListener('submit', function (event) {
+function validateForm() {
+    // Realizar todas las validaciones necesarias
     validateEmail();
     validateSiteId();
+    validateRoleId();
 
-    var emailError = document.getElementById('userEmail-error').innerText;
-    var siteIdError = document.getElementById('userSiteId-error').innerText;
+    // Verificar si hay errores
+    var hasErrors = document.querySelectorAll('.text-danger').length > 0;
 
-    if (emailError !== '' || siteIdError !== '') {
-        event.preventDefault();
+    // Si hay errores, no enviar el formulario
+    if (hasErrors) {
+        event.preventDefault(); // Evitar que el formulario se envíe
     }
-});
+}
+
+// Agregar el evento onsubmit al formulario
+var userForm = document.getElementById('user-form');
+if (userForm) {
+    userForm.addEventListener('submit', validateForm);
+}
+

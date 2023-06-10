@@ -88,6 +88,16 @@ namespace Tera_Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult EmailExists(string userEmail)
+        {
+            // Validar si el correo electrónico existe
+            bool emailExists = userModel.EmailExists(userEmail);
+
+            return Json(emailExists);
+        }
+
+
         private string GenerateRandomPassword(int length)
         {
             const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -101,12 +111,6 @@ namespace Tera_Web.Controllers
             }
 
             return password.ToString();
-        }
-
-        [HttpPost]
-        public ActionResult EmailExists(string validateEmailExists)
-        {
-            return Json(userModel.EmailExists(validateEmailExists));
         }
 
         public ActionResult EditUser(int id)
