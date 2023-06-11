@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    int roleID = Convert.ToInt32(Context.Session.GetString("roleID"));
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,13 +39,19 @@
                         </a>
                         <ul class="nav">
                             <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Usuarios", "List", "User")</li>
-                            <li>@Html.ActionLink("Roles", "List", "Role")</li>
-                            <li>@Html.ActionLink("Productos", "List", "Product")</li>
-                            <li>@Html.ActionLink("Pedidos", "List", "Order")</li>
+                            @if (roleID == 1)
+                            {
+                                <li>@Html.ActionLink("Usuarios", "List", "User")</li>
+                                <li>@Html.ActionLink("Roles", "List", "Role")</li>
+                                <li>@Html.ActionLink("Productos", "List", "Product")</li>
+                                <li>@Html.ActionLink("Pedidos", "List", "Order")</li>
+                                <li>@Html.ActionLink("Pedidos detalles", "List", "OrderDetail")</li>
+                                <li>@Html.ActionLink("Sedes", "List", "Site")</li>
+                            }
+
                             <li>@Html.ActionLink("Pedido", "ListUser", "Order")</li>
-                            <li>@Html.ActionLink("Pedidos detalles", "List", "OrderDetail")</li>
-                            <li>@Html.ActionLink("Sedes", "List", "Site")</li>
+
+
                             <li><a href="@Url.Action("UserProfile","User")"><i class="fa-regular fa-user"></i></a></li>
                             <li><a href="@Url.Action("LogOut","Auth")"><i class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i></a></li>
                         </ul>

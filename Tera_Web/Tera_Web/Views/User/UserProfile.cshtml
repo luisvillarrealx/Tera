@@ -12,7 +12,7 @@
                     <div class="">
                         <h4 class="card-title text-center"><i class="fa-solid fa-user" style="color: #ee626b;"></i></i></h4>
                     </div>
-                    @using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { onsubmit = "return validateForm();" }))
+                    @using (Html.BeginForm("UserProfile", "User", FormMethod.Post, new { onsubmit = "return validateForm();" }))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             @Html.HiddenFor(m => m.userId)

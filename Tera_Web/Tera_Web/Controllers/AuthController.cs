@@ -31,6 +31,7 @@ namespace Tera_Web.Controllers
                     HttpContext.Session.SetString("userFirstSurname", result.userFirstSurname);
                     HttpContext.Session.SetString("userSecondSurname", result.userSecondSurname);
                     HttpContext.Session.SetString("userId", result.userId.ToString());
+                    HttpContext.Session.SetString("roleID", result.userRoleId.ToString());
 
 
 

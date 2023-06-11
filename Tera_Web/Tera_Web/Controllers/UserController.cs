@@ -18,7 +18,7 @@ namespace Tera_Web.Controllers
         UserModel userModel = new UserModel();
         AuthModel authModel = new AuthModel();
 
-
+        [FilterSessionValidation]
         public IActionResult List()
         {
             List<UserObj> _user = new List<UserObj>();
@@ -27,6 +27,7 @@ namespace Tera_Web.Controllers
             return View(_user);
         }
 
+        [FilterSessionValidation]
         [HttpGet]
         public ActionResult Register()
         {
@@ -58,7 +59,7 @@ namespace Tera_Web.Controllers
             }
         }
 
-
+        [FilterSessionValidation]
         [HttpPost]
         public IActionResult Register(UserObj userObj)
         {
@@ -112,7 +113,7 @@ namespace Tera_Web.Controllers
 
             return password.ToString();
         }
-
+        [FilterSessionValidation]
         public ActionResult EditUser(int id)
         {
             try
@@ -160,7 +161,7 @@ namespace Tera_Web.Controllers
             }
 
         }
-
+        [FilterSessionValidation]
         [HttpPost]
         public ActionResult EditUser(UserObj userObj)
         {
@@ -173,6 +174,15 @@ namespace Tera_Web.Controllers
                 else if (!IsValidEmail(userObj.userEmail))
                 {
                     ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico válido.");
+                }
+                else
+                {
+                    // Validar si el correo electrónico ya existe
+                    bool emailExists = userModel.EmailExists(userObj.userEmail);
+                    if (emailExists)
+                    {
+                        ModelState.AddModelError("userEmail", "El correo electrónico ya está registrado.");
+                    }
                 }
 
                 if (string.IsNullOrEmpty(userObj.userGovId))
@@ -191,12 +201,30 @@ namespace Tera_Web.Controllers
                 }
                 else
                 {
+                    var userRoleIdCombo = userModel.ComboBoxRoles();
+                    var userRoleIdListCombo = new List<SelectListItem>();
+
+                    userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+                    foreach (var item in userRoleIdCombo)
+                        userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+
+                    // SiteCombo
+                    var userSiteIdCombo = userModel.ComboBoxSites();
+                    var userSiteIdListCombo = new List<SelectListItem>();
+
+                    userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+                    foreach (var item in userSiteIdCombo)
+                        userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+
+                    ViewBag.CombouserRoleId = userRoleIdListCombo;
+                    ViewBag.CombouserSiteId = userSiteIdListCombo;
+
                     return View(userObj);
                 }
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(List));
             }
         }
 
@@ -239,16 +267,69 @@ namespace Tera_Web.Controllers
         {
             try
             {
-                userModel.PutUsers(userObj);
-                return RedirectToAction("List", "User");
+                if (string.IsNullOrEmpty(userObj.userEmail))
+                {
+                    ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico.");
+                }
+                else if (!IsValidEmail(userObj.userEmail))
+                {
+                    ModelState.AddModelError("userEmail", "Por favor, ingresa un correo electrónico válido.");
+                }
+                else
+                {
+                    // Validar si el correo electrónico ya existe
+                    bool emailExists = userModel.EmailExists(userObj.userEmail);
+                    if (emailExists)
+                    {
+                        ModelState.AddModelError("userEmail", "El correo electrónico ya está registrado.");
+                    }
+                }
+
+                if (string.IsNullOrEmpty(userObj.userGovId))
+                {
+                    ModelState.AddModelError("userGovId", "Por favor, ingresa la cédula.");
+                }
+                else if (userObj.userGovId.Length != 9)
+                {
+                    ModelState.AddModelError("userGovId", "La cédula debe tener 9 dígitos o mas si es extranjero.");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    userModel.PutUsers(userObj);
+                    return RedirectToAction("List", "User");
+                }
+                else
+                {
+                    var userRoleIdCombo = userModel.ComboBoxRoles();
+                    var userRoleIdListCombo = new List<SelectListItem>();
+
+                    userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+                    foreach (var item in userRoleIdCombo)
+                        userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+
+                    // SiteCombo
+                    var userSiteIdCombo = userModel.ComboBoxSites();
+                    var userSiteIdListCombo = new List<SelectListItem>();
+
+                    userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+                    foreach (var item in userSiteIdCombo)
+                        userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+
+                    ViewBag.CombouserRoleId = userRoleIdListCombo;
+                    ViewBag.CombouserSiteId = userSiteIdListCombo;
+
+                    return View(userObj);
+                }
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
         }
 
         // GET: UsuarioController/Delete/5
+        [FilterSessionValidation]
         [HttpPost]
         public ActionResult DeleteUser(int id, bool confirmed)
         {
@@ -261,6 +342,7 @@ namespace Tera_Web.Controllers
         }
 
         // POST: UsuarioController/Delete/5
+        [FilterSessionValidation]
         [HttpPost]
         public ActionResult ChangeUserActive(long id)
         {
