@@ -11,5 +11,9 @@ namespace Tera_API.Entities
 
         public string productMeasurementUnit { get; set; } = string.Empty;
 
+        //CategoryObj
+        public int categoryId { get; set; } = 0;
+        public string categoryName { get; set; } = string.Empty;
+
     }
 }

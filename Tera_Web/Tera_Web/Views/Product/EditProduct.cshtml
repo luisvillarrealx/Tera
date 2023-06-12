@@ -34,6 +34,11 @@
                             @Html.DropDownListFor(m => m.productMeasurementUnit, ViewBag.ComboUnit as List<SelectListItem>, new { @class = "form-control", id = "productMeasurementUnit" })
                             <span asp-validation-for="productMeasurementUnit" class="text-danger"></span>
                         </div>
+                        <div class="form-group pb-4">
+                            <label asp-for="categoryName" class="control-label"></label>
+                            @Html.DropDownListFor(m => m.categoryId, ViewBag.CombocategoryId as List<SelectListItem>, new { @class = "form-control", id = "categoryId" })
+                            <span asp-validation-for="productMeasurementUnit" class="text-danger"></span>
+                        </div>
                         <div class="form-group">
                             <a href="@Url.Action("List","Product")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
                             <button type="submit" class="btn btn-success"><i class="fa-solid fa-check "></i></button>

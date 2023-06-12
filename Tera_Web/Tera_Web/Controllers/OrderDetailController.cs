@@ -13,6 +13,7 @@ namespace Tera_Web.Controllers
         OrderDetailModel orderDetailsModel = new OrderDetailModel();
 
         // GET: Order/List
+        [FilterSessionValidation]
         public IActionResult List()
         {
             List<OrderDetailObj> orders = orderDetailsModel.GetOrderDetailsList();

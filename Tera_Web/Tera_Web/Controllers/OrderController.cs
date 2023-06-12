@@ -18,6 +18,7 @@ namespace Tera_Web.Controllers
         List<OrderObj> OrderOBJList = new List<OrderObj>();
 
         // GET: OrderController
+        [FilterSessionValidation]
         public ActionResult List()
         {
 

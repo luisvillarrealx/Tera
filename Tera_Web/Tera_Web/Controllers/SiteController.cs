@@ -5,6 +5,7 @@ using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
+    [FilterSessionValidation]
     [FilterSession]
     public class SiteController : Controller
     {

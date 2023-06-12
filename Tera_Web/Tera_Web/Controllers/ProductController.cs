@@ -6,6 +6,7 @@ using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
+    [FilterSessionValidation]
     [FilterSession]
     public class ProductController : Controller
     {
@@ -35,6 +36,14 @@ namespace Tera_Web.Controllers
             userUnitListCombo.Add(new SelectListItem { Value = "Unidad", Text = "Unidad" });
 
             ViewBag.ComboUnit = userUnitListCombo;
+
+            var categoryIdCombo = productModel.ComboBoxCategory();
+            var categoryIdListCombo = new List<SelectListItem>();
+
+            categoryIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una Categoria" });
+            foreach (var item in categoryIdCombo)
+                categoryIdListCombo.Add(new SelectListItem { Value = item.categoryId.ToString(), Text = item.CategoryName });
+            ViewBag.CombocategoryId = categoryIdListCombo.AsEnumerable();
             return View();
         }
 
@@ -77,6 +86,14 @@ namespace Tera_Web.Controllers
 
             ViewBag.ComboUnit = userUnitListCombo;
             productObj = productModel.GetProduct(id);
+
+            var categoryIdCombo = productModel.ComboBoxCategory();
+            var categoryIdListCombo = new List<SelectListItem>();
+
+            categoryIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una Categoria" });
+            foreach (var item in categoryIdCombo)
+                categoryIdListCombo.Add(new SelectListItem { Value = item.categoryId.ToString(), Text = item.CategoryName });
+            ViewBag.CombocategoryId = categoryIdListCombo.AsEnumerable();
             return View(productObj);
         }
 

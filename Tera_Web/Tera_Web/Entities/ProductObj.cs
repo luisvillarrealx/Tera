@@ -21,5 +21,10 @@ namespace Tera_Web.Entities
         [DisplayName("Cantidad")]
         public int cuantity { get; set; } = 0;
 
+        //CategoryObj
+        [DisplayName("ID")]
+        public int categoryId { get; set; } = 0;
+        [DisplayName("Categoria")]
+        public string categoryName { get; set; } = string.Empty;
     }
 }

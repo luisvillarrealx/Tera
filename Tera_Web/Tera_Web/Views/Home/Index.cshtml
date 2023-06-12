@@ -1,4 +1,7 @@
-﻿<div id="js-preloader" class="js-preloader">
+﻿@{
+    int roleID = Convert.ToInt32(Context.Session.GetString("roleID"));
+}
+<div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
         <span class="dot"></span>
         <div class="dots">
@@ -31,16 +34,42 @@
 <div class="features mb-5">
     <div class="container">
         <div class="row">
+            @if (roleID == 1)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <a href="@Url.Action("Consolidated","Consolidated")">
+                        <div class="item">
+                            <div class="image">
+                                <img src="~/images/featured-04.png" alt="" style="max-width: 44px;">
+                            </div>
+                            <h4>Consolidado</h4>
+                        </div>
+                    </a>
+                </div>
+            }
             <div class="col-lg-3 col-md-6">
-                <a href="@Url.Action("Consolidated","Consolidated")">
+                <a href="@Url.Action("CreateOrder","Order")">
                     <div class="item">
                         <div class="image">
                             <img src="~/images/featured-04.png" alt="" style="max-width: 44px;">
                         </div>
-                        <h4>Consolidado</h4>
+                        <h4>Pedir</h4>
                     </div>
                 </a>
             </div>
+            @if (roleID == 1)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <a href="#">
+                        <div class="item">
+                            <div class="image">
+                                <img src="~/images/featured-01.png" alt="" style="max-width: 44px;">
+                            </div>
+                            <h4>Reportes</h4>
+                        </div>
+                    </a>
+                </div>
+            }
             <div class="col-lg-3 col-md-6">
                 <a href="@Url.Action("UserProfile","User")">
                     <div class="item">
@@ -48,26 +77,6 @@
                             <img src="~/images/featured-02.png" alt="" style="max-width: 44px;">
                         </div>
                         <h4>Perfil</h4>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="item">
-                        <div class="image">
-                            <img src="~/images/featured-03.png" alt="" style="max-width: 44px;">
-                        </div>
-                        <h4>Logs</h4>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="item">
-                        <div class="image">
-                            <img src="~/images/featured-01.png" alt="" style="max-width: 44px;">
-                        </div>
-                        <h4>Reportes</h4>
                     </div>
                 </a>
             </div>

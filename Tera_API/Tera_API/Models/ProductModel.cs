@@ -16,7 +16,7 @@ namespace Tera_API.Models
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var SqlQuery = connection.Query<ProductObj>("SELECT * FROM Products ORDER BY productId ASC");
+                var SqlQuery = connection.Query<ProductObj>("GetProductsWithCategoryNames");
                 return SqlQuery.ToList();
             }
         }
@@ -51,7 +51,8 @@ namespace Tera_API.Models
                     {
                         productObj.productName,
                         productObj.productCost,
-                        productObj.productMeasurementUnit
+                        productObj.productMeasurementUnit,
+                        productObj.categoryId
                     }, commandType: CommandType.StoredProcedure);
             }
         }
@@ -72,7 +73,8 @@ namespace Tera_API.Models
                         productObj.productId,
                         productObj.productName,
                         productObj.productCost,
-                        productObj.productMeasurementUnit
+                        productObj.productMeasurementUnit,
+                        productObj.categoryId
                     }, commandType: CommandType.StoredProcedure);
             }
         }

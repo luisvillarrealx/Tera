@@ -11,6 +11,7 @@
                     <div class="card-body table-responsive">
                         <div class="pb-2">
                             <a href="@Url.Action("Register","Product")" class="btn btn-primary ml-auto" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                            <a href="@Url.Action("List","Category")" class="btn btn-primary ml-auto" type="button" value=""><i class="fa-solid fa-plus"></i></a>
                         </div>
                         <table id="Table" class="table table-bordered table-hover table-striped ">
                             <thead class="text-center">
@@ -26,6 +27,9 @@
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.productMeasurementUnit)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.categoryName)
                                     </th>
                                     <th class="text-center">Editar</th>
                                 </tr>
@@ -67,6 +71,16 @@
                                             else
                                             {
                                                 @Html.DisplayFor(modelItem => item.productMeasurementUnit)
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.categoryName))
+                                            {
+                                                <span class="text-center">-</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.categoryName)
                                             }
                                         </td>
                                         <td class="text-center col-2">

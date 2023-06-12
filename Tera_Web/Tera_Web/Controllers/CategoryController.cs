@@ -1,24 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Tera_Web.Entities;
-using Tera_Web.Filters;
 using Tera_Web.Models;
 
 namespace Tera_Web.Controllers
 {
-    [FilterSessionValidation]
-    [FilterSession]
-    public class RoleController : Controller
+    public class CategoryController : Controller
     {
-        RoleObj roleObj = new RoleObj();
-        RoleModel roleModel = new RoleModel();
+        CategoryObj CategoryObj = new CategoryObj();
+        CategoryModel CategoryModel = new CategoryModel();
 
         // GET: RolesController
-        [FilterSessionValidation]
         public ActionResult List()
         {
-            List<RoleObj> _rol = new List<RoleObj>();
-            _rol = roleModel.GetRoleList().ToList();
-            return View(_rol);
+            List<CategoryObj> _categoryObj = new List<CategoryObj>();
+            _categoryObj = CategoryModel.GetCategoryList().ToList();
+            return View(_categoryObj);
         }
 
         // GET: RolesController/Create
@@ -30,12 +27,12 @@ namespace Tera_Web.Controllers
 
         // POST: RolesController/Create
         [HttpPost]
-        public ActionResult Register(RoleObj roleObj)
+        public ActionResult Register(CategoryObj CategoryObj)
         {
-            string mensaje = ValidateRoles(roleObj);
+            string mensaje = ValidateRoles(CategoryObj);
             if (string.IsNullOrEmpty(mensaje))
             {
-                roleModel.PostRoles(roleObj);
+                CategoryModel.PostCategory(CategoryObj);
                 return RedirectToAction("List", "Role");
                 //else
                 //{
@@ -50,9 +47,9 @@ namespace Tera_Web.Controllers
                 return View("List");
             }
         }
-        private string ValidateRoles(RoleObj roleObj)
+        private string ValidateRoles(CategoryObj CategoryObj)
         {
-            if (string.IsNullOrEmpty(roleObj.roleName))
+            if (string.IsNullOrEmpty(CategoryObj.CategoryName))
             {
                 return "Cree un nombre para el Rol";
             }
@@ -61,39 +58,39 @@ namespace Tera_Web.Controllers
 
         // GET: RolesController/Edit/5
         [HttpGet]
-        public ActionResult EditRole(int id)
+        public ActionResult EditCategory(int id)
         {
-            roleObj = roleModel.GetRole(id);
+            CategoryObj = CategoryModel.GetCategory(id);
 
-            if (roleObj == null)
+            if (CategoryObj == null)
             {
                 return NotFound();
             }
             //ViewBag.CodigoProveedor = new SelectList(db.Proveedores, "CodigoProveedor", "Nombre", articulos.CodigoProveedor);
-            return View(roleObj);
+            return View(CategoryObj);
         }
 
         // POST: RolesController/Edit/5
         [HttpPost]
-        public ActionResult EditRole(RoleObj roleObj)
+        public ActionResult EditCategory(CategoryObj CategoryObj)
         {
             if (ModelState.IsValid)
             {
-                roleModel.PUTRoles(roleObj);
+                CategoryModel.PUTCategory(CategoryObj);
                 return RedirectToAction("List", "Role");
             }
             //ViewBag.CodigoProveedor = new SelectList(db.Proveedores, "CodigoProveedor", "Nombre", articulos.CodigoProveedor);
-            return View(roleObj);
+            return View(CategoryObj);
         }
 
         // GET: RolesController/Delete/5
-        public ActionResult DeleteRole(int id)
+        public ActionResult DeleteCategory(int id)
         {
             if (id == null)
             {
                 return BadRequest();
             }
-            roleModel.DeleteRoles(id);
+            CategoryModel.DeleteCategory(id);
             if (id == null)
             {
                 return NotFound();
@@ -103,7 +100,7 @@ namespace Tera_Web.Controllers
 
         // POST: ProductosController/Delete/5
         [HttpPost]
-        public ActionResult DeleteRole(int id, IFormCollection collection)
+        public ActionResult DeleteCategory(int id, IFormCollection collection)
         {
             try
             {

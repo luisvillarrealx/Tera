@@ -7,8 +7,9 @@ namespace Tera_Web.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            var roleID = filterContext.HttpContext.Session.GetString("roleID");
             // Verificar si el usuario tiene la variable de sesión "roleID" con el valor adecuado
-            if (filterContext.HttpContext.Session.GetInt32("roleID") != 1)
+            if (roleID != "1")
             {
                 // Redirigir al usuario a la vista de error
                 filterContext.Result = new RedirectToActionResult("Error", "Permissions", null);
@@ -16,6 +17,5 @@ namespace Tera_Web.Filters
 
             base.OnActionExecuting(filterContext);
         }
-
     }
 }
