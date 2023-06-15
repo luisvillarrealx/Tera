@@ -70,6 +70,35 @@ namespace Tera_Web.Controllers
 
                 userObj.userPassword = password;
 
+                bool emailExists = userModel.EmailExists(userObj.userEmail);
+
+                if (emailExists)
+                {
+
+                    ModelState.AddModelError("userEmail", "El correo electrónico ya está registrado.");
+
+                    var userRoleIdCombo = userModel.ComboBoxRoles();
+                    var userRoleIdListCombo = new List<SelectListItem>();
+
+                    userRoleIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona un Rol" });
+                    foreach (var item in userRoleIdCombo)
+                        userRoleIdListCombo.Add(new SelectListItem { Value = item.roleId.ToString(), Text = item.roleName });
+
+                    // SiteCombo
+                    var userSiteIdCombo = userModel.ComboBoxSites();
+                    var userSiteIdListCombo = new List<SelectListItem>();
+
+                    userSiteIdListCombo.Add(new SelectListItem { Value = "0", Text = "Selecciona una sede" });
+                    foreach (var item in userSiteIdCombo)
+                        userSiteIdListCombo.Add(new SelectListItem { Value = item.siteId.ToString(), Text = item.siteName });
+
+                    ViewBag.CombouserRoleId = userRoleIdListCombo.AsEnumerable();
+                    ViewBag.CombouserSiteId = userSiteIdListCombo.AsEnumerable(); // Convertir a IEnumerable<SelectListItem>
+
+
+                    return View(userObj);
+                }
+
                 // Los datos del formulario son válidos, realizar acciones adicionales, como guardar en la base de datos.
                 if (userModel.PostUsers(userObj) != string.Empty)
                 {

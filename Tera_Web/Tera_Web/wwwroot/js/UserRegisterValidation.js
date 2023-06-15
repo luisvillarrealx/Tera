@@ -95,10 +95,31 @@ function validateForm(event) {
         event.preventDefault(); // Evitar que el formulario se envíe
     } else {
         // Verificar si el correo electrónico existe
-        validateEmailExist();
-        event.preventDefault(); // Evitar que el formulario se envíe inmediatamente
+        var userEmail = $("#email").val();
+
+        // Realizar una solicitud AJAX para verificar si el correo electrónico existe
+        $.ajax({
+            url: "/User/EmailExists",
+            type: "POST",
+            data: { userEmail: userEmail },
+            success: function (result) {
+                if (result === true) {
+                    // El correo electrónico existe, muestra el mensaje de error
+                    $("#userEmail-error").text("El correo electrónico ya está registrado.");
+                    preventDefault();
+                }
+            },
+            error: function () {
+                // Manejar el error de la solicitud AJAX si es necesario
+                console.log("Error al verificar el correo electrónico.");
+            }
+        });
     }
 }
+function preventDefault() {
+    event.preventDefault(); // Evitar que el formulario se envíe inmediatamente
+}
+
 
 
 // Agregar el evento onsubmit al formulario
