@@ -63,7 +63,7 @@ namespace Tera_Web.Controllers
             if (ModelState.IsValid)
             {
                 orderDetailsModel.Register(orderDetailsObj);
-                return RedirectToAction(nameof(ListOrderDetailsUser));
+                return RedirectToAction("ListUser", "Order");
             }
             return View(orderDetailsObj);
         }
@@ -114,7 +114,7 @@ namespace Tera_Web.Controllers
             if (ModelState.IsValid)
             {
                 orderDetailsModel.EditOrderDetails(orderDetailsObj);
-                return RedirectToAction(nameof(List));
+                return RedirectToAction("ListUser", "Order");
             }
             return View(orderDetailsModel);
         }

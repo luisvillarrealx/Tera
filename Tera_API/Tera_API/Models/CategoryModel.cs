@@ -31,7 +31,7 @@ namespace Tera_API.Models
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var SqlQuery = connection.Query<CategoryObj>("SELECT * FROM Roles WHERE roleId =" + id.ToString()).ToList();
+                var SqlQuery = connection.Query<CategoryObj>("SELECT * FROM Categories WHERE categoryId =" + id.ToString()).ToList();
                 return SqlQuery[0];
             }
         }
@@ -108,6 +108,15 @@ namespace Tera_API.Models
             {
                 var datos = connection.Query<CategoryObj>("SELECT * FROM Categories").ToList();
                 return datos;
+            }
+        }
+        public bool CategoryExist(string CategoryName, IConfiguration configuration)
+        {
+            string connectionString = configuration.GetConnectionString("Connection");
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var sqlQuery = connection.Query<UserObj>("SELECT * FROM Categories WHERE CategoryName = @CategoryName", new { CategoryName }).ToList();
+                return sqlQuery.Any(); // Devuelve true si se encuentra al menos un usuario con el correo electrónico dado
             }
         }
     }

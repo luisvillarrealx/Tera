@@ -7,30 +7,28 @@
 
 <section class="content mt-5">
     <div class="offset-4 container-fluid mt-5">
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-md-4">
-                <div>
-                    <h3 class="pb-3 text-center">Edición de Roles</h3>
-                    @using (Html.BeginForm("EditCategory", "Category", FormMethod.Post))
+                <div class="">
+                    <h3 class="card-title pb-3 text-center">Edicion de categoria</h3>
+                    @using (Html.BeginForm("EditCategory", "Category", FormMethod.Post, new { id = "category-form" }))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="categoryId" class="control-label"></label>
-                            <input asp-for="categoryId" class="form-control" />
-                            <span asp-validation-for="categoryId" class="text-danger"></span>
-                        </div>
+                        @Html.HiddenFor(m => m.categoryId)
                         <div class="form-group">
                             <label asp-for="CategoryName" class="control-label"></label>
-                            <input asp-for="CategoryName" class="form-control" />
-                            <span asp-validation-for="CategoryName" class="text-danger"></span>
+                            <input asp-for="CategoryName" class="form-control" oninput="validateForm();" />
+                            <span asp-validation-for="CategoryName" id="CategoryName-error" class="text-danger"></span>
+                            <span id="empty-error" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                        <div class="form-group pt-3">
+                            <a href="@Url.Action("List","Category")" class="btn btn-danger " type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                            <input type="submit" value="Editar" class="btn btn-warning" id="submit-btn" />
                         </div>
                     }
                 </div>
             </div>
-
         </div>
     </div>
 </section>
+<script src="~/js/categoryvalidation.js"></script>

@@ -5,10 +5,13 @@
 
     if (email === '') {
         showError(emailError, 'Por favor, ingrese su correo');
+        return false;
     } else if (!validateEmailFormat(email)) {
         showError(emailError, 'No cumple con el formato de correo electrónico');
+        return false;
     } else {
         clearError(emailError);
+        return true;
     }
 }
 
@@ -38,15 +41,16 @@ function validateEmailExist() {
     });
 }
 
-
 function validateSiteId() {
     var siteIdDropdown = document.getElementById('userSiteId');
     var siteIdError = document.getElementById('userSiteId-error');
 
     if (siteIdDropdown.selectedIndex === 0) {
         showError(siteIdError, 'Por favor, selecciona una sede');
+        return false;
     } else {
         clearError(siteIdError);
+        return true;
     }
 }
 
@@ -56,18 +60,10 @@ function validateRoleId() {
 
     if (roleIdDropdown.selectedIndex === 0) {
         showError(roleIdError, 'Por favor, selecciona un Rol');
+        return false;
     } else {
         clearError(roleIdError);
-    }
-}
-function validateRoleId() {
-    var roleIdDropdown = document.getElementById('userRoleId');
-    var roleIdError = document.getElementById('userRoleId-error');
-
-    if (roleIdDropdown.selectedIndex === 0) {
-        showError(roleIdError, 'Por favor, selecciona un Rol');
-    } else {
-        clearError(roleIdError);
+        return true;
     }
 }
 
@@ -76,27 +72,37 @@ function showError(errorElement, errorMessage) {
 }
 
 function clearError(errorElement) {
-    errorElement.innerText = '';
+    errorElement.innerText = null;
 }
 
-function validateForm() {
+function validateForm(event) {
     // Realizar todas las validaciones necesarias
-    validateEmail();
-    validateSiteId();
-    validateRoleId();
+    var hasErrors = false;
 
-    // Verificar si hay errores
-    var hasErrors = document.querySelectorAll('.text-danger').length > 0;
+    if (!validateEmail()) {
+        hasErrors = true;
+    }
 
-    // Si hay errores, no enviar el formulario
+    if (!validateSiteId()) {
+        hasErrors = true;
+    }
+
+    if (!validateRoleId()) {
+        hasErrors = true;
+    }
+
     if (hasErrors) {
         event.preventDefault(); // Evitar que el formulario se envíe
+    } else {
+        // Verificar si el correo electrónico existe
+        validateEmailExist();
+        event.preventDefault(); // Evitar que el formulario se envíe inmediatamente
     }
 }
+
 
 // Agregar el evento onsubmit al formulario
 var userForm = document.getElementById('user-form');
 if (userForm) {
     userForm.addEventListener('submit', validateForm);
 }
-

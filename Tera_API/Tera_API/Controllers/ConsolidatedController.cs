@@ -22,6 +22,20 @@ namespace Tera_API.Controllers
             var consolidate = _ConsolidatedModel.ListConsolidated(_configuration);
             return consolidate;
         }
+        [HttpGet("GetListFilter")]
+        public ActionResult<List<ConsolidatedObj>> GetConsolidatedList(DateTime min, DateTime max)
+        {
+            List<ConsolidatedObj> consolidatedList = _ConsolidatedModel.ListConsolidated(_configuration, min, max);
+
+            if (consolidatedList == null || consolidatedList.Count == 0)
+            {
+                return NoContent(); // Devuelve respuesta 204 sin contenido si la lista está vacía
+            }
+
+            return Ok(consolidatedList); // Devuelve respuesta 200 OK con la lista consolidada
+        }
+
+
 
     }
 }

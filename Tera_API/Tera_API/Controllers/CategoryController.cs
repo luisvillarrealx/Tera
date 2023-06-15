@@ -89,21 +89,27 @@ namespace Tera_API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet]
+        [Route("CategoryExist")]
+        public bool CategoryExist(string CategoryName)
+        {
+            return _categoryModel.CategoryExist(CategoryName, _configuration);
+        }
 
         /// <summary>
         /// Elimina un rol de la base de datos por su ID.
         /// </summary>
-        [HttpDelete("DeleteRole")]
-        public IActionResult Delete(int roleId)
+        [HttpDelete("DeleteCategory")]
+        public IActionResult Delete(int categoryId)
         {
             try
             {
-                if (roleId == 0)
+                if (categoryId == 0)
                 {
                     return NotFound();
                 }
 
-                var result = _categoryModel.DeleteCategory(roleId, _configuration);
+                var result = _categoryModel.DeleteCategory(categoryId, _configuration);
                 if (result > 0)
                 {
                     return Ok();

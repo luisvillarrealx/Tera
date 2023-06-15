@@ -12,11 +12,12 @@
                     <div class="">
                         <h4 class="card-title text-center">Edición de detalle de pedido</h4>
                     </div>
-                    @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+                    @using (Html.BeginForm("EditOrderDetails", "OrderDetail", FormMethod.Post))
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         @Html.HiddenFor(m => m.orderDetailsId)
                         @Html.HiddenFor(m => m.orderId)
+                        @Html.HiddenFor(m => m.productId)
                         <div class="form-group">
                             <fieldset>
                                 <label asp-for="productName" class="control-label"></label>

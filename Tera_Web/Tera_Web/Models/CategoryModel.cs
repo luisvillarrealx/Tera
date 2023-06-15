@@ -108,7 +108,7 @@ namespace Tera_Web.Models
             }
         }
 
-        public void DeleteCategory(int id)
+        public void DeleteCategory(int categoryId)
         {
             //validacion de datos para eliminar los datos
             try
@@ -116,7 +116,7 @@ namespace Tera_Web.Models
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://localhost:7021/");
-                    var response = client.DeleteAsync("api/Category/DeleteRole?roleId=" + id);
+                    var response = client.DeleteAsync("api/Category/DeleteCategory?categoryId=" + categoryId);
                     response.Wait();
                     var result = response.Result;
                     if (result.IsSuccessStatusCode)
@@ -133,6 +133,37 @@ namespace Tera_Web.Models
             {
                 lblmsj = "Error en el registro de la carrera\n" + ex.StackTrace;
             }
+        }
+        public bool CategoryExist(string CategoryName)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = $"https://localhost:7021/api/Category/CategoryExist?CategoryName={CategoryName}";
+
+                try
+                {
+                    HttpResponseMessage response = client.GetAsync(url).GetAwaiter().GetResult();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                        bool emailExists = bool.Parse(responseContent);
+                        return emailExists;
+                    }
+                    else
+                    {
+                        // Manejar la respuesta no exitosa si es necesario
+                        Console.WriteLine("Error en la solicitud: " + response.StatusCode);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Manejar excepciones si ocurren
+                    Console.WriteLine("Error al realizar la solicitud: " + ex.Message);
+                }
+            }
+
+            return false;
         }
     }
 }

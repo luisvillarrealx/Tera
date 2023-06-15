@@ -102,11 +102,11 @@ namespace Tera_Web.Controllers
                 //int total = Convert.ToInt32(HttpContext.Session.GetString("Total"));
                 orderModel.Register(OrderOBJList);
 
-                return RedirectToAction(nameof(List));
+                return RedirectToAction(nameof(ListUser));
             }
             catch
             {
-                return RedirectToAction(nameof(List));
+                return RedirectToAction(nameof(ListUser));
             }
 
 

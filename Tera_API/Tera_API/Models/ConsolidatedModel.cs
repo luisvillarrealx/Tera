@@ -10,9 +10,20 @@ namespace Tera_API.Models
         {
             using (var connection = new SqlConnection(stringConnection.GetSection("ConnectionStrings:Connection").Value))
             {
-                var sqlQuery = connection.Query<ConsolidatedObj>("GetConsolidated");
+                var sqlQuery = connection.Query<ConsolidatedObj>("SelectRawData");
                 return sqlQuery.ToList();
             }
         }
+        public List<ConsolidatedObj> ListConsolidated(IConfiguration configuration, DateTime min, DateTime max)
+        {
+            string connectionString = configuration.GetConnectionString("Connection");
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var sqlQuery = connection.Query<ConsolidatedObj>("SelectRawDataFiltered");
+                return sqlQuery.ToList();
+            }
+        }
+
     }
 }

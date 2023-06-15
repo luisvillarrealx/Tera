@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Tera_Web.Entities.ConsolidatedObj>
 
 @{
-    ViewData["Title"] = "Consolidated";
+    ViewData["Title"] = "ConsolidatedFilter";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,7 +11,7 @@
             <div class="col-12">
                 <div class="card mb-5">
                     <div class="card-header">
-                        <h3 class="card-title">Tabla padre</h3>
+                        <h3 class="card-title">Tabla Padre</h3><p>Últimos 31 días</p>
                     </div>
                     <div class="card-body table-responsive">
                         @*<table border="0" cellspacing="5" cellpadding="5">
@@ -26,15 +26,11 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a id="insertOrderLink" class="btn btn-primary ml-auto" type="button" value=""><i class="fa-solid fa-plus"></i></a>
+                                        <button type="button" id="filterButton" class="btn btn-success" onclick="FilterDate()">Filtrar</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>*@
-                        <div class="pb-2">
-                            <a href="@Url.Action("ConsolidatedFilter","Consolidated")" class="btn btn-primary ml-auto" type="button" value="">Ultimos 30 dÍas<i class=""></i></a>
-                        </div>
-
                         <table id="Table" class="table table-bordered table-hover table-striped">
                             <thead class="text-center">
                                 <tr>
@@ -59,7 +55,6 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.roleName)
                                     </th>
-                                    
                                     <th>
                                         @Html.DisplayNameFor(model => model.orderDate)
                                     </th>
@@ -103,30 +98,3 @@
         </div>
     </div>
 </section>
-
-<script>
-
-            //function FilterDate() {
-            //    var minDate = document.getElementById("minDate").value;
-            //    var maxDate = document.getElementById("maxDate").value;
-
-            //    var url = '@Url.Action("ConsolidatedFilter", "Consolidated")';
-            //    var data = { min: minDate, max: maxDate };
-
-            //    $.ajax({
-            //        url: url,
-            //        type: 'Post',
-            //        data: data,
-            //        success: function (result) {
-            //            // Manejar la respuesta del controlador, por ejemplo, actualizar la tabla con los nuevos datos
-            //            // Puedes usar jQuery para actualizar la tabla o realizar cualquier otra acción necesaria
-            //            // Ejemplo: $("#Table tbody").html(result);
-            //        window.location.href = 'ConsolidatedFilter';
-            //        },
-            //        error: function (xhr, status, error) {
-            //            // Manejar errores de la solicitud AJAX
-            //        }
-            //    });
-            //}
-</script>
-

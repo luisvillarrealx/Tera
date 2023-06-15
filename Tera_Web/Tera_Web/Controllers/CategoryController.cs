@@ -33,7 +33,7 @@ namespace Tera_Web.Controllers
             if (string.IsNullOrEmpty(mensaje))
             {
                 CategoryModel.PostCategory(CategoryObj);
-                return RedirectToAction("List", "Role");
+                return RedirectToAction("List", "Category");
                 //else
                 //{
                 //    ErrorViewModel error = new ErrorViewModel();
@@ -77,25 +77,25 @@ namespace Tera_Web.Controllers
             if (ModelState.IsValid)
             {
                 CategoryModel.PUTCategory(CategoryObj);
-                return RedirectToAction("List", "Role");
+                return RedirectToAction("List", "Category");
             }
             //ViewBag.CodigoProveedor = new SelectList(db.Proveedores, "CodigoProveedor", "Nombre", articulos.CodigoProveedor);
             return View(CategoryObj);
         }
 
         // GET: RolesController/Delete/5
-        public ActionResult DeleteCategory(int id)
+        public ActionResult DeleteCategory(int categoryId)
         {
-            if (id == null)
+            if (categoryId == null)
             {
                 return BadRequest();
             }
-            CategoryModel.DeleteCategory(id);
-            if (id == null)
+            CategoryModel.DeleteCategory(categoryId);
+            if (categoryId == null)
             {
                 return NotFound();
             }
-            return RedirectToAction("List", "Role");
+            return RedirectToAction("List", "Category");
         }
 
         // POST: ProductosController/Delete/5
@@ -104,12 +104,20 @@ namespace Tera_Web.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(List));
+                return RedirectToAction("List", "Category");
             }
             catch
             {
                 return View();
             }
+        }
+
+        public ActionResult CategoryExist(string CategoryName)
+        {
+            // Validar si el correo electrónico existe
+            bool categoryExist = CategoryModel.CategoryExist(CategoryName);
+
+            return Json(categoryExist);
         }
     }
 }
