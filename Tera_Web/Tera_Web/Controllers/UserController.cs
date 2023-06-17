@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Org.BouncyCastle.Crypto.Macs;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -206,21 +207,27 @@ namespace Tera_Web.Controllers
                 }
                 else
                 {
-                    // Validar si el correo electrónico ya existe
-                    bool emailExists = userModel.EmailExists(userObj.userEmail);
-                    if (emailExists)
+                    UserObj userObjClone = new UserObj();
+                    userObjClone = userModel.GetUser(userObj.userId);
+                    if (userObj.userEmail != userObjClone.userEmail)
                     {
-                        ModelState.AddModelError("userEmail", "El correo electrónico ya está registrado.");
+                        // Validar si el correo electrónico ya existe
+                        bool emailExists = userModel.EmailExists(userObj.userEmail);
+                        if (emailExists)
+                        {
+                            ModelState.AddModelError("userEmail", "El correo electrónico ya está registrado.");
+                        }
                     }
+
                 }
 
                 if (string.IsNullOrEmpty(userObj.userGovId))
                 {
                     ModelState.AddModelError("userGovId", "Por favor, ingresa la cédula.");
                 }
-                else if (userObj.userGovId.Length != 9)
+                else if (userObj.userGovId.Length >= 9 && userObj.userGovId.Length <= 12)
                 {
-                    ModelState.AddModelError("userGovId", "La cédula debe tener 9 dígitos.");
+                    ModelState.AddModelError("userGovId", "La cédula debe tener al menos 9 dígitos.");
                 }
 
                 if (ModelState.IsValid)
@@ -306,11 +313,16 @@ namespace Tera_Web.Controllers
                 }
                 else
                 {
-                    // Validar si el correo electrónico ya existe
-                    bool emailExists = userModel.EmailExists(userObj.userEmail);
-                    if (emailExists)
+                    UserObj userObjClone = new UserObj();
+                    userObjClone = userModel.GetUser(userObj.userId);
+                    if (userObj.userEmail != userObjClone.userEmail)
                     {
-                        ModelState.AddModelError("userEmail", "El correo electrónico ya está registrado.");
+                        // Validar si el correo electrónico ya existe
+                        bool emailExists = userModel.EmailExists(userObj.userEmail);
+                        if (emailExists)
+                        {
+                            ModelState.AddModelError("userEmail", "El correo electrónico ya está registrado.");
+                        }
                     }
                 }
 
@@ -326,7 +338,7 @@ namespace Tera_Web.Controllers
                 if (ModelState.IsValid)
                 {
                     userModel.PutUsers(userObj);
-                    return RedirectToAction("List", "User");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

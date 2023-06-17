@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 using Tera_API.Entities;
 using Tera_API.Models;
+using static Tera_API.Models.Logs;
 
 namespace Tera_API.Controllers
 {
@@ -36,8 +38,24 @@ namespace Tera_API.Controllers
         [Route("GetList")]
         public List<UserObj> List()
         {
-            return userModel.ListUser(_configuration);
+            try
+            {
+                return userModel.ListUser(_configuration);
+            }
+            catch (Exception ex)
+            {
+                string methodName = nameof(List);
+                string logFilePath = @"C:\Users\JUANK'S-PC\Desktop\Logs";
+                string additionalParams = null;
+
+                WriteLog.Log(methodName, ex.InnerException?.Message ?? ex.Message, logFilePath, additionalParams);
+                // Puedes agregar aquí código adicional para manejar la excepción, si es necesario.
+                // Por ejemplo, puedes lanzar una nueva excepción personalizada o devolver una lista vacía.
+                throw; // Opcionalmente, puedes lanzar la excepción original.
+            }
         }
+
+
 
         /// <summary>
         /// Obtiene un usuario por su ID.
