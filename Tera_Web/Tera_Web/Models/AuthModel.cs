@@ -11,7 +11,7 @@ namespace Tera_Web.Models
         {
             using (HttpClient access = new HttpClient())
             {
-                string urlApi = "http://localhost:9095/api/Auth/UserValidate";
+                string urlApi = "https://localhost:7021/api/Auth/UserValidate";
                 JsonContent content = JsonContent.Create(userObj);
 
                 HttpResponseMessage response = access.PostAsync(urlApi, content).GetAwaiter().GetResult();
